@@ -3885,6 +3885,7 @@
         const state = (()=>{ try{ return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }catch{ return {}; } })();
         if(!Array.isArray(state.opened)) state.opened = Array(6).fill(false);
 
+        
         function save(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
 
         let typingTimers = Array(6).fill(null);
