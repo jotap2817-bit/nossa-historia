@@ -1,0 +1,4150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Comemorando Nosso Amor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+  <style>
+    /* reset */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Helvetica Neue', Arial, sans-serif;
+      color:#fff;
+      /* fundo degradê azul */
+      background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+      line-height:1.4;
+    }
+    .wrapper { max-width:800px; margin:0 auto; padding:20px; }
+
+    /* coração e contador */
+    .hero { text-align:center; padding:40px 0; }
+    .hero .heart {
+      font-size:80px;
+      /* cor azul para o coração */
+      color: #0072ff;
+      animation:heartbeat 1s ease-in-out infinite;
+    }
+    @keyframes heartbeat {
+      0%,100%{transform:scale(1)} 
+      25%,75%{transform:scale(1.2)} 
+      50%{transform:scale(1)}
+    }
+    .hero h1 { font-size:1.8em; margin:20px 0 10px; }
+    .hero p  { font-size:1.2em; }
+
+    /* timeline */
+    .timeline {
+      position: relative;
+      margin:60px 0;
+      padding-left:30px;
+    }
+    .timeline::before {
+      content:''; position:absolute; left:15px; top:0; bottom:0;
+      width:4px; background:rgba(255,255,255,0.5);
+    }
+    .timeline-item {
+      position:relative; margin-bottom:60px; padding-left:20px;
+    }
+    .timeline-item .image-container {
+      width:100%; max-width:600px; margin:0 auto;
+    }
+    .timeline-item img,
+    .timeline-item video {
+      width:100%; border-radius:8px; display:block;
+    }
+    .timeline-item .caption {
+      margin-top:8px; font-size:1em; text-align:center;
+    }
+
+    /* carousel */
+    .carousel { margin:60px 0; }
+    .carousel h2 { margin-bottom:10px; text-align:center; font-size:1.4em; }
+    .carousel-track {
+      display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling: touch;
+    }
+    .slide { flex:0 0 auto; scroll-snap-align:center; width:80%; max-width:300px; margin-right:20px; }
+    .slide img { width:100%; border-radius:8px; }
+
+    /* botão de play */
+    #play-btn {
+      position: fixed; bottom: 20px; right: 20px;
+      background: rgba(0,0,0,0.6); color: #fff; border: none;
+      padding: 10px 15px; border-radius: 5px; font-size: 1em;
+      cursor: pointer; z-index: 1000;
+    }
+    /* esconde player nativo */
+    #bg-music { display: none; }
+
+    /* responsividade */
+    @media (min-width:600px) {
+      .hero .heart { font-size:120px; }
+      .hero h1     { font-size:2.5em; }
+      .hero p      { font-size:1.4em; }
+    }
+
+    /* estilização do h1 final */
+    .love { text-align: center; margin: 40px 0; font-size: 2em; }
+    @media (min-width:600px) { .love { font-size:2.5em; } }
+
+    /* ======== 3 MESES (tm-*) ======== */
+    .tm-section { margin: 60px 0; text-align:center; }
+    .tm-type { 
+      display:inline-block; 
+      border-right: 2px solid rgba(255,255,255,0.8);
+      white-space: nowrap; overflow: hidden; 
+      font-size: 1.6em; padding: 6px 4px; min-height: 1.6em;
+    }
+    .tm-question { margin: 22px 0 14px; font-size: 1.2em; opacity: .95; text-align: center }
+    .tm-actions { position: relative; display: inline-block; min-height: 54px; }
+    .tm-btn {
+      display:inline-block; margin: 6px 8px; padding: 10px 16px;
+      border-radius: 999px; border: 1px solid rgba(255,255,255,0.6);
+      background: rgba(0,0,0,0.25); color:#fff; cursor:pointer; user-select:none;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+    }
+    .tm-btn:hover { transform: translateY(-1px); background: rgba(0,0,0,0.35); }
+    /* “Não” que foge */
+    .tm-btn-no { position: absolute; left: 110px; top: 0; }
+
+    /* Envelope animado */
+    .tm-envelope-wrap { 
+      margin: 28px auto 0;
+      width: 360px;                /* um pouquinho mais largo para ficar elegante */
+      max-width: 92%;
+      perspective: 1000px;
+      display: none;               /* aparece ao clicar em "Sim" */
+    }
+
+    .tm-envelope { 
+      position: relative;
+      margin: 0 auto;              /* centraliza */
+      width: 100%;
+      height: 220px;               /* fechado */
+      transition: height .6s ease; /* anima quando abre/fecha */
+    }
+
+    /* fundo do envelope (retângulo) */
+    .tm-env-back {
+      position:absolute; inset:0;
+      background:#f5f5f5;
+      border-radius:12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    }
+
+    /* flap (triângulo) perfeitamente central */
+    .tm-env-flap {
+      position:absolute; left:50%; top:0; height:58%; width: 86%;
+      transform: translateX(-50%);               /* centraliza o triângulo */
+      background:#e9e9e9; transform-origin: top;
+      border-top-left-radius:12px; border-top-right-radius:12px;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transition: transform 0.8s cubic-bezier(.23,1,.32,1);
+      z-index: 2;
+    }
+
+    /* Carta: bloco próprio, não “segue” o flap */
+    .tm-letter {
+      position:absolute; 
+      left:50%; transform: translateX(-50%);     /* centraliza perfeitamente */
+      top: 74px;                                  /* fica abaixo do triângulo */
+      width: calc(100% - 40px);                   /* margens laterais iguais */
+      bottom: 12px;
+      background:#fff; border-radius:10px; 
+      overflow:hidden;                            /* fechado: oculta conteúdo */
+      display:flex; flex-direction:column;
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      height: 0;                                  /* FECHADO */
+      transition: height 0.8s cubic-bezier(.23,1,.32,1) 0.2s;
+    }
+
+    /* Conteúdo com scroll interno */
+    .tm-letter-content { 
+      padding:16px 18px; color:#333; text-align:left; line-height:1.5;
+      flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch;
+    }
+
+    /* Estado ABERTO */
+    .tm-envelope.open { height: clamp(360px, 62vh, 560px); } /* simétrico e responsivo */
+    .tm-envelope.open .tm-env-flap { transform: translateX(-50%) rotateX(-180deg); }
+    .tm-envelope.open .tm-letter { height: calc(100% - 94px); } /* ocupa o espaço do retângulo */
+
+    /* Título e typewriter da carta */
+    .tm-letter-title { font-weight:700; margin-bottom:6px; color:#0072ff; }
+    .tm-letter-typed {
+      border-right:2px solid rgba(0,0,0,.5);
+      white-space: pre-wrap; overflow-wrap:anywhere; min-height:3em;
+    }
+
+    /* Botão de fechar */
+    .tm-close {
+      position:absolute; right:10px; top:10px; z-index:3;
+      background: rgba(0,0,0,.08); border:0; border-radius:8px;
+      padding:6px 10px; font-weight:600; color:#333; cursor:pointer;
+    }
+    .tm-close:hover { background: rgba(0,0,0,.14); }
+
+    @media (max-width:420px){ .tm-type { font-size: 1.3em; } }
+    :root{
+      --env-width: clamp(460px, 72vw, 680px); /* ↑ mais largo em desktop, responsivo */
+      --flap-height: 42%;                     /* ↓ flap mais curto */
+      --letter-top: 76px;                      /* distância do topo da carta */
+    }
+
+    /* wrapper mais largo */
+    .tm-envelope-wrap{
+      width: var(--env-width);
+      max-width: 96%;
+    }
+
+    /* fundo com leve brilho */
+    .tm-env-back{
+      background: linear-gradient(180deg, #fefefe 0%, #f3f3f3 100%);
+      border-radius: 14px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.25);
+    }
+
+    /* flap central com degradê e sombra suave */
+    .tm-env-flap{
+      height: var(--flap-height);
+      width: 92%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, #fafafa 0%, #eaeaea 70%);
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.14));
+    }
+
+    /* linha de dobra sutil */
+    .tm-env-flap::after{
+      content:''; position:absolute;
+      left:10%; right:10%;
+      bottom:-1px;
+      height:2px;
+      border-radius:1px;
+      background: linear-gradient(90deg, transparent, rgba(0,0,0,.12), transparent);
+    }
+
+    /* carta mais larga e com altura baseada no offset do flap */
+    .tm-letter{
+      top: var(--letter-top);
+      width: calc(100% - 48px);
+      border-radius: 12px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+
+    /* envelope aberto: um pouco mais alto */
+    .tm-envelope.open{
+      height: clamp(420px, 64vh, 620px);
+    }
+
+    /* altura da carta quando aberto (usa a var --letter-top) */
+    .tm-envelope.open .tm-letter{
+      height: calc(100% - (var(--letter-top) + 16px));
+    }
+
+    /* respiro do conteúdo */
+    .tm-letter-content{ padding: 18px 20px; }
+
+    /* título destacado (mantém sua cor) */
+    .tm-letter-title{ font-weight: 700; color:#0072ff; }
+
+    /* ajustes mobile */
+    @media (max-width: 480px){
+      :root{
+        --env-width: 92vw;
+        --flap-height: 46%;
+        --letter-top: 72px;
+      }
+    }
+
+    .reasons-list{ list-style:none; margin:12px auto; padding:0; max-width:560px; }
+    .reasons-list li{
+      background: rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.5);
+      padding:10px 14px; border-radius:10px; margin:8px 0;
+    }
+
+    /* ======== POLAROID ======== */
+    .polaroid{
+      background:#fff; color:#333;
+      padding:8px 8px 26px; border-radius:10px;
+      box-shadow: 0 14px 30px rgba(0,0,0,.28);
+      transform: rotate(var(--rot, -1.5deg));
+      margin: 12px auto;
+    }
+    .polaroid img{ width:100%; display:block; border-radius:6px; }
+    .polaroid small{
+      display:block; text-align:center; margin-top:8px;
+      font-family: "Patrick Hand", "Comic Sans MS", cursive;
+      color:#333;
+    }
+    /* Ajustes dentro do carrossel */
+    .slide .polaroid{ margin:0; }
+
+    /* ======== BOUQUET v2 ======== */
+    .bouquet-wrap{ text-align:center; margin:48px 0 24px; }
+    .bouquet-title{ margin-bottom:10px; font-size:1.6em; }
+
+    .bouquet{
+      width:min(92vw, 440px);
+      margin:0 auto;
+      cursor:pointer;
+      user-select:none;
+      touch-action:manipulation;
+      filter: drop-shadow(0 12px 22px rgba(0,0,0,.25));
+      position: relative;         /* para flutuantes ficarem dentro */
+    }
+    .bouquet svg{ width:100%; height:auto; overflow:visible; }
+
+    /* cone (papel) + fita */
+    .cone{
+      fill:#f3dfb8;
+      stroke:#a88f60; stroke-width:2.2;
+      opacity:0;
+      transform: translateY(18px) scale(.92);
+      transform-origin:50% 100%;
+      transition: transform .7s cubic-bezier(.2,1,.2,1) .2s, opacity .6s ease .2s;
+    }
+    .ribbon{ fill:#ff8fa3; stroke:#d96b82; stroke-width:1.8; opacity:0; transition: opacity .5s ease .65s; }
+    .bouquet.active .cone{ opacity:1; transform: translateY(0) scale(1); }
+    .bouquet.active .ribbon{ opacity:1; }
+
+    /* “copa” das flores balança suavemente quando aberto */
+    .head{ transform-origin:200px 180px; }
+    @keyframes sway { 0%,100%{transform:rotate(-1.2deg)} 50%{transform:rotate(1.2deg)} }
+    .bouquet.active .head{ animation: sway 3.6s ease-in-out .9s infinite; }
+
+    /* caules curvos “desenhados” */
+    .stem{
+      stroke:#2e8b57; stroke-width:4; fill:none; stroke-linecap:round;
+      stroke-dasharray: var(--len, 1); 
+      stroke-dashoffset: var(--len, 1);
+      transition: stroke-dashoffset 1.15s ease var(--delay, 0s);
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,.18));
+    }
+    .bouquet.active .stem{ stroke-dashoffset: 0; }
+
+    /* folhinhas */
+    .leaf{
+      fill:#3aa96b; opacity:0; transform-origin:center;
+      transform: scale(.8);
+      transition: opacity .5s ease var(--delay, 0s), transform .5s ease var(--delay, 0s);
+    }
+    .bouquet.active .leaf{ opacity:1; transform: scale(1); }
+
+    /* flor como grupo: surge, depois pétalas abrem em cascata */
+    .flower{
+      transform: scale(0) rotate(-6deg);
+      transform-origin: center;
+      opacity:0;
+      transition: transform .6s cubic-bezier(.2,1,.2,1) var(--delay, 0s), opacity .6s ease var(--delay, 0s);
+    }
+    .bouquet.active .flower{ transform: scale(1) rotate(0deg); opacity:1; }
+
+    /* pétalas desabrochando */
+    .petal{
+      transform-origin: var(--cx) var(--cy);
+      transform: scale(.1) rotate(var(--rot, 0deg));
+      opacity:0;
+      transition: transform .46s cubic-bezier(.2,1.1,.2,1) calc(var(--delay, 0s) + var(--i,0)*.06s),
+                  opacity .46s ease calc(var(--delay, 0s) + var(--i,0)*.06s);
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,.12));
+    }
+    .bouquet.active .petal{ transform: scale(1) rotate(var(--rot, 0deg)); opacity:1; }
+
+    /* miolo da flor */
+    .core{
+      fill:#ffd166; stroke:#caa534; stroke-width:1.2;
+      opacity:0; transform: scale(.6);
+      transition: opacity .4s ease var(--delay, 0s), transform .4s ease var(--delay, 0s);
+    }
+    .bouquet.active .core{ opacity:1; transform: scale(1); }
+
+    /* botão */
+    #bouquet-toggle{ margin-top:10px; }
+
+    /* ======== FLORETES/✨ FLUTUANTES ======== */
+    .floater{
+      position:absolute; z-index:3; pointer-events:none;
+      font-size:18px;
+      opacity:0;
+      animation: floatRise var(--dur,2.2s) ease-out var(--delay,0s) forwards;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+    }
+    @keyframes floatRise{
+      0%   { transform: translate(var(--x0,0), var(--y0,0)) scale(.8) rotate(var(--r0,0deg)); opacity:0; }
+      10%  { opacity:1; }
+      100% { transform: translate(var(--x1,40px), calc(var(--y0,0) - 160px)) scale(1.25) rotate(var(--r1,15deg)); opacity:0; }
+    }
+
+    /* ======== ACCORDION (details/summary) ======== */
+    .accordion {
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 12px;
+      background: rgba(0,0,0,.18);
+      margin: 18px 0;
+      overflow: hidden;
+    }
+    .accordion summary {
+      list-style: none;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.1em;
+      background: rgba(0,0,0,.22);
+      user-select: none;
+    }
+    .accordion summary::-webkit-details-marker { display: none; }
+    .accordion .accordion-content { padding: 16px; }
+    .accordion .chev { transition: transform .2s ease; }
+    .accordion[open] .chev { transform: rotate(90deg); }
+    /* ======== 4 MESES – QUEBRA-CABEÇA 3×3 ======== */
+    .puzzle-wrap{
+      margin: 28px auto 14px;
+      max-width: 720px;
+      position: relative;
+    }
+
+    .puzzle-board{
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0,0,0,.28);
+      background: rgba(0,0,0,.15);
+      border: 1px solid rgba(255,255,255,.35);
+    }
+
+    .puzzle-secret{
+      padding: 22px 20px;
+      text-align: center;
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      line-height: 1.55;
+      backdrop-filter: blur(0px);
+      transition: filter .35s ease, opacity .35s ease;
+      filter: blur(10px) saturate(0.8);
+      opacity: .85;
+    }
+
+    .puzzle-revealed .puzzle-secret{
+      filter: blur(0);
+      opacity: 1;
+    }
+
+    .puzzle-grid{
+      position: absolute; inset: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 1fr;
+    }
+
+    .puzzle-tile{
+      position: relative;
+      border: 1px dashed rgba(255,255,255,.35);
+      background: rgba(0,0,0,.28);
+      cursor: pointer;
+      transition: transform .12s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: rgba(255,255,255,.9);
+      user-select: none;
+    }
+    .puzzle-tile:hover{ transform: translateY(-1px); background: rgba(0,0,0,.34); }
+    .puzzle-tile.solved{
+      background: rgba(0, 180, 80, .22);
+      border-color: rgba(0, 220, 120, .7);
+      cursor: default;
+    }
+    .puzzle-tile.solved::after{
+      content: "✅";
+      position: absolute; right: 8px; bottom: 6px; font-size: 18px;
+    }
+
+    /* progresso */
+    .puzzle-progress{
+      margin-top: 10px; text-align: center; font-size: .98em; opacity: .9;
+    }
+
+    /* Modal Q&A (leve, sem <dialog>) */
+    .qa-backdrop{
+      position: fixed; inset: 0; background: rgba(0,0,0,.5);
+      display: none; align-items: center; justify-content: center;
+      z-index: 2000; padding: 16px;
+    }
+    .qa-backdrop.show{ display: flex; }
+    .qa-modal{
+      width: min(92vw, 520px);
+      background: #ffffff;
+      color: #222;
+      border-radius: 12px;
+      box-shadow: 0 14px 32px rgba(0,0,0,.35);
+      overflow: hidden;
+    }
+    .qa-header{
+      padding: 14px 16px; background: #e9f2ff; color: #0d47a1; font-weight: 800;
+      display: flex; align-items:center; justify-content: space-between;
+    }
+    .qa-body{ padding: 16px; }
+    .qa-body p{ margin-bottom: 10px; }
+    .qa-actions{
+      display: flex; gap: 10px; justify-content: flex-end;
+      padding: 12px 16px; background: #f7f7f7;
+      border-top: 1px solid #eee;
+    }
+    .qa-input{
+      width: 100%; padding: 10px 12px; border: 1px solid #d6d6d6; border-radius: 8px;
+      font-size: 1rem; outline: none;
+    }
+    .qa-input:focus{ border-color: #0072ff; box-shadow: 0 0 0 3px rgba(0,114,255,.12); }
+    .qa-btn{
+      padding: 10px 14px; border: 0; border-radius: 10px; font-weight: 700; cursor: pointer;
+    }
+    .qa-btn.primary{ background: #0072ff; color: #fff; }
+    .qa-btn.ghost{ background: transparent; color: #333; }
+    .qa-error{ color: #c62828; font-size: .92em; margin-top: 8px; min-height: 1.2em; }
+    .qa-options{ display:grid; grid-template-columns:1fr; gap:10px; margin-top:8px; }
+    .qa-option{
+      padding:10px 12px; border-radius:10px; border:1px solid #d6d6d6; background:#fff;
+      cursor:pointer; font-weight:700; text-align:left;
+    }
+    .qa-option:hover{ border-color:#0072ff; box-shadow:0 0 0 3px rgba(0,114,255,.12); }
+    .qa-option.correct{ border-color:#1b8e3e; background:#e9f7ef; }
+    .qa-option.wrong{ border-color:#c62828; background:#fdecec; }
+
+    .puzzle-grid{ transition: opacity .35s ease, transform .35s ease; }
+    .puzzle-cleared .puzzle-grid{
+      opacity: 0;
+      transform: scale(0.98);
+      pointer-events: none;
+    }
+    .puzzle-cleared .puzzle-secret{
+      filter: blur(0);
+      opacity: 1;
+    }
+
+    .pair-wrap.ring-bear{
+      width:min(680px,94vw); margin:16px auto 10px; aspect-ratio:3/1.3;
+      border-radius:14px; overflow:hidden; background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.35); box-shadow:0 12px 28px rgba(0,0,0,.28);
+    }
+    .pair-wrap.ring-bear .thing{
+      transition: transform .85s cubic-bezier(.2,1,.2,1);
+      transform-box: fill-box;
+    }
+    /* posição separados */
+    .pair-wrap.ring-bear .ring.left  { transform: translateX(-16%) rotate(-6deg); }
+    .pair-wrap.ring-bear .bear.right { transform: translateX( 16%) rotate( 4deg); }
+    /* juntinhos */
+    .pair-wrap.ring-bear.merged .ring.left  { transform: translateX(-4%) rotate(-18deg); }
+    .pair-wrap.ring-bear.merged .bear.right { transform: translateX( 2%) rotate( 2deg); }
+
+    /* braço do urso “abraça” a aliança quando junta */
+    .bear .arm{ transform-box: fill-box; transform-origin: center; transition: transform .6s ease; }
+    .bear .arm-left{ transform-origin: 540px 232px; }  /* pivô do braço esquerdo */
+    .pair-wrap.ring-bear.merged .bear .arm-left{
+      transform: translate(-14px,-10px) rotate(-22deg);
+    }
+
+    /* brilho ao juntar */
+    .pair-wrap.ring-bear .spark{
+      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(.6);
+      font-size:28px; opacity:0; pointer-events:none; transition:opacity .25s ease, transform .35s ease;
+    }
+    .pair-wrap.ring-bear.merged .spark{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+
+    /* texto: oculto -> aparece ao juntar */
+    .pair-after.ring-bear-text{
+      margin-top:10px; opacity:0; max-height:0; overflow:hidden;
+      transition:opacity .35s ease, max-height .35s ease;
+    }
+    .pair-wrap.ring-bear.merged ~ .pair-after.ring-bear-text{ opacity:1; max-height:400px; }
+
+    #rb-puzzle .pair-wrap{ width:min(680px,94vw); margin:16px auto 10px; aspect-ratio:3/1.3;
+      border-radius:14px; overflow:hidden; background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.35); box-shadow:0 12px 28px rgba(0,0,0,.28); }
+    #rb-puzzle svg{ width:100%; height:100%; display:block; }
+    #rb-puzzle .piece{ transform-box:fill-box; transition:transform .85s cubic-bezier(.2,1,.2,1); }
+    #rb-puzzle .left{  transform: translateX(-5.5%) rotate(-4deg); }
+    #rb-puzzle .right{ transform: translateX( 5.5%) rotate( 3deg); }
+
+    #rb-puzzle .pair-wrap.joined .left{  transform: translateX(0%) rotate(0deg); }
+    #rb-puzzle .pair-wrap.joined .right{ transform: translateX(0%) rotate(0deg); }
+    #rb-puzzle .pair-wrap.joined .piece{ transition-timing-function:cubic-bezier(.2,1.2,.2,1);
+      transform-origin: 400px 180px; }
+
+    /* brilho ao encaixar */
+    #rb-puzzle .spark{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(.6);
+      font-size:28px; opacity:0; pointer-events:none; transition:opacity .25s ease, transform .35s ease; }
+    #rb-puzzle .pair-wrap.joined .spark{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+
+    /* texto que você vai escrever (mostra só depois de juntar) */
+    #rbText{ margin-top:10px; opacity:0; max-height:0; overflow:hidden; transition:opacity .35s, max-height .35s; }
+    #rb-puzzle .pair-wrap.joined ~ #rbText{ opacity:1; max-height:400px; }
+    .future-section{ margin:60px 0; text-align:center; }
+    .fe-wrap{
+      margin: 22px auto 0; width: clamp(360px, 72vw, 680px); max-width: 96%;
+      perspective: 1000px;
+    }
+    .fe-envelope{
+      position: relative; margin:0 auto; width:100%;
+      height: 220px; transition: height .6s ease;
+    }
+    .fe-back{
+      position:absolute; inset:0;
+      background: linear-gradient(180deg,#fefefe 0%,#f3f3f3 100%);
+      border-radius:14px; box-shadow:0 14px 34px rgba(0,0,0,.25);
+    }
+    .fe-flap{
+      position:absolute; left:50%; top:0; height:44%; width:92%;
+      transform: translateX(-50%); transform-origin: top;
+      background: linear-gradient(180deg,#fafafa 0%,#eaeaea 70%);
+      border-top-left-radius:14px; border-top-right-radius:14px;
+      clip-path: polygon(0 0,100% 0,50% 100%);
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.14));
+      transition: transform .8s cubic-bezier(.23,1,.32,1);
+      z-index:2;
+    }
+    .fe-flap::after{
+      content:''; position:absolute; left:10%; right:10%; bottom:-1px; height:2px; border-radius:1px;
+      background: linear-gradient(90deg,transparent,rgba(0,0,0,.12),transparent);
+    }
+    .fe-letter{
+      position:absolute; left:50%; transform:translateX(-50%);
+      top:72px; width: calc(100% - 48px); bottom:14px;
+      background:#fff; border-radius:12px; overflow:hidden; display:flex; flex-direction:column;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+      height:0; transition:height .8s cubic-bezier(.23,1,.32,1) .2s;
+    }
+    .fe-letter-content{ padding:18px 20px; color:#333; text-align:left; line-height:1.6; overflow-y:auto; }
+    .fe-title{ font-weight:800; color:#0072ff; margin-bottom:6px; }
+    .fe-typed{ border-right:2px solid rgba(0,0,0,.5); white-space:pre-wrap; min-height:4.2em; }
+
+    /* aberto */
+    .fe-envelope.open{ height: clamp(420px, 64vh, 620px); }
+    .fe-envelope.open .fe-flap{ transform: translateX(-50%) rotateX(-180deg); }
+    .fe-envelope.open .fe-letter{ height: calc(100% - 96px); }
+
+    /* botão/nota */
+    #fe-open{ margin-top:12px; }
+    .fe-note{ margin-top:10px; opacity:.9; }
+
+    /* responsivo fino */
+    @media (max-width:480px){
+      .fe-letter{ top:70px; }
+    }
+    .fe-close{
+      position:absolute; right:10px; top:10px; z-index:3;
+      background: rgba(0,0,0,.08); border:0; border-radius:8px;
+      padding:6px 10px; font-weight:700; color:#333; cursor:pointer;
+    }
+    .fe-close:hover{ background: rgba(0,0,0,.14); }
+
+    /* ======== 5 MESES – QUEBRA-CABEÇA DE FOTO ======== */
+    .jigsaw-wrap{
+      margin: 28px auto 14px;
+      max-width: 720px;
+    }
+    .jigsaw-panel{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; margin-bottom:10px;
+    }
+    .jigsaw-panel .tm-btn{ margin:0; }
+    .jigsaw-board{
+      position:relative;
+      width:min(94vw, 720px);
+      aspect-ratio: 4/3;              /* fica responsivo; mude para 1/1 se quiser quadrado */
+      border-radius:12px; overflow:hidden;
+      box-shadow:0 12px 28px rgba(0,0,0,.28);
+      background: rgba(0,0,0,.15);
+      border:1px solid rgba(255,255,255,.35);
+      display:grid;
+      user-select:none;
+      touch-action: manipulation;
+    }
+    .jig-tile{
+      position:relative;
+      border:1px dashed rgba(255,255,255,.35);
+      background-size: 100% 100%;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .2s ease;
+    }
+    .jig-tile:focus-visible{ outline: 2px solid #fff; }
+    .jig-tile:hover{ transform: translateY(-1px); }
+    .jig-tile.selected{
+      border-color: rgba(0,114,255,.9);
+      box-shadow: 0 0 0 3px rgba(0,114,255,.18) inset;
+    }
+    .jigsaw-stats{
+      margin-top:10px; text-align:center; font-size:.98em; opacity:.9;
+    }
+    .jigsaw-preview{
+      display:flex; align-items:center; gap:8px;
+      opacity:.9; font-size:.95em;
+    }
+    .jigsaw-preview img{ width:64px; height:48px; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,.35); }
+    input[type="file"].jig-file{ display:none; }
+    .jig-file-label{
+      display:inline-block; padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.6); background:rgba(0,0,0,.25);
+      cursor:pointer;
+    }
+    /* Linha da constelação acompanhando o brilho */
+    #leo-const{
+      stroke:#7cc4ff;
+      stroke-width:2.5;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      filter: drop-shadow(0 0 10px rgba(124,196,255,.6));
+      animation: constPulse 3.6s ease-in-out infinite, constGlow 7s ease-in-out infinite;
+    }
+    @keyframes constPulse{
+      0%,100% { stroke-width:2.5; opacity:.9; }
+      50%     { stroke-width:3.2; opacity:1; }
+    }
+    @keyframes constGlow{
+      0%,100% { filter: drop-shadow(0 0 8px rgba(124,196,255,.45)); }
+      50%     { filter: drop-shadow(0 0 14px rgba(124,196,255,.85)); }
+    }
+
+    /* Lua + estrelas (já usados) */
+    #leo-moon { transform-origin:center; animation: floatMoon 12s ease-in-out infinite; }
+    @keyframes floatMoon { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    #bg-stars circle { animation: twinkle 6s ease-in-out infinite; }
+    @keyframes twinkle { 0%,100%{opacity:.25} 50%{opacity:.55} }
+    #leo-stars circle { animation: pulseStar 3s ease-in-out infinite; transform-origin:center; }
+    @keyframes pulseStar { 0%,100%{transform:scale(1);opacity:.85} 50%{transform:scale(1.18);opacity:1} }
+
+    /* Botão de áudio da seção */
+    #sky-audio-btn{ margin:10px 0 0; }
+
+    .five-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap:16px;
+      margin-top:14px;
+    }
+    .five-card{
+      position:relative;
+      cursor:pointer;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .five-card:hover{ transform: translateY(-2px) rotate(var(--rot, -1.5deg)); box-shadow: 0 16px 34px rgba(0,0,0,.32); }
+    .five-card img{ aspect-ratio: 3/4; object-fit: cover; border-radius:6px; }
+    .five-badge{
+      position:absolute; top:8px; left:8px;
+      width:28px; height:28px; border-radius:50%;
+      display:grid; place-items:center;
+      background:#0072ff; color:#fff; font-weight:800;
+      box-shadow:0 4px 12px rgba(0,0,0,.25);
+    }
+
+    /* lightbox */
+    .five-lightbox{
+      position:fixed; inset:0; display:none;
+      align-items:center; justify-content:center;
+      background:rgba(0,0,0,.7); z-index:3000; padding:18px;
+    }
+    .five-lightbox.show{ display:flex; }
+    .five-lightbox img{
+      max-width:min(92vw, 860px); max-height:70vh; border-radius:12px; box-shadow:0 18px 40px rgba(0,0,0,.35);
+    }
+    .five-meta{
+      margin-left:16px; max-width: 380px; background: rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.4); border-radius:12px; padding:12px 14px; color:#fff;
+    }
+    .five-close{
+      position:absolute; right:16px; top:16px;
+      background: rgba(0,0,0,.35); color:#fff; border:0;
+      border-radius:10px; padding:8px 12px; font-weight:800; cursor:pointer;
+    }
+    @media (max-width:900px){
+      .five-lightbox{ flex-direction:column; }
+      .five-meta{ margin-left:0; margin-top:12px; width:min(92vw, 640px); }
+    }
+    /* ======== 6 MESES – VOTOS (sv-*) ======== */
+    .sv-section{ margin:60px 0; text-align:center; }
+    .sv-type{
+      display:inline-block;
+      border-right: 2px solid rgba(255,255,255,0.8);
+      white-space: nowrap; overflow: hidden;
+      font-size: 1.6em; padding: 6px 4px; min-height: 1.6em;
+    }
+    .sv-question{ margin: 22px 0 14px; font-size: 1.2em; opacity: .95; text-align:center; }
+
+    .sv-wrap{
+      margin: 22px auto 0;
+      width: clamp(360px, 72vw, 720px);
+      max-width: 96%;
+      perspective: 1000px;
+    }
+    .sv-envelope{
+      position: relative; margin:0 auto; width:100%;
+      height: 220px; transition: height .6s ease;
+      cursor: pointer;
+    }
+    .sv-back{
+      position:absolute; inset:0;
+      background: linear-gradient(180deg,#fefefe 0%,#f3f3f3 100%);
+      border-radius:14px; box-shadow:0 14px 34px rgba(0,0,0,.25);
+    }
+    .sv-flap{
+      position:absolute; left:50%; top:0; height:44%; width:92%;
+      transform: translateX(-50%); transform-origin: top;
+      background: linear-gradient(180deg,#fafafa 0%,#eaeaea 70%);
+      border-top-left-radius:14px; border-top-right-radius:14px;
+      clip-path: polygon(0 0,100% 0,50% 100%);
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.14));
+      transition: transform .8s cubic-bezier(.23,1,.32,1);
+      z-index:2;
+    }
+    .sv-flap::after{
+      content:''; position:absolute; left:10%; right:10%; bottom:-1px; height:2px; border-radius:1px;
+      background: linear-gradient(90deg,transparent,rgba(0,0,0,.12),transparent);
+    }
+    .sv-letter{
+      position:absolute; left:50%; transform:translateX(-50%);
+      top:72px; width: calc(100% - 48px); bottom:14px;
+      background:#fff; border-radius:12px; overflow:hidden;
+      display:flex; flex-direction:column;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+      height:0;
+      transition:height .8s cubic-bezier(.23,1,.32,1) .2s;
+    }
+    .sv-letter-content{
+      padding:18px 20px; color:#333; text-align:left; line-height:1.6;
+      overflow-y:auto; -webkit-overflow-scrolling:touch;
+    }
+    .sv-title{ font-weight:800; color:#0072ff; margin-bottom:6px; }
+    .sv-typed{
+      border-right:2px solid rgba(0,0,0,.5);
+      white-space:pre-wrap;
+      min-height: 8em;
+    }
+    .sv-actions{ margin-top:12px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+    .sv-close{
+      position:absolute; right:10px; top:10px; z-index:3;
+      background: rgba(0,0,0,.08); border:0; border-radius:8px;
+      padding:6px 10px; font-weight:700; color:#333; cursor:pointer;
+      display:none;
+    }
+    .sv-close:hover{ background: rgba(0,0,0,.14); }
+
+    /* aberto */
+    .sv-envelope.open{ height: clamp(440px, 66vh, 660px); }
+    .sv-envelope.open .sv-flap{ transform: translateX(-50%) rotateX(-180deg); }
+    .sv-envelope.open .sv-letter{ height: calc(100% - 96px); }
+
+    @media (max-width:480px){
+      .sv-type{ font-size: 1.3em; }
+      .sv-letter{ top:70px; }
+    }
+
+    /* ======== 6 MESES – QUEM SOMOS AGORA (qs-*) ======== */
+    .qs-section{ margin: 42px 0 16px; text-align:center; }
+    .qs-title{ font-size: 1.5em; margin-bottom: 8px; }
+    .qs-sub{ opacity:.92; margin: 0 auto 16px; max-width: 760px; }
+
+    .qs-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .qs-card{
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 14px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.22);
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .qs-head{
+      display:flex; align-items:center; justify-content: space-between; gap: 10px;
+      padding: 14px 16px;
+      background: rgba(0,0,0,.22);
+    }
+    .qs-person{
+      font-weight: 900;
+      letter-spacing:.5px;
+    }
+    .qs-pill{
+      font-size:.85em;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.45);
+      background: rgba(0,0,0,.22);
+      cursor: pointer;
+      user-select:none;
+      transition: transform .15s ease, background .2s ease;
+    }
+    .qs-pill:hover{ transform: translateY(-1px); background: rgba(0,0,0,.30); }
+    .qs-pill[aria-pressed="true"]{
+      border-color: rgba(255,255,255,.7);
+      background: rgba(0,0,0,.34);
+    }
+
+    .qs-body{ padding: 14px 16px 16px; }
+
+    .qs-block{
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(0,0,0,.16);
+      padding: 12px 12px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .qs-label{
+      display:flex; align-items:center; justify-content: space-between;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .qs-tag{
+      font-size:.82em;
+      opacity:.9;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.35);
+      background: rgba(0,0,0,.18);
+    }
+
+    .qs-text{
+      line-height: 1.55;
+      opacity: .95;
+    }
+
+    /* “Antes” começa meio oculto (pra ficar dramático) */
+    .qs-card .qs-before .qs-text{
+      filter: blur(7px) saturate(.85);
+      opacity: .75;
+      transition: filter .35s ease, opacity .35s ease;
+    }
+
+    /* quando revela, fica normal */
+    .qs-card.revealed .qs-before .qs-text{
+      filter: blur(0);
+      opacity: 1;
+    }
+
+    /* “Depois” sempre visível */
+    .qs-card .qs-after .qs-text{ opacity: 1; }
+
+    /* botão geral */
+    .qs-actions{
+      display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+      margin-top: 10px;
+    }
+
+    /* ======== 6 MESES – O QUE EU NUNCA TE DISSE (ud-*) ======== */
+    .ud-section{ margin: 42px 0 16px; text-align:center; }
+    .ud-title{ font-size: 1.5em; margin-bottom: 8px; }
+    .ud-sub{ opacity:.92; margin: 0 auto 16px; max-width: 760px; }
+
+    .ud-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .ud-card{
+      position: relative;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 14px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.22);
+      overflow: hidden;
+      cursor: pointer;
+      text-align: left;
+      transition: transform .16s ease, background .2s ease, border-color .2s ease;
+    }
+    .ud-card:hover{ transform: translateY(-2px); background: rgba(0,0,0,.24); }
+
+    .ud-head{
+      padding: 14px 16px;
+      background: rgba(0,0,0,.22);
+      display:flex; align-items:center; justify-content:space-between; gap: 10px;
+    }
+    .ud-kicker{
+      font-weight: 900;
+      letter-spacing:.4px;
+    }
+    .ud-lock{
+      width: 34px; height: 34px;
+      display:grid; place-items:center;
+      border-radius: 10px;
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.35);
+      font-size: 18px;
+    }
+
+    .ud-body{
+      padding: 14px 16px 16px;
+    }
+
+    .ud-preview{
+      opacity:.92;
+      line-height: 1.55;
+    }
+
+    /* conteúdo escondido com “blur” */
+    .ud-content{
+      margin-top: 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(0,0,0,.16);
+      padding: 12px 12px;
+      filter: blur(10px) saturate(.85);
+      opacity: .70;
+      max-height: 0;
+      overflow: hidden;
+      transition: filter .35s ease, opacity .35s ease, max-height .35s ease;
+    }
+
+    /* aberto */
+    .ud-card.open{
+      border-color: rgba(255,255,255,.65);
+    }
+    .ud-card.open .ud-lock{ background: rgba(0,114,255,.28); border-color: rgba(0,114,255,.65); }
+    .ud-card.open .ud-content{
+      filter: blur(0);
+      opacity: 1;
+      max-height: 420px;
+    }
+
+    /* texto digitado */
+    .ud-typed{
+      border-right: 2px solid rgba(255,255,255,.75);
+      white-space: pre-wrap;
+      line-height: 1.6;
+      min-height: 5.5em;
+    }
+
+    /* final secreto */
+    .ud-final{
+      margin: 16px auto 0;
+      max-width: 820px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.20);
+      border: 1px solid rgba(255,255,255,.35);
+      box-shadow: 0 12px 28px rgba(0,0,0,.22);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    .ud-final.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .ud-final strong{ color: #bfe0ff; }
+
+    /* ====== ESTILOS (pode mover pro seu CSS) ====== */
+    .month-section{
+      max-width: 920px;
+      margin: 48px auto;
+      padding: 28px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      backdrop-filter: blur(10px);
+    }
+
+    .month-header h2{
+      margin: 0 0 6px;
+      font-size: 1.6rem;
+      line-height: 1.2;
+    }
+
+    .month-subtitle{
+      margin: 0 0 18px;
+      opacity: .9;
+    }
+
+    .month-text{
+      padding: 16px 16px 6px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      margin-bottom: 22px;
+    }
+
+    .month-text p{
+      margin: 0 0 10px;
+      line-height: 1.55;
+    }
+
+    .interactive-block{
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .block-title{
+      display:flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .block-title h3{
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .hint{ opacity: .8; font-size: .92rem; }
+
+    /* Accordion */
+    .accordion{ display:flex; flex-direction:column; gap: 10px; }
+    .acc-item{
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      overflow:hidden;
+    }
+
+    .acc-summary{
+      cursor:pointer;
+      padding: 12px 14px;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      user-select: none;
+    }
+    .acc-summary::-webkit-details-marker{ display:none; }
+
+    .acc-title{ font-weight: 600; }
+    .acc-content{
+      padding: 0 14px 12px 36px;
+      opacity: .95;
+    }
+    .acc-content p{ margin: 10px 0 0; line-height:1.5; }
+
+    .badge{
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      display:inline-block;
+    }
+    .badge-blue{ background: #4ea8ff; }
+    .badge-yellow{ background: #ffd166; }
+    .badge-heart{ background: #ff4d6d; }
+
+    /* Buttons */
+    .btn{
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: inherit;
+      cursor: pointer;
+    }
+    .btn:hover{ background: rgba(255,255,255,.12); }
+
+    .btn-secondary{ background: rgba(78,168,255,.14); }
+    .btn-secondary:hover{ background: rgba(78,168,255,.20); }
+
+    .btn-ghost{
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .btn-ghost:hover{ background: rgba(255,255,255,.06); }
+
+    /* Flip cards */
+    .lesson-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 720px){
+      .lesson-grid{ grid-template-columns: 1fr; }
+      .block-title{ flex-direction:column; align-items:flex-start; }
+    }
+
+    .flip-card{
+      position: relative;
+      min-height: 88px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      cursor: pointer;
+      padding: 14px;
+      text-align: left;
+      color: inherit;
+      overflow:hidden;
+    }
+
+    .flip-front{
+      display:block;
+      font-weight: 700;
+      font-size: 1.02rem;
+    }
+    .flip-back{
+      display:block;
+      margin-top: 8px;
+      opacity: .92;
+      line-height: 1.45;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .25s ease;
+    }
+
+    .flip-card[data-open="true"] .flip-back{
+      max-height: 120px;
+    }
+
+    /* Checklist */
+    .checklist{
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,.18);
+      background: rgba(255,255,255,.03);
+    }
+
+    .checklist-title{
+      margin: 0 0 10px;
+      opacity: .95;
+    }
+
+    .check-item{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      margin: 10px 0;
+      cursor:pointer;
+      user-select:none;
+    }
+    .check-item input{ transform: scale(1.1); }
+
+    .check-actions{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .output{
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.10);
+      display:none;
+    }
+    .output.show{ display:block; }
+
+    .trail{
+      max-width: 920px;
+      margin: 28px auto 60px;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+    }
+
+    .trail-header h2{
+      margin: 0 0 6px;
+      font-size: 1.35rem;
+    }
+    .trail-subtitle{ margin: 0 0 10px; opacity: .9; }
+
+    .trail-meta{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 8px 0 14px;
+    }
+    .pill{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      font-size: .92rem;
+    }
+
+    .trail-grid{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 720px){
+      .trail-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+
+    .trail-card{
+      position: relative;
+      border-radius: 14px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .trail-img{
+      width: 100%;
+      height: 135px;
+      object-fit: cover;
+      display:block;
+    }
+
+    .trail-label{
+      display:block;
+      padding: 10px 12px;
+      font-weight: 600;
+    }
+
+    .trail-badge{
+      position:absolute;
+      top: 10px;
+      left: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display:grid;
+      place-items:center;
+      font-weight: 800;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.35);
+    }
+
+    /* Estado bloqueado */
+    .trail-card.locked{
+      cursor: not-allowed;
+      opacity: .85;
+    }
+    .trail-card.locked .trail-img{
+      filter: blur(10px) grayscale(1);
+      transform: scale(1.03);
+    }
+    .trail-card.locked::after{
+      content: "🔒 Bloqueado";
+      position:absolute;
+      inset: 0;
+      display:grid;
+      place-items:center;
+      font-weight: 800;
+      letter-spacing: .2px;
+      background: rgba(0,0,0,.35);
+    }
+
+    /* Modal */
+    .trail-modal{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      padding: 18px;
+      z-index: 9999;
+    }
+    .trail-modal.show{ display:grid; place-items:center; }
+
+    .trail-modal-content{
+      position: relative;
+      width: min(880px, 100%);
+      border-radius: 16px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+    }
+    .trail-modal-content img{
+      width:100%;
+      max-height: 72vh;
+      object-fit: contain;
+      background: rgba(0,0,0,.35);
+      display:block;
+    }
+    .trail-modal-content p{
+      margin: 0;
+      padding: 12px 14px;
+      opacity: .95;
+    }
+    .trail-modal-close{
+      position:absolute;
+      top: 10px;
+      right: 10px;
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: inherit;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- áudio em loop, acionado por interação -->
+  <audio id="bg-music" src="./music/hungriahiphop-preta-feat-joao-carlos-martins-77a8c819.mp3" loop></audio>
+  <button id="play-btn">▶️ Tocar Música</button>
+
+  <h1 class="love">Às vezes quando você menos espera vem a vida e te surpreende</h1>
+
+  <!-- seção do contador -->
+  <div class="wrapper">
+    <div class="hero">
+      <div class="heart">💙</div>
+      <h1 id="counter">Carregando...</h1>
+      <p id="message">Carregando...</p>
+    </div>
+  </div>
+
+  <div class="wrapper">
+
+    <!-- ====== SEÇÃO 2 MESES (COLAPSÁVEL) ====== -->
+    <details class="accordion" id="acc-two-months">
+      <summary>
+        <span>✨ 2 meses</span>
+        <span class="chev">▸</span>
+      </summary>
+      <div class="accordion-content">
+        <!-- trilha de fotos -->
+        <div class="timeline">
+          <div class="timeline-item">
+            <h1 class="caption">Mas obviamente tivemos que ter um começo e aqui temos a trilha desse começo</h1>
+          </div>
+          <!-- 1º encontro -->
+          <div class="timeline-item">
+            <div class="image-container">
+              <img src="./images/e19b8a8bf6703b0869eb70a82231cfcf.jpg" alt="Nosso primeiro encontro"/>
+            </div>
+            <p class="caption">Nós em nosso primeiro encontro</p>
+          </div>
+          <!-- legenda entre 1ª e 2ª foto -->
+          <div class="timeline-item">
+            <p class="caption">“Por um momento eu quis te estrangular de tantas desculpas, mas aí veio…”</p>
+          </div>
+          <!-- momentos marcantes -->
+          <div class="timeline-item">
+            <div class="image-container">
+              <img src="./images/IMG-20250625-WA0005.jpg" alt="Momentos marcantes"/>
+            </div>
+            <p class="caption">Nossos momentos marcantes</p>
+          </div>
+          <!-- rotina -->
+          <div class="timeline-item">
+            <p class="caption">“Do nada comecei a fazer parte da tua rotina”</p>
+          </div>
+          <!-- primeiro mês -->
+          <div class="timeline-item">
+            <div class="image-container">
+              <img src="./images/20250705_220219(1).jpg" alt="Nosso primeiro mês"/>
+            </div>
+            <p class="caption">Chegou o nosso primeiro mês</p>
+          </div>
+          <!-- vídeo de covers -->
+          <div class="timeline-item">
+            <div class="image-container">
+              <video controls>
+                <source src="./video/20250706_180941_1_1_1 (1).mp4" type="video/mp4">
+                Seu navegador não suporta vídeo.
+              </video>
+            </div>
+            <p class="caption">Nossos covers juntos 😂🎤</p>
+          </div>
+          <!-- praia -->
+          <div class="timeline-item">
+            <div class="image-container">
+              <img src="./images/20250716_161809.jpg" alt="Passeio à praia"/>
+            </div>
+            <p class="caption">Finalmente te levei à praia 🏖️</p>
+          </div>
+        </div>
+
+        <!-- carrossel final -->
+        <div class="carousel">
+          <h2> E continuamos escrevendo nossa história…</h2>
+          <div class="carousel-track">
+            <div class="slide"><img src="./images/20250623_200023.jpg" alt="23/06/25"/></div>
+            <div class="slide"><img src="./images/20250624_183546(1).jpg" alt="24/06/25"/></div>
+            <div class="slide"><img src="./images/20250629_202254.jpg" alt="29/06/25"/></div>
+            <div class="slide"><img src="./images/20250704_195513.jpg" alt="04/07/25"/></div>
+            <div class="slide"><img src="./images/20250705_191530.jpg" alt="05/07/25"/></div>
+            <div class="slide"><img src="./images/20250705_220549.jpg" alt="05/07/25"/></div>
+            <div class="slide"><img src="./images/20250716_164040.jpg" alt="16/07/25"/></div>
+            <div class="slide"><img src="./images/20250719_162935.jpg" alt="19/07/25"/></div>
+            <div class="slide"><img src="./images/20250719_163630.jpg" alt="19/07/25"/></div>
+            <div class="slide"><img src="./images/IMG_20250725_204801_957.webp" alt="25/07/25"/></div>
+          </div>
+        </div>
+
+        <h2>E ainda temos muitos capítulos para adicionar nessa trilha</h2>
+        <h3>Histórias para contar, rir e sonhar</h3>
+        <h3>e acima de tudo muito tempo para poder te amar e fazer feliz</h3>
+        <h2 class="love">Te amo mil milhões meu amor 💙</h2>
+
+      </div>
+    </details>
+
+    <!-- ====== SEÇÃO 3 MESES (COLAPSÁVEL) ====== -->
+    <details class="accordion" id="acc-three-months">
+      <summary>
+        <span>💙 3 meses</span>
+        <span class="chev">▸</span>
+      </summary>
+      <div class="accordion-content">
+
+        <!-- ======== BLOCO 3 MESES ======== -->
+        <section class="tm-section" id="tm-three-months">
+          <div class="tm-type" id="tm-typewriter"></div>
+
+          <p class="tm-question">Promete mais 3, 6, 12 meses (e uma vida inteira) comigo? 🥹💙</p>
+
+          <div class="tm-actions" id="tm-actions">
+            <button class="tm-btn tm-btn-yes" id="tm-yes">Sim 💙</button>
+            <button class="tm-btn tm-btn-no" id="tm-no">Não 😜</button>
+          </div>
+
+          <!-- Envelope + carta -->
+          <div class="tm-envelope-wrap" id="tm-envelope-wrap">
+            <div class="tm-envelope" id="tm-envelope">
+              <button class="tm-close" id="tm-close" aria-label="Fechar carta">✖ Fechar</button>
+              <div class="tm-env-back"></div>
+              <div class="tm-env-flap"></div>
+              <div class="tm-letter">
+                <div class="tm-letter-content">
+                  <div class="tm-letter-title">Carta para o nosso 3º mês ✨</div>
+                  <div id="tm-letter-text" class="tm-letter-typed"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="tm-section" id="reasons">
+          <h1>10 razões pelas quais te amo</h1>
+          <ul class="reasons-list" id="reasons-list"></ul>
+          <button class="tm-btn" id="reasons-next">Mostrar próxima 💌</button>
+        </section>
+
+        <section class="bouquet-wrap">
+          <h2 class="bouquet-title">Um buquê só seu 💐 (toque para abrir)</h2>
+          <h3 class="tm-question">Tive a ideia de um buquê por que foi um dos primeiros presentes que te dei e e não consigo me esquecer da tua felicidade e do que você falou quando recebeu, que aquilo era um dos seus sonhos, poder receber flores e sinceramente ali foi um dos momentos que me deixaram mais feliz e por isso que o buque sempre tem tanto significado, por isso que eu quis fazer algo especial para você. o motivo do buque eterni de lego também e agora um que nunca vai poder ser apagado</h3>
+
+          <div id="bouquet" class="bouquet" aria-label="Buquê animado" title="Clique/Toque para abrir">
+            <svg viewBox="0 0 400 420" role="img" aria-labelledby="bouquetTitle">
+              <title id="bouquetTitle">Buquê de flores animado</title>
+
+              <!-- cone de papel -->
+              <path class="cone" d="M200,380 L120,300 Q200,260 280,300 Z"/>
+              <!-- fita -->
+              <path class="ribbon" d="M190 310 q10 10 20 0 q9 -8 22 -4 q-11 16 -42 16 q-24 0 -36 -8 q15 -6 36 -4z"/>
+
+              <!-- caules (curvos) -->
+              <g class="stems">
+                <path class="stem" data-len d="M200 318 Q160 250 140 182" style="--delay:.05s"/>
+                <path class="stem" data-len d="M200 318 Q176 238 180 158" style="--delay:.10s"/>
+                <path class="stem" data-len d="M200 318 Q200 230 200 140" style="--delay:.15s"/>
+                <path class="stem" data-len d="M200 318 Q220 236 220 150" style="--delay:.20s"/>
+                <path class="stem" data-len d="M200 318 Q240 250 260 180" style="--delay:.25s"/>
+                <path class="stem" data-len d="M200 318 Q150 246 120 210" style="--delay:.30s"/>
+                <path class="stem" data-len d="M200 318 Q250 246 280 210" style="--delay:.35s"/>
+              </g>
+
+              <!-- folhas -->
+              <ellipse class="leaf" cx="168" cy="230" rx="10" ry="5" transform="rotate(-30 168 230)" style="--delay:.55s"/>
+              <ellipse class="leaf" cx="232" cy="230" rx="10" ry="5" transform="rotate(30 232 230)"  style="--delay:.60s"/>
+              <ellipse class="leaf" cx="150" cy="205" rx="9"  ry="5" transform="rotate(-24 150 205)" style="--delay:.62s"/>
+              <ellipse class="leaf" cx="250" cy="205" rx="9"  ry="5" transform="rotate(24 250 205)"  style="--delay:.64s"/>
+              <path class="leaf" d="M196 318 q6 -10 12 0 q-6 10 -12 0z" style="--delay:.66s"/>
+
+              <!-- cabeça do buquê (balanço) -->
+              <g class="head">
+                <!-- marcadores de flores: o JS gera pétalas e miolo -->
+                <g class="flower" data-cx="140" data-cy="180" data-color="#ff7aa2" style="--delay:.85s"></g>
+                <g class="flower" data-cx="180" data-cy="160" data-color="#f7b267" style="--delay:.95s"></g>
+                <g class="flower" data-cx="200" data-cy="140" data-color="#b892ff" style="--delay:1.05s"></g>
+                <g class="flower" data-cx="220" data-cy="150" data-color="#63d2ff" style="--delay:1.15s"></g>
+                <g class="flower" data-cx="260" data-cy="180" data-color="#ffa3a3" style="--delay:1.25s"></g>
+                <g class="flower" data-cx="120" data-cy="210" data-color="#ffd166" style="--delay:1.35s"></g>
+                <g class="flower" data-cx="280" data-cy="210" data-color="#9ae66e" style="--delay:1.45s"></g>
+              </g>
+            </svg>
+          </div>
+
+          <button class="tm-btn" id="bouquet-toggle">Abrir buquê 💐</button>
+        </section>
+    </div>
+    </details> 
+    <!-- ====== SEÇÃO 4 MESES (COLAPSÁVEL) ====== -->
+    <details class="accordion" id="acc-four-months">
+      <summary>
+        <span>🧸💍 4 meses</span>
+        <span class="chev">▸</span>
+      </summary>
+      <div class="accordion-content">
+
+        <section class="tm-section" id="tm-four-months">
+          <div class="tm-type">Nosso 4º mês chegou com um joguinho! 💌</div>
+          <p class="tm-question">Responda as 9 perguntinhas. Acertando todas, o texto escondido se revela. 😍</p>
+
+          <div class="puzzle-wrap">
+            <!-- Tabuleiro: o texto fica por baixo, as peças por cima -->
+            <div id="puzzle-board" class="puzzle-board">
+              <div class="puzzle-secret" id="puzzle-secret">
+                <h3 class="tm-letter-title" style="margin-bottom:8px;">Uma mensagem especial pra você 💙</h3>
+                <p>
+                  Então amor chegamos aos 4 meses, e eu só tenho a agradecer por cada momento que passamos juntos, por cada sorriso que você me deu, por cada abraço que me confortou e por cada palavra de carinho que me fez sentir especial.
+                  Sabe as vezes reclamo do teu jeito que as vezes parece uma cavala ou muito fria em certas ocasiões, mas a verdade é que eu amo cada pedacinho de você, até mesmo os defeitos que você acha que tem, eu amo tudo em você e isso me faz muito valorizar os momentos que eu tenho cntg princialmente por que tu só é uma pedra de gelo no whats.
+                  Você é a pessoa que me faz sentir vivo, que me inspira a ser melhor e que me completa de uma forma que eu nunca imaginei ser possível.
+                  Eu amo o teu sorriso, o teu olhar, o teu jeito de ser, a tua voz, o teu cheiro, o teu toque, o teu abraço, o teu beijo.
+                  Amo tudo em você, e eu quero passar o resto da minha vida ao teu lado, construindo uma história juntos, cheia de amor, respeito, cumplicidade e felicidade.
+                  Obrigado por ser minha namorada, minha amiga, minha confidente e meu amor.
+                  Que nossos próximos meses tragam ainda mais risadas, planos, abraços demorados e a paz que só existe no teu abraço.
+                  Te amo mil milhões — hoje, amanhã e sempre. ✨
+                </p>
+              </div>
+
+              <div id="puzzle-grid" class="puzzle-grid">
+                <!-- 9 peças (marcadores), o JS liga cada uma a uma pergunta -->
+                <div class="puzzle-tile" data-idx="0">1</div>
+                <div class="puzzle-tile" data-idx="1">2</div>
+                <div class="puzzle-tile" data-idx="2">3</div>
+                <div class="puzzle-tile" data-idx="3">4</div>
+                <div class="puzzle-tile" data-idx="4">5</div>
+                <div class="puzzle-tile" data-idx="5">6</div>
+                <div class="puzzle-tile" data-idx="6">7</div>
+                <div class="puzzle-tile" data-idx="7">8</div>
+                <div class="puzzle-tile" data-idx="8">9</div>
+              </div>
+            </div>
+
+            <div class="puzzle-progress" id="puzzle-progress">Progresso: 0 / 9</div>
+            <button class="tm-btn" id="puzzle-reset" style="margin-top:8px;">Resetar quebra-cabeça ↺</button>
+          </div>
+        </section>
+        <section class="tm-section pair-section" id="rb-puzzle">
+          <div class="tm-type">Nosso mini-puzzle: a aliança e o ursinho 🧸💍</div>
+          <p class="tm-question pair-text">Duas peças diferentes… que fazem sentido quando se encontram. Vamos juntar?</p>
+
+          <div class="pair-wrap" id="rbWrap">
+            <div class="pair-stage">
+              <div class="spark" id="rbSpark">✨</div>
+
+              <!-- SVG: duas peças que se encaixam -->
+              <svg viewBox="0 0 800 360" aria-hidden="true">
+                <defs>
+                  <!-- fundos -->
+                  <linearGradient id="bgLeft" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#e6f1ff"/>
+                    <stop offset="100%" stop-color="#cfe2ff"/>
+                  </linearGradient>
+                  <linearGradient id="bgRight" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#ffe1ea"/>
+                    <stop offset="100%" stop-color="#ffd1dd"/>
+                  </linearGradient>
+
+                  <!-- “meio” do encaixe -->
+                  <circle id="nub" cx="400" cy="180" r="34"/>
+
+                  <!-- máscara para cavidade da peça da direita (retângulo – círculo) -->
+                  <mask id="rightHole" maskUnits="userSpaceOnUse">
+                    <rect x="390" y="20" width="390" height="320" rx="18" ry="18" fill="white"/>
+                    <use href="#nub" fill="black"/>
+                  </mask>
+
+                  <!-- clip para deixar a aba da peça esquerda aparecer um pouco para a direita -->
+                  <clipPath id="leftClip">
+                    <rect x="20" y="20" width="420" height="320" rx="18" ry="18"/>
+                  </clipPath>
+
+                  <!-- ouro branco -->
+                  <linearGradient id="whiteGold" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#f4f6f8"/>
+                    <stop offset="60%" stop-color="#d8dde3"/>
+                    <stop offset="100%" stop-color="#c7ced6"/>
+                  </linearGradient>
+                  <linearGradient id="whiteGoldEdge" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="100%" stop-color="#bfc6cf"/>
+                  </linearGradient>
+
+                  <!-- safira -->
+                  <radialGradient id="sapphire" cx="50%" cy="45%" r="65%">
+                    <stop offset="0%" stop-color="#51c0ff"/>
+                    <stop offset="55%" stop-color="#1f6ad3"/>
+                    <stop offset="100%" stop-color="#0a3c8f"/>
+                  </radialGradient>
+
+                  <!-- plush do urso -->
+                  <linearGradient id="plush" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%"  stop-color="#ffb8c6"/>
+                    <stop offset="100%" stop-color="#ff8aa2"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- ===== PEÇA ESQUERDA (com “aba” que entra na direita) ===== -->
+                <g class="piece left" clip-path="url(#leftClip)">
+                  <!-- base -->
+                  <rect x="20" y="20" width="380" height="320" rx="18" ry="18" fill="url(#bgLeft)" stroke="rgba(0,0,0,.18)" stroke-width="2"/>
+                  <!-- a própria “aba” (união visual) -->
+                  <use href="#nub" fill="url(#bgLeft)" stroke="rgba(0,0,0,.18)" stroke-width="2"/>
+
+                  <!-- aliança (ouro branco com safira) -->
+                  <g transform="translate(300,194)">
+                    <circle r="76" fill="none" stroke="url(#whiteGold)" stroke-width="24"/>
+                    <circle r="76" fill="none" stroke="url(#whiteGoldEdge)" stroke-width="5" opacity=".6"/>
+                    <!-- chaton + gema -->
+                    <g transform="translate(0,-70)">
+                      <rect x="-16" y="-10" width="32" height="18" rx="4" ry="4" fill="url(#whiteGold)" stroke="#aeb6c2" stroke-width="1.6"/>
+                      <circle r="13" fill="url(#sapphire)" stroke="#0a3c8f" stroke-width="2"/>
+                      <path d="M-6 -6 q4 -4 10 -6" fill="none" stroke="#aee1ff" stroke-width="2" opacity=".9"/>
+                    </g>
+                  </g>
+                </g>
+
+                <!-- ===== PEÇA DIREITA (com cavidade) ===== -->
+                <g class="piece right">
+                  <rect x="390" y="20" width="390" height="320" rx="18" ry="18"
+                        fill="url(#bgRight)" stroke="rgba(0,0,0,.18)" stroke-width="2" mask="url(#rightHole)"/>
+
+                  <!-- ursinho – centrado na peça -->
+                  <g transform="translate(585,210)">
+                    <!-- CORPO (desenha primeiro) -->
+                    <ellipse cx="0" cy="18" rx="66" ry="78" fill="url(#plush)" stroke="#c86a78" stroke-width="4"/>
+                    <ellipse cx="0" cy="26" rx="34" ry="40" fill="#ffd9de" opacity=".9"/>
+
+                    <!-- BRAÇOS -->
+                    <ellipse cx="-50" cy="6" rx="20" ry="32" fill="url(#plush)" stroke="#c86a78" stroke-width="4"/>
+                    <ellipse cx=" 50" cy="6" rx="20" ry="32" fill="url(#plush)" stroke="#c86a78" stroke-width="4"/>
+
+                    <!-- PÉS -->
+                    <ellipse cx="-30" cy="74" rx="20" ry="14" fill="#ffd9de" stroke="#c86a78" stroke-width="3"/>
+                    <ellipse cx=" 30" cy="74" rx="20" ry="14" fill="#ffd9de" stroke="#c86a78" stroke-width="3"/>
+
+                    <!-- ORELHAS (atrás da cabeça, mas antes de desenhá-la) -->
+                    <circle cx="-30" cy="-90" r="22" fill="url(#plush)" stroke="#c86a78" stroke-width="4"/>
+                    <circle cx=" 30" cy="-90" r="22" fill="url(#plush)" stroke="#c86a78" stroke-width="4"/>
+
+                    <!-- CABEÇA (por cima de tudo) -->
+                    <circle cy="-50" r="52" fill="url(#plush)" stroke="#c86a78" stroke-width="4"/>
+                    <!-- ROSTO -->
+                    <circle cx="-18" cy="-52" r="4.5" fill="#2b2b2b"/>
+                    <circle cx=" 18" cy="-52" r="4.5" fill="#2b2b2b"/>
+                    <ellipse cx="0" cy="-38" rx="22" ry="16" fill="#ffd9de" stroke="#c86a78" stroke-width="3"/>
+                    <circle  cx="0" cy="-38" r="5" fill="#8a2c3a"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <button class="tm-btn" id="rbBtn">Juntar ✨</button>
+          
+          <p class="pair-after ring-bear-text" id="rbText">
+            A aliança e o ursinho de pelucia.
+            Confesso que quando te perguntei sobre quais objetos representavam cada um de nós fiquei surpreso com a tua resposta, como sempre a primeira coisa que veio na minha cabeça foi por que uma alinça e por que um urso de pelucia?.
+            Até você me explicar o motivo, que a aliança representa o compromisso, o amor e a união, e o urso de pelúcia representa o conforto, o aconchego e a amizade.
+            e bem juntando essas duas partes não tenho duvidas que realmente nos representamos perfeitamente, por que eu vejo em você tudo isso que a aliança representa e você vê em mim tudo isso que o ursinho representa.
+            E é por isso que eu acredito que juntos somos mais fortes, mais felizes e mais completos.
+            Até por que quando o mundo tá desabando eu sei que posso contar com você para me apoiar e me fazer sorrir, por que você sempre vai ser o meu lugar de paz nesse mundo caótico e louco.
+          </p>
+        </section>
+        <section class="tm-section future-section" id="future-letter">
+          <div class="tm-type">Carta ao futuro ✉️</div>
+          <p class="tm-question">
+            Um lembrete doce de que o que planejamos hoje nos empurra para o amanhã. Abra a carta…
+          </p>
+
+          <div class="fe-wrap">
+            <div class="fe-envelope" id="fe-envelope" role="button" aria-label="Abrir carta ao futuro">
+              <button class="fe-close" id="fe-close" aria-label="Guardar carta" style="display:none;">✖ Guardar</button>
+              <div class="fe-back"></div>
+              <div class="fe-flap"></div>
+              <div class="fe-letter">
+                <div class="fe-letter-content">
+                  <div class="fe-title">Para nós, de hoje para o amanhã 💙</div>
+                  <div id="fe-typed" class="fe-typed"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="tm-btn" id="fe-open">Abrir carta ✨</button>
+          <p class="fe-note">Toque no envelope ou no botão para abrir. A mensagem será “escrita” na hora.</p>
+        </section>
+
+      </div>
+    </details>
+
+    <!-- Modal simples para perguntas -->
+    <div class="qa-backdrop" id="qa-backdrop" aria-hidden="true">
+      <div class="qa-modal" role="dialog" aria-modal="true" aria-labelledby="qa-title">
+        <div class="qa-header">
+          <strong id="qa-title">Pergunta</strong>
+          <button class="qa-btn ghost" id="qa-close" aria-label="Fechar">✖</button>
+        </div>
+        <div class="qa-body">
+          <p id="qa-question">...</p>
+          <input id="qa-input" class="qa-input" type="text" placeholder="Sua resposta" autocomplete="off"/>
+          <div id="qa-options" class="qa-options" style="display:none;"></div>
+          <div id="qa-error" class="qa-error"></div>
+        </div>
+        <div class="qa-actions">
+          <button class="qa-btn ghost" id="qa-cancel">Cancelar</button>
+          <button class="qa-btn primary" id="qa-submit">Responder</button>
+        </div>
+      </div>
+    </div>
+
+    <details class="accordion" id="acc-five-months">
+    <summary>
+      <span>🧩💙 5 meses</span>
+      <span class="chev">▸</span>
+    </summary>
+    <div class="accordion-content">
+      <section class="tm-section" id="tm-five-months">
+        <div class="tm-type">Nosso 5º mês começou com um joguinho novo! 🧩</div>
+        <p class="tm-question">Monte o quebra-cabeça usando uma foto nossa. Você pode escolher a dificuldade ou trocar a imagem.</p>
+
+        <div class="jigsaw-wrap">
+          <div class="jigsaw-panel">
+            <div class="jigsaw-preview">
+              <span>Prévia:</span>
+              <img id="jg-preview" src="./images/puzzle-5m.jpg" alt="Prévia da foto do quebra-cabeça">
+            </div>
+
+            <div style="display:flex; gap:8px; align-items:center;">
+              <label for="jg-size">Dificuldade:</label>
+              <select id="jg-size" class="tm-btn" style="padding:8px 12px">
+                <option value="3">Fácil (3×3)</option>
+                <option value="4" selected>Médio (4×4)</option>
+                <option value="5">Desafio (5×5)</option>
+              </select>
+              <button class="tm-btn" id="jg-shuffle">Embaralhar ↻</button>
+
+              <label class="jig-file-label" for="jg-file">Trocar foto</label>
+              <input id="jg-file" class="jig-file" type="file" accept="image/*">
+            </div>
+          </div>
+
+          <div id="jigsaw-board" class="jigsaw-board" aria-label="Tabuleiro do quebra-cabeça"></div>
+          <div class="jigsaw-stats" id="jigsaw-stats">Movimentos: 0 • Tempo: 00:00</div>
+        </div>
+
+        <p class="tm-question" style="margin-top:12px;">
+          Dica: toque/click em duas peças para trocá-las. Quando terminar, tem confete 💙
+        </p>
+      </section>
+      <section class="tm-section" id="sky-born">
+        <div class="tm-type">Céu de Recife — 14 de agosto de 2001 🌙</div>
+        <p class="tm-question">Assim estava o céu na noite em que você nasceu — e o Leão brilhava sobre Recife 💙</p>
+
+        <div class="stars-wrap">
+          <div class="stars-scene">
+            <svg class="stars-svg" viewBox="0 0 800 500" aria-label="Céu de Recife 14/08/2001">
+              <!-- fundo noturno -->
+              <rect width="800" height="500" fill="url(#gradNight)" />
+              <defs>
+                <radialGradient id="gradNight" cx="50%" cy="40%" r="70%">
+                  <stop offset="0%" stop-color="#0d1b3a"/>
+                  <stop offset="100%" stop-color="#01060f"/>
+                </radialGradient>
+              </defs>
+
+              <!-- LUA MINGUANTE -->
+              <g id="leo-moon" transform="translate(650,90)">
+                <circle r="20" fill="#f6f1d5" filter="drop-shadow(0 0 12px rgba(255,255,220,.5))"/>
+                <path d="M10,-20A20,20 0 1,1 10,20A18,18 0 1,0 10,-20Z" fill="#0b1024" opacity=".8"/>
+              </g>
+
+              <!-- estrelas de fundo -->
+              <g id="bg-stars" fill="white" opacity=".35">
+                <circle cx="60" cy="80" r="1.1"/><circle cx="120" cy="130" r="1.4"/><circle cx="210" cy="90" r="1.2"/>
+                <circle cx="330" cy="60" r="1.3"/><circle cx="430" cy="110" r="1.4"/><circle cx="520" cy="80" r="1.5"/>
+                <circle cx="610" cy="120" r="1.2"/><circle cx="740" cy="70" r="1.4"/><circle cx="100" cy="210" r="1.3"/>
+                <circle cx="250" cy="250" r="1.2"/><circle cx="400" cy="260" r="1.4"/><circle cx="550" cy="220" r="1.3"/>
+                <circle cx="700" cy="250" r="1.1"/><circle cx="140" cy="330" r="1.3"/><circle cx="280" cy="370" r="1.5"/>
+                <circle cx="430" cy="350" r="1.4"/><circle cx="560" cy="360" r="1.2"/><circle cx="680" cy="380" r="1.3"/>
+                <circle cx="750" cy="330" r="1.2"/>
+              </g>
+
+              <!-- constelação Leão (linha acompanha o brilho) -->
+              <polyline id="leo-const"
+                points="200,250 260,190 340,170 420,150 480,180 560,200 640,240"
+                fill="none"/>
+
+              <!-- estrelas principais de Leão -->
+              <g id="leo-stars" fill="#aee1ff">
+                <circle cx="200" cy="250" r="6"/><!-- Regulus -->
+                <circle cx="260" cy="190" r="5"/><!-- Algieba -->
+                <circle cx="340" cy="170" r="4.5"/><!-- Adhafera -->
+                <circle cx="420" cy="150" r="4"/><!-- Ras Elased -->
+                <circle cx="480" cy="180" r="5"/><!-- Zosma -->
+                <circle cx="560" cy="200" r="4.8"/><!-- Chertan -->
+                <circle cx="640" cy="240" r="5"/><!-- Denebola -->
+              </g>
+
+              <!-- rótulo -->
+              <text x="480" y="280" fill="rgba(255,255,255,.85)" font-size="18"
+                    font-family="Rethink Sans, sans-serif" letter-spacing="2">LEÃO ♌︎</text>
+            </svg>
+          </div>
+
+          <!-- player da trilha "Sinais" -->
+          <button class="tm-btn" id="sky-audio-btn" aria-pressed="false">▶️ Tocar “Sinais”</button>
+          <audio id="sky-audio" src="./music/Luan_Santana_-_Sinais_Znaki_(mp3.pm).mp3" preload="auto" loop style="display:none"></audio>
+
+          <!-- mensagem -->
+          <div class="stars-message show" style="margin-top:16px;">
+            <div class="tm-letter-title" style="margin-bottom:4px;">
+              O dia em que o mundo sorriu de um novo jeito
+            </div>
+            <div class="stars-type" style="border:none;">
+              Naquela noite de 14 de agosto, o céu guardava segredos que só o tempo contaria.<br>
+              A Lua se inclinava sobre Recife, testemunha do instante em que o universo resolveu
+              desenhar você no mundo — o meu sinal mais claro de que nada é por acaso.<br><br>
+
+              Desde então, é como se o destino tivesse nos sussurrado baixinho:
+              “é aqui, é agora”. E mesmo sem entender, meu coração entendeu primeiro —
+              porque quando é pra ser, o tempo se curva, o vento muda e tudo se alinha.<br><br>
+
+              No dia 11 de junho, a vida cruzou nossos caminhos e eu soube.
+              Cada gesto seu, cada olhar, parecia escrito nas estrelas desde sempre.
+              E hoje eu percebo que não foi sorte: foi propósito, foi encontro, foi milagre.<br><br>
+
+              Se o amor tem um idioma próprio, o meu aprendeu a falar o seu nome.
+              Porque você é o meu sinal — aquele que veio pra ficar,
+              que acende o céu e me lembra todos os dias o quanto te amo. 💙
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="tm-section" id="five-frames">
+        <div class="tm-type">5 frames de nós dois 📷</div>
+        <p class="tm-question">Um momento por mês — clique para ver maior 💙</p>
+
+        <div class="five-grid">
+          <!-- 1º mês -->
+          <figure class="five-card polaroid" data-caption="1º mês — Nosso primeiro oi virou rotina. 💙" data-date="06/07/2025" data-src="./images/20250705_220219(1).jpg">
+            <img src="./images/20250705_220219(1).jpg" alt="1º mês">
+            <small>1º mês — primeiro mês</small>
+            <span class="five-badge">1</span>
+          </figure>
+
+          <!-- 2º mês -->
+          <figure class="five-card polaroid" data-caption="2º mês — veio aquela fase que pareciamos uma avião decolando rápido e constante. " data-date="06/08/2025" data-src="./images/20250803_165531.jpg">
+            <img src="./images/20250803_165531.jpg" alt="2º mês">
+            <small>2º mês — avião</small>
+            <span class="five-badge">2</span>
+          </figure>
+
+          <!-- 3º mês -->
+          <figure class="five-card polaroid" data-caption="3º mês — veio a fase do conhecimento . 🎤" data-date="06/09/2025" data-src="./images/20250831_195649.jpg">
+            <img src="./images/20250831_195649.jpg" alt="3º mês">
+            <small>3º mês — conhecimento</small>
+            <span class="five-badge">3</span>
+          </figure>
+
+          <!-- 4º mês -->
+          <figure class="five-card polaroid" data-caption="4º mês — aqui aconteceram altas emoções inclusive no fim desse ciclo conheceu meus pais. ✨" data-date="06/10/2025" data-src="./images/20250906_204300.jpg">
+            <img src="./images/20250906_204300.jpg" alt="4º mês">
+            <small>4º mês — novas conexões</small>
+            <span class="five-badge">4</span>
+          </figure>
+
+          <!-- 5º mês -->
+          <figure class="five-card polaroid" data-caption="5º mês — aqui e um novo começo e quase chegando na metade do nosso primeiro ano. 🧩" data-date="06/11/2025" data-src="./images/puzzle-5m.jpg">
+            <img src="./images/puzzle-5m.jpg" alt="5º mês">
+            <small>5º mês — uma historia sendo escrita </small>
+            <span class="five-badge">5</span>
+          </figure>
+        </div>
+      </section>
+
+      <!-- lightbox -->
+      <div id="five-lightbox" class="five-lightbox" aria-hidden="true">
+        <button class="five-close" aria-label="Fechar">✖</button>
+        <img id="five-lg-img" src="" alt="">
+        <div class="five-meta">
+          <strong id="five-lg-date"></strong>
+          <p id="five-lg-cap"></p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ====== SEÇÃO 6 MESES (COLAPSÁVEL) ====== -->
+  <details class="accordion" id="acc-six-months">
+    <summary>
+      <span>💍💙 6 meses</span>
+      <span class="chev">▸</span>
+    </summary>
+
+    <div class="accordion-content">
+      <section class="sv-section" id="sv-six-months">
+        <div class="sv-type" id="sv-typewriter"></div>
+        <p class="sv-question">
+          Seis meses… e eu ainda escolho você. Abre a carta dos nossos votos? 💙
+        </p>
+
+        <div class="sv-wrap">
+          <div class="sv-envelope" id="sv-envelope" role="button" aria-label="Abrir carta de 6 meses">
+            <button class="sv-close" id="sv-close" aria-label="Guardar carta">✖ Guardar</button>
+            <div class="sv-back"></div>
+            <div class="sv-flap"></div>
+
+            <div class="sv-letter">
+              <div class="sv-letter-content">
+                <div class="sv-title">Nossos votos de 6 meses ✨</div>
+                <div id="sv-typed" class="sv-typed"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sv-actions">
+            <button class="tm-btn" id="sv-open">Abrir carta ✨</button>
+            <button class="tm-btn" id="sv-replay">Reescrever ✍️</button>
+          </div>
+
+          <p style="margin-top:10px; opacity:.9;">
+            Toque no envelope ou use o botão. 💙
+          </p>
+        </div>
+      </section>
+    </div>
+    <section class="qs-section" id="qs-six-months">
+      <h2 class="qs-title">Quem somos agora (antes × depois) 💙</h2>
+      <p class="qs-sub">
+        Seis meses parecem pouco no calendário… mas mudaram muita coisa dentro da gente.
+        Aqui é um retrato simples do que eu era, do que eu virei — e do que você despertou em mim.
+      </p>
+
+      <div class="qs-actions">
+        <button class="tm-btn" id="qs-reveal-all">Revelar “antes” de tudo ✨</button>
+        <button class="tm-btn" id="qs-hide-all">Esconder de novo 🙈</button>
+      </div>
+
+      <div class="qs-grid">
+        <!-- EU -->
+        <article class="qs-card" id="qs-me">
+          <div class="qs-head">
+            <div class="qs-person">EU</div>
+            <button class="qs-pill" id="qs-toggle-me" aria-pressed="false">Revelar antes</button>
+          </div>
+
+          <div class="qs-body">
+            <div class="qs-block qs-before">
+              <div class="qs-label">
+                <span>Antes de você</span>
+                <span class="qs-tag">antes</span>
+              </div>
+              <div class="qs-text" id="qs-me-before">
+                Eu andava no automático, rindo por fora e cansando por dentro.
+                Eu parecia forte, mas tinha dias que eu só queria alguém que me entendesse sem exigir explicação.
+                Eu era “eu contra o mundo”, e isso pesa.
+              </div>
+            </div>
+
+            <div class="qs-block qs-after">
+              <div class="qs-label">
+                <span>Depois de você</span>
+                <span class="qs-tag">depois</span>
+              </div>
+              <div class="qs-text" id="qs-me-after">
+                Eu aprendi a voltar pra casa com o coração mais leve.
+                Eu tenho vontade de construir, de planejar, de ser melhor — porque agora faz sentido.
+                Você virou meu lugar seguro: onde eu descanso, respiro e lembro quem eu sou.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- VOCÊ -->
+        <article class="qs-card" id="qs-you">
+          <div class="qs-head">
+            <div class="qs-person">VOCÊ</div>
+            <button class="qs-pill" id="qs-toggle-you" aria-pressed="false">Revelar antes</button>
+          </div>
+
+          <div class="qs-body">
+            <div class="qs-block qs-before">
+              <div class="qs-label">
+                <span>Antes de nós</span>
+                <span class="qs-tag">antes</span>
+              </div>
+              <div class="qs-text" id="qs-you-before">
+                Você carregava o mundo no peito e fingia que não doía.
+                Você se protegia com silêncio, com força, com “tá tudo bem”.
+                Você parecia distante… mas era só cuidado com o próprio coração.
+              </div>
+            </div>
+
+            <div class="qs-block qs-after">
+              <div class="qs-label">
+                <span>Depois de nós</span>
+                <span class="qs-tag">depois</span>
+              </div>
+              <div class="qs-text" id="qs-you-after">
+                Você ganhou um lugar onde não precisa ser dura o tempo todo.
+                Você pode ser você — com calma, com verdade, do seu jeito.
+                E mesmo quando o mundo aperta, eu vejo: você ainda escolhe amar.
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p class="tm-question" style="margin-top:14px;">
+        E se alguém perguntar o que mudou… eu vou dizer: <b>mudou tudo.</b> 💙
+      </p>
+    </section>
+    <section class="ud-section" id="ud-six-months">
+      <h2 class="ud-title">O que eu nunca te disse 🕯️</h2>
+      <p class="ud-sub">
+        Tem coisas que não viram conversa… mas moram aqui dentro.
+        Abre um por vez — só nós dois entendendo o nosso idioma. 💙
+      </p>
+
+      <div class="ud-grid" id="ud-grid">
+        <article class="ud-card" data-idx="0" role="button" aria-label="Abrir mensagem 1">
+          <div class="ud-head">
+            <div class="ud-kicker">1 — Quando tive medo</div>
+            <div class="ud-lock">🔒</div>
+          </div>
+          <div class="ud-body">
+            <div class="ud-preview">“Nem todo medo é fraqueza…”</div>
+            <div class="ud-content">
+              <div class="ud-typed" id="ud-typed-0"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ud-card" data-idx="1" role="button" aria-label="Abrir mensagem 2">
+          <div class="ud-head">
+            <div class="ud-kicker">2 — Quando eu quase desisti</div>
+            <div class="ud-lock">🔒</div>
+          </div>
+          <div class="ud-body">
+            <div class="ud-preview">“Teve um dia que eu…”</div>
+            <div class="ud-content">
+              <div class="ud-typed" id="ud-typed-1"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ud-card" data-idx="2" role="button" aria-label="Abrir mensagem 3">
+          <div class="ud-head">
+            <div class="ud-kicker">3 — Quando percebi que era você</div>
+            <div class="ud-lock">🔒</div>
+          </div>
+          <div class="ud-body">
+            <div class="ud-preview">“Não foi num momento grande…”</div>
+            <div class="ud-content">
+              <div class="ud-typed" id="ud-typed-2"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ud-card" data-idx="3" role="button" aria-label="Abrir mensagem 4">
+          <div class="ud-head">
+            <div class="ud-kicker">4 — Quando você me salvou sem saber</div>
+            <div class="ud-lock">🔒</div>
+          </div>
+          <div class="ud-body">
+            <div class="ud-preview">“Você fez algo simples…”</div>
+            <div class="ud-content">
+              <div class="ud-typed" id="ud-typed-3"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ud-card" data-idx="4" role="button" aria-label="Abrir mensagem 5">
+          <div class="ud-head">
+            <div class="ud-kicker">5 — Quando pensei no futuro</div>
+            <div class="ud-lock">🔒</div>
+          </div>
+          <div class="ud-body">
+            <div class="ud-preview">“Foi a primeira vez que…”</div>
+            <div class="ud-content">
+              <div class="ud-typed" id="ud-typed-4"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ud-card" data-idx="5" role="button" aria-label="Abrir mensagem 6">
+          <div class="ud-head">
+            <div class="ud-kicker">6 — O que eu nunca te disse</div>
+            <div class="ud-lock">🔒</div>
+          </div>
+          <div class="ud-body">
+            <div class="ud-preview">“Mesmo quando a gente…”</div>
+            <div class="ud-content">
+              <div class="ud-typed" id="ud-typed-5"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="ud-final" id="ud-final">
+        <strong>Se depois de tudo isso você ainda está aqui…</strong>
+        então é amor. 💙
+      </div>
+    </section>
+  </details>
+
+  <!-- ====== SEÇÃO 7 MESES (COLAPSÁVEL) ====== -->
+  <details class="accordion" id="acc-seven-months">
+    <summary>
+      <span>🌊💙 7 meses</span>
+      <span class="chev">▸</span>
+    </summary>
+
+    <div class="accordion-body">
+      <section id="mes-7" class="month-section" aria-labelledby="mes-7-title">
+        <header class="month-header">
+          <h2 id="mes-7-title">🌊💙 7 meses — aprender a amar também é aprender a adaptar</h2>
+          <p class="month-subtitle">
+            Um mês de altos e baixos, mudanças e readaptações — e ainda assim, nós.
+          </p>
+        </header>
+
+        <!-- Texto principal -->
+        <article class="month-text" aria-label="Texto principal do sétimo mês">
+          <p>Sete meses não foram só sorrisos.</p>
+          <p>Foram dias leves, dias intensos e dias que pediram coragem.</p>
+          <p>
+            A primeira metade veio suave, cheia de certezas. Depois, vieram mudanças,
+            desafios e a necessidade de nos adaptarmos mais uma vez.
+          </p>
+          <p>
+            E foi aí que eu entendi: amar não é só quando tudo vai bem, amar é escolher
+            ficar quando tudo pede ajuste.
+          </p>
+          <p>
+            Relacionamento é isso — uma construção viva, feita de diálogo, paciência e
+            vontade de ser feliz juntos.
+          </p>
+          <p>E mesmo nos altos e baixos, eu continuo escolhendo você.</p>
+        </article>
+
+        <!-- Interação 1 -->
+        <section class="interactive-block" aria-label="Interação: Linha do nosso mês">
+          <div class="block-title">
+            <h3>🔹 A linha do nosso mês</h3>
+            <span class="hint">Clique para abrir cada parte</span>
+          </div>
+
+          <div class="month-accordion" role="list">
+            <details class="acc-item" open>
+              <summary class="acc-summary">
+                <span class="badge badge-blue" aria-hidden="true"></span>
+                <span class="acc-title">Antes do dia 22</span>
+              </summary>
+              <div class="acc-content">
+                <p>Foi leve. Foi riso fácil. Foi certeza.</p>
+                <p>A gente estava em sintonia, vivendo o que parecia ser só o começo de algo muito bom.</p>
+              </div>
+            </details>
+
+            <details class="acc-item">
+              <summary class="acc-summary">
+                <span class="badge badge-yellow" aria-hidden="true"></span>
+                <span class="acc-title">Depois do dia 22</span>
+              </summary>
+              <div class="acc-content">
+                <p>Vieram os desafios. Vieram mudanças que não pediram licença.</p>
+                <p>
+                  Tivemos que reaprender, reajustar, respirar fundo e entender que nem
+                  todo amor cresce no conforto, entender a lidar com frustrações, anseios e dúvidas.
+                </p>
+              </div>
+            </details>
+
+            <details class="acc-item">
+              <summary class="acc-summary">
+                <span class="badge badge-heart" aria-hidden="true"></span>
+                <span class="acc-title">O que ficou</span>
+              </summary>
+              <div class="acc-content">
+                <p>Ficou a escolha. Ficou o respeito.</p>
+                <p>
+                  Ficou a vontade de continuar — não porque é fácil, mas porque é verdadeiro, até por que
+                  tudo aquilo que vem fácil, vai fácil. Não estamos hoje aqui por que escolhemos o caminho fácil,
+                  estamos por que acreditamos em algo maior que eu ou você. Acreditamos no nós.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <button class="btn" type="button" data-action="navegar">Seguir navegando 🌊</button>
+        </section>
+
+        <!-- Interação 2 -->
+        <section class="interactive-block" aria-label="Interação: O que esse mês nos ensinou">
+          <div class="block-title">
+            <h3>🔹 O que esse mês nos ensinou</h3>
+            <span class="hint">Clique nos cards para revelar</span>
+          </div>
+
+          <div class="lesson-grid" role="list">
+            <button class="flip-card" type="button" aria-pressed="false">
+              <span class="flip-front">🧩 Conversa</span>
+              <span class="flip-back">Aprendemos a conversar melhor, sem fugir do difícil.</span>
+            </button>
+
+            <button class="flip-card" type="button" aria-pressed="false">
+              <span class="flip-front">🌱 Crescimento</span>
+              <span class="flip-back">Nem todo dia é leve — mas todo dia pode fortalecer.</span>
+            </button>
+
+            <button class="flip-card" type="button" aria-pressed="false">
+              <span class="flip-front">🫶 Escolha</span>
+              <span class="flip-back">A gente escolheu ficar e se ajustar, juntos.</span>
+            </button>
+
+            <button class="flip-card" type="button" aria-pressed="false">
+              <span class="flip-front">🧭 Respeito</span>
+              <span class="flip-back">Respeitar tempo, limite e sentimento também é amor.</span>
+            </button>
+          </div>
+
+          <div class="checklist">
+            <p class="checklist-title">Marca o que você sente que foi verdade nesse mês:</p>
+
+            <label class="check-item">
+              <input type="checkbox" value="A gente se ouviu mais" />
+              <span>A gente se ouviu mais</span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" value="A gente se adaptou" />
+              <span>A gente se adaptou</span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" value="A gente ficou junto mesmo no caos" />
+              <span>A gente ficou junto mesmo no caos</span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" value="A gente saiu mais forte" />
+              <span>A gente saiu mais forte</span>
+            </label>
+
+            <div class="check-actions">
+              <button class="btn btn-secondary" type="button" data-action="resumo">Gerar resumo 💙</button>
+              <button class="btn btn-ghost" type="button" data-action="limpar">Limpar</button>
+            </div>
+
+            <div class="output" data-output="resumo" aria-live="polite"></div>
+          </div>
+        </section>
+      </section>
+    </div>
+  </details>
+  </section>
+
+  <details class="accordion" id="acc-eight-months">
+    <summary>
+      <span>🎆💙 8 meses</span>
+      <span class="chev">▸</span>
+    </summary>
+
+    <div class="accordion-body">
+      <section id="mes-8" class="month-section" aria-labelledby="mes-8-title">
+        <header class="month-header">
+          <h2 id="mes-8-title">🎆💙 8 meses — janeiro foi a prévia do nosso “todos os dias”</h2>
+          <p class="month-subtitle">
+            Nossa primeira viagem juntos, a rotina compartilhada e a sensação de “vida de casados”.
+          </p>
+        </header>
+
+        <!-- Texto principal (você pode manter o seu antigo se quiser) -->
+        <article class="month-text" aria-label="Texto principal do oitavo mês">
+          <p>Janeiro não foi só um mês bonito.</p>
+          <p>Foi um mês real — de convivência, de passar o dia inteiro juntos e de ver, na prática, como a gente funciona.</p>
+          <p>
+            A nossa primeira viagem veio como um atalho: acelerou sentimentos, testou paciência, revelou parceria
+            e confirmou que estar com você no cotidiano é leve.
+          </p>
+          <p>
+            Eu vi um pouco de como seria nossa vida de casados — e, sinceramente, me deu paz.
+            Porque dividir a vida com você não assusta… conforta.
+          </p>
+        </article>
+
+        <!-- Interação 1 (NOVA) -->
+        <section class="interactive-block" aria-label="Interação: Nossa primeira vida juntos">
+          <div class="block-title">
+            <h3>🔹 Nossa primeira vida juntos (versão beta)</h3>
+            <span class="hint">Clique para abrir cada parte</span>
+          </div>
+
+          <div class="month-accordion" role="list">
+            <details class="acc-item" open>
+              <summary class="acc-summary">
+                <span class="badge badge-blue" aria-hidden="true"></span>
+                <span class="acc-title">🏡 Acordar e dormir juntos</span>
+              </summary>
+              <div class="acc-content">
+                <p>Te ter perto no começo e no fim do dia mudou o meu ritmo.</p>
+                <p>Foi como se o meu “lar” tivesse ganhado um sentido novo — e mais calmo.</p>
+              </div>
+            </details>
+
+            <details class="acc-item">
+              <summary class="acc-summary">
+                <span class="badge badge-yellow" aria-hidden="true"></span>
+                <span class="acc-title">🍳 As decisões simples</span>
+              </summary>
+              <div class="acc-content">
+                <p>Comida, horários, planos, imprevistos…</p>
+                <p>Nas pequenas escolhas, eu vi parceria — e vi a gente virando time.</p>
+              </div>
+            </details>
+
+            <details class="acc-item">
+              <summary class="acc-summary">
+                <span class="badge badge-heart" aria-hidden="true"></span>
+                <span class="acc-title">🚗 A primeira viagem juntos</span>
+              </summary>
+              <div class="acc-content">
+                <p>Viajar com você não foi só conhecer um lugar.</p>
+                <p>Foi conhecer um “nós” mais completo: com risos, cansaço, ajustes… e carinho do mesmo jeito.</p>
+              </div>
+            </details>
+
+            <details class="acc-item">
+              <summary class="acc-summary">
+                <span class="badge badge-blue" aria-hidden="true"></span>
+                <span class="acc-title">⏳ O dia inteiro lado a lado</span>
+              </summary>
+              <div class="acc-content">
+                <p>Não foi sobre fazer algo o tempo todo — foi sobre estar.</p>
+                <p>E perceber que até o silêncio com você é confortável.</p>
+              </div>
+            </details>
+          </div>
+
+          <button class="btn" type="button" data-action="navegar">Seguir navegando 🌊</button>
+        </section>
+
+        <!-- Interação 2 (NOVA) -->
+        <section class="interactive-block" aria-label="Interação: Um dia inteiro com você">
+          <div class="block-title">
+            <h3>🔹 Um dia inteiro com você</h3>
+            <span class="hint">Clique para viver cada momento</span>
+          </div>
+
+          <div class="lesson-grid" role="list">
+            <!-- Manhã -->
+            <button class="flip-card" type="button" aria-pressed="false">
+              <span class="flip-front">☀️ Manhã</span>
+              <span class="flip-back">
+                Acordar e te ver ali muda o jeito que o dia começa.  
+                Parece simples, mas dá uma paz que eu não sabia que precisava.
+              </span>
+            </button>
+
+            <button class="flip-card" type="button" aria-pressed="false">
+              <span class="flip-front">🍳 Café / Rotina</span>
+              <span class="flip-back">
+                Entre um “o que a gente vai fazer hoje?” e um detalhe bobo, eu vejo parceria.  
+                Amor também mora nessas pequenas decisões.
+              </span>
+            </button>
+
+            <!-- Tarde -->
+            <button class="flip-card" type="button" aria-pressed="false">
+              <span class="flip-front">🌤️ Tarde</span>
+              <span class="flip-back">
+                Estar com você o dia inteiro não cansa — conforta.  
+                Até quando não acontece nada “grandioso”, eu sinto que é exatamente onde eu queria estar.
+              </span>
+            </button>
+
+            <button class="flip-card" type="button" aria-pressed="false">
+              <span class="flip-front">🧭 No meio do caminho</span>
+              <span class="flip-back">
+                Se muda o plano, a gente se ajusta.  
+                E eu gosto disso: com você, o imprevisto não vira problema… vira história.
+              </span>
+            </button>
+
+            <!-- Noite -->
+            <button class="flip-card" type="button" aria-pressed="false">
+              <span class="flip-front">🌆 Fim de tarde</span>
+              <span class="flip-back">
+                Quando o dia desacelera, fica o que importa: nós.  
+                Conversa solta, riso fácil, e aquele silêncio que não pesa.
+              </span>
+            </button>
+
+            <button class="flip-card" type="button" aria-pressed="false">
+              <span class="flip-front">🌙 Noite</span>
+              <span class="flip-back">
+                No final do dia, eu percebo a melhor parte: continuar sendo “nós”.  
+                Se janeiro foi uma prévia… eu quero viver o resto da vida assim.
+              </span>
+            </button>
+          </div>
+        </section>
+
+      </section>
+    </div>
+  </details>
+
+  </section>
+
+  <section id="photo-trail" class="trail" aria-labelledby="trail-title">
+    <header class="trail-header">
+      <h2 id="trail-title">📸 Trilha até 1 ano</h2>
+      <p class="trail-subtitle">
+        Cada mês, uma lembrança. As próximas fotos liberam com o tempo… até completar 1 ano. 💙
+      </p>
+      <div class="trail-meta">
+        <span class="pill" id="trail-progress">Carregando…</span>
+        <span class="pill" id="trail-countdown">Carregando…</span>
+      </div>
+    </header>
+
+    <div class="trail-grid" id="trail-grid" role="list" aria-label="Trilha de fotos por mês">
+      <!-- 12 slots -->
+      <button class="trail-card" data-month="1" type="button">
+        <span class="trail-badge">1</span>
+        <img class="trail-img" src="images/e19b8a8bf6703b0869eb70a82231cfcf.jpg" alt="17/06/2025">
+        <span class="trail-label">Mês 1</span>
+      </button>
+
+      <button class="trail-card" data-month="2" type="button">
+        <span class="trail-badge">2</span>
+        <img class="trail-img" src="images/20250705_220219(1).jpg" alt="">
+        <span class="trail-label">Mês 2</span>
+      </button>
+
+      <button class="trail-card" data-month="3" type="button">
+        <span class="trail-badge">3</span>
+        <img class="trail-img" src="images/20250803_165531.jpg" alt="03/08/2025">
+        <span class="trail-label">Mês 3</span>
+      </button>
+
+      <button class="trail-card" data-month="4" type="button">
+        <span class="trail-badge">4</span>
+        <img class="trail-img" src="images/20250906_204300.jpg" alt="Foto do mês 4">
+        <span class="trail-label">Mês 4</span>
+      </button>
+
+      <button class="trail-card" data-month="5" type="button">
+        <span class="trail-badge">5</span>
+        <img class="trail-img" src="images/20251106_194639.jpg" alt="Foto do mês 5">
+        <span class="trail-label">Mês 5</span>
+      </button>
+
+      <button class="trail-card" data-month="6" type="button">
+        <span class="trail-badge">6</span>
+        <img class="trail-img" src="images/20251205_200100.jpg" alt="Foto do mês 6">
+        <span class="trail-label">Mês 6</span>
+      </button>
+
+      <button class="trail-card" data-month="7" type="button">
+        <span class="trail-badge">7</span>
+        <img class="trail-img" src="images/20251231_214630(1).jpg" alt="Foto do mês 7">
+        <span class="trail-label">Mês 7</span>
+      </button>
+
+      <button class="trail-card" data-month="8" type="button">
+        <span class="trail-badge">8</span>
+        <img class="trail-img" src="images/20260116_225115.jpg" alt="Foto do mês 8">
+        <span class="trail-label">Mês 8</span>
+      </button>
+
+      <button class="trail-card" data-month="9" type="button">
+        <span class="trail-badge">9</span>
+        <img class="trail-img" src="assets/photos/09.jpg" alt="Foto do mês 9">
+        <span class="trail-label">Mês 9</span>
+      </button>
+
+      <button class="trail-card" data-month="10" type="button">
+        <span class="trail-badge">10</span>
+        <img class="trail-img" src="assets/photos/10.jpg" alt="Foto do mês 10">
+        <span class="trail-label">Mês 10</span>
+      </button>
+
+      <button class="trail-card" data-month="11" type="button">
+        <span class="trail-badge">11</span>
+        <img class="trail-img" src="assets/photos/11.jpg" alt="Foto do mês 11">
+        <span class="trail-label">Mês 11</span>
+      </button>
+
+      <button class="trail-card" data-month="12" type="button">
+        <span class="trail-badge">12</span>
+        <img class="trail-img" src="assets/photos/12.jpg" alt="Foto do mês 12">
+        <span class="trail-label">1 ano 🎉</span>
+      </button>
+    </div>
+
+    <!-- Modal simples pra ver a foto grande -->
+    <div class="trail-modal" id="trail-modal" aria-hidden="true">
+      <div class="trail-modal-content" role="dialog" aria-modal="true" aria-label="Visualização da foto">
+        <button class="trail-modal-close" id="trail-close" type="button">✕</button>
+        <img id="trail-modal-img" alt="">
+        <p id="trail-modal-caption"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- confetti lib -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // contador desde 06/06/2025
+    function updateCounter() {
+      const start = new Date(2025,5,6,0,0,0);
+      const now = new Date();
+      let y = now.getFullYear() - start.getFullYear();
+      let m = now.getMonth() - start.getMonth();
+      let d = now.getDate() - start.getDate();
+      let h = now.getHours() - start.getHours();
+      let min = now.getMinutes() - start.getMinutes();
+      let s = now.getSeconds() - start.getSeconds();
+
+      if (s<0){ s+=60; min--; }
+      if (min<0){ min+=60; h--; }
+      if (h<0){ h+=24; d--; }
+      if (d<0){
+        const prevMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        d += prevMonthDays; m--;
+      }
+      if (m<0){ m+=12; y--; }
+
+      const totalMonths = y*12 + m;
+      const text = `Hoje fazem ${totalMonths} ${totalMonths===1?'mês':'meses'} `+
+                   `${d} dia${d===1?'':'s'} `+
+                   `${h} hora${h===1?'':'s'} `+
+                   `${min} minuto${min===1?'':'s'} e `+
+                   `${s} segundo${s===1?'':'s'} desde do nosso primeiro oi.`;
+      document.getElementById('counter').textContent = text;
+
+      let msg;
+      if (y>0){
+        const anos = y===1?'1 ano':`${y} anos`;
+        const meses = m===1?'1 mês':`${m} meses`;
+        msg = `Feliz ${anos} e ${meses} de namoro!`;
+      } else {
+        msg = `Feliz ${totalMonths} ${totalMonths===1?'mês':'meses'} de namoro!`;
+      }
+      document.getElementById('message').textContent = msg;
+    }
+
+    updateCounter();
+    setInterval(updateCounter,1000);
+
+    // controle do áudio
+    const audio = document.getElementById('bg-music');
+    const btn   = document.getElementById('play-btn');
+    btn.addEventListener('click', () => {
+      audio.play()
+        .then(() => btn.style.display = 'none')
+        .catch(err => console.error('Erro ao tocar áudio:', err));
+    });
+    window.addEventListener('scroll', () => {
+      if (audio.paused) {
+        audio.play().catch(()=>{});
+        btn.style.display = 'none';
+      }
+    }, { once: true });
+
+    /* ======== TYPEWRITER DO TÍTULO (3 MESES) ======== */
+    (function(){
+      const el = document.getElementById('tm-typewriter');
+      const text = 'Chegamos aos nossos 3 meses! 💙';
+      let i = 0;
+      function type() {
+        if (i <= text.length) {
+          el.textContent = text.slice(0, i);
+          i++;
+          setTimeout(type, 55);
+        }
+      }
+      type();
+    })();
+
+    /* ======== BOTÃO "NÃO" QUE FOGE ======== */
+    (function(){
+      const noBtn = document.getElementById('tm-no');
+      const container = document.getElementById('tm-actions');
+
+      // calcula posição aleatória
+      function moveButton() {
+        const pad = 20;
+        const cw = container.clientWidth - noBtn.offsetWidth - pad;
+        const ch = 100; // mais espaço vertical
+        const x = Math.max(0, Math.floor(Math.random() * cw));
+        const y = Math.max(0, Math.floor(Math.random() * ch));
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+      }
+
+      // foge quando mouse chega perto
+      container.addEventListener('mousemove', (e) => {
+        const rect = noBtn.getBoundingClientRect();
+        const btnCenterX = rect.left + rect.width / 2;
+        const btnCenterY = rect.top + rect.height / 2;
+
+        // distância do mouse até o centro do botão
+        const dist = Math.hypot(e.clientX - btnCenterX, e.clientY - btnCenterY);
+
+        if (dist < 100) { // se mouse chegar a menos de 100px, ele foge
+          moveButton();
+        }
+      });
+
+      // foge também se tentar clicar direto
+      noBtn.addEventListener('mousedown', moveButton);
+
+      // em touch (mobile), sempre foge
+      noBtn.addEventListener('touchstart', function(e){
+        e.preventDefault();
+        moveButton();
+      }, {passive:false});
+    })();
+
+    /* ======== AÇÃO DO "SIM": CONFETTI + CARTA ABRINDO + DIGITAÇÃO ======== */
+    (function(){
+      const yesBtn = document.getElementById('tm-yes');
+      const noBtn  = document.getElementById('tm-no');
+      const envWrap = document.getElementById('tm-envelope-wrap');
+      const envelope = document.getElementById('tm-envelope');
+      const letterText = document.getElementById('tm-letter-text');
+      const closeBtn = document.getElementById('tm-close');
+
+      const message = 
+    `Meu amor,
+
+    hoje completamos três meses juntos, e às vezes me pego pensando que o tempo, quando se trata de nós dois, parece se curvar, como a luz ao redor de uma estrela. Três meses parecem pouco diante da eternidade, mas o que construímos nesse tempo tem o peso e a grandeza de um universo inteiro.
+
+    Você é como uma galáxia rara que encontrei em meio ao infinito — algo tão imenso e ao mesmo tempo tão delicado. Se o universo guarda mistérios que os cientistas ainda tentam decifrar, eu guardo em mim o mistério do quanto você me transforma todos os dias. Seu sorriso é como o nascer de uma estrela: ilumina, aquece, dá sentido. Seu abraço é meu planeta seguro, meu lugar de gravidade, onde tudo em mim encontra equilíbrio.
+
+    Três meses podem ser só um instante na imensidão do cosmos, mas, para mim, cada segundo ao seu lado vale mais que bilhões de anos-luz. Porque ao seu lado eu entendi que amor não se mede em tempo, mas em intensidade — e o nosso é do tamanho do universo inteiro.
+
+    Te amo mil milhões. 💙
+    
+    Não tenho palavras para descrever o quão sou feliz contigo e como quero viver a vida ao teu lado, te fazer feliz e te amar para sempre.
+    `;
+
+      function fireConfetti() {
+        const duration = 2000;
+        const end = Date.now() + duration;
+        (function frame() {
+          confetti({ particleCount: 6, spread: 70, origin: { x: Math.random(), y: Math.random() * 0.6 } });
+          if (Date.now() < end) requestAnimationFrame(frame);
+        })();
+        confetti({ particleCount: 120, spread: 90, angle: 60, origin: { x: 0,   y: 0.6 } });
+        confetti({ particleCount: 120, spread: 90, angle: 120, origin: { x: 1,  y: 0.6 } });
+      }
+
+      function typeLetter(text, targetEl, speed=18) {
+        targetEl.textContent = '';
+        targetEl.style.borderRightColor = 'rgba(0,0,0,.5)';
+        let i = 0;
+        const timer = setInterval(() => {
+          targetEl.textContent = text.slice(0, i);
+          i++;
+          if (i > text.length) {
+            clearInterval(timer);
+            targetEl.style.borderRightColor = 'transparent';
+          }
+        }, speed);
+      }
+
+      yesBtn.addEventListener('click', () => {
+        yesBtn.disabled = true; noBtn.disabled = true;
+        yesBtn.style.opacity = .6; noBtn.style.opacity = .6;
+
+        fireConfetti();
+
+        envWrap.style.display = 'block';
+        envelope.getBoundingClientRect();      // reflow pra iniciar animação
+        envelope.classList.add('open');
+
+        setTimeout(() => { typeLetter(message, letterText); }, 800);
+      });
+
+      // Fechar carta
+      closeBtn.addEventListener('click', () => {
+        // para mostrar o resto da página, recolhe o envelope
+        envelope.classList.remove('open');      // flap desce e carta recolhe
+        // limpa o caret se estava no meio da digitação
+        letterText.style.borderRightColor = 'transparent';
+
+        // aguarda a animação terminar e esconde o bloco
+        setTimeout(() => {
+          envWrap.style.display = 'none';
+          // reabilita os botões (se quiser permitir abrir novamente)
+          yesBtn.disabled = false; noBtn.disabled = false;
+          yesBtn.style.opacity = 1; noBtn.style.opacity = 1;
+
+          // rola suavemente para o título “Chegamos aos nossos 3 meses!”
+          document.getElementById('tm-three-months')
+                  .scrollIntoView({ behavior:'smooth', block:'start' });
+        }, 650);
+      });
+    })();
+
+    (function reasonsList(){
+      const REASONS = [
+        "Você me faz rir até quando eu não quero.",
+        "Seu abraço é meu lugar de paz.",
+        "A forma como você cuida de mim, mesmo as vezes zerando minha paciência kkkkkk.",
+        "Seu jeitinho.",
+        "Nossos covers sem vergonha 😂🎤",
+        "Como tudo fica mais leve com você.",
+        "Teu sorriso.",
+        "Seu companheirismo, topando qualquer loucura juntos.",
+        "Nossos planos bobos e os gigantes.",
+        "Porque com você, tudo faz sentido."
+      ];
+
+      const ul = document.getElementById('reasons-list');
+      const btn = document.getElementById('reasons-next');
+      let i = 0;
+
+      btn.addEventListener('click', () => {
+        if(i < REASONS.length){
+          const li = document.createElement('li');
+          li.textContent = REASONS[i++];
+          ul.appendChild(li);
+          if(i === REASONS.length){
+            btn.textContent = "Fim 💙";
+            btn.disabled = true;
+            btn.style.opacity = .7;
+          }
+        }
+      });
+    })();
+
+    /* ======== POLAROIDIFY: aplica moldura a TODAS as fotos ======== */
+    (function polaroidify(){
+      const selectors = [
+        '.timeline .timeline-item .image-container img',
+        '.carousel .slide img'
+      ].join(',');
+
+      const imgs = document.querySelectorAll(selectors);
+
+      imgs.forEach((img) => {
+        // evita duplicar
+        if (img.closest('.polaroid')) return;
+
+        // cria moldura
+        const frame = document.createElement('div');
+        frame.className = 'polaroid';
+        // rotação aleatória suave
+        const rot = (Math.random() * 3 - 1.5).toFixed(2) + 'deg';
+        frame.style.setProperty('--rot', rot);
+
+        // insere e move a imagem pra dentro
+        const parent = img.parentNode;
+        parent.insertBefore(frame, img);
+        frame.appendChild(img);
+
+        // legenda: tenta pegar a legenda <p.caption> seguinte (na timeline),
+        // senão usa o ALT da imagem (no carrossel).
+        let captionText = '';
+        const timelineItem = img.closest('.timeline-item');
+        if (timelineItem) {
+          const containerDiv = img.closest('.image-container');
+          if (containerDiv && containerDiv.nextElementSibling && containerDiv.nextElementSibling.matches('.caption')) {
+            captionText = containerDiv.nextElementSibling.textContent.trim();
+            containerDiv.nextElementSibling.style.display = 'none'; // oculta a legenda original para não duplicar
+          }
+        }
+        if (!captionText) captionText = img.getAttribute('alt') || '';
+
+        if (captionText) {
+          const small = document.createElement('small');
+          small.textContent = captionText;
+          frame.appendChild(small);
+        }
+      });
+    })();
+
+    (function(){
+      const root   = document.getElementById('bouquet');
+      const button = document.getElementById('bouquet-toggle');
+      if (!root || !button) return;
+
+      // 1) preparar “desenho” dos caules
+      root.querySelectorAll('[data-len]').forEach(path => {
+        const len = path.getTotalLength();
+        path.style.setProperty('--len', len);
+      });
+
+      // 2) construir as flores dinamicamente (pétalas + miolo)
+      const PETALS = 7, PETAL_RX = 10, PETAL_RY = 18, PETAL_RAD = 12, CORE_R = 6;
+      root.querySelectorAll('.flower').forEach((g) => {
+        const cx = parseFloat(g.getAttribute('data-cx'));
+        const cy = parseFloat(g.getAttribute('data-cy'));
+        const color = g.getAttribute('data-color') || '#ff7aa2';
+
+        for (let i = 0; i < PETALS; i++) {
+          const ang = (360 / PETALS) * i;
+          const rad = ang * Math.PI / 180;
+          const px = cx + Math.cos(rad) * PETAL_RAD;
+          const py = cy + Math.sin(rad) * PETAL_RAD;
+
+          const petal = document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+          petal.setAttribute('class','petal');
+          petal.setAttribute('cx', px);
+          petal.setAttribute('cy', py);
+          petal.setAttribute('rx', PETAL_RX);
+          petal.setAttribute('ry', PETAL_RY);
+          petal.setAttribute('fill', color);
+          petal.style.setProperty('--cx', px);
+          petal.style.setProperty('--cy', py);
+          petal.style.setProperty('--rot', ang + 'deg');
+          petal.style.setProperty('--i', i);
+          g.appendChild(petal);
+        }
+
+        const core = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        core.setAttribute('class','core');
+        core.setAttribute('cx', cx);
+        core.setAttribute('cy', cy);
+        core.setAttribute('r', CORE_R);
+        g.appendChild(core);
+      });
+
+      // 3) florzinhas/✨ flutuantes
+      const FLOAT_EMOJIS = ["🌸","✨","💮","💠","💖","🌼"];
+      let floatTimer = null;
+      function spawnFloaters(durationMs = 2200, everyMs = 80){
+        const start = performance.now();
+        function spawn(){
+          const now = performance.now();
+          if (now - start > durationMs){ clearInterval(floatTimer); floatTimer = null; return; }
+          const el = document.createElement('span');
+          el.className = 'floater';
+          el.textContent = FLOAT_EMOJIS[(Math.random()*FLOAT_EMOJIS.length)|0];
+          const leftPct = 20 + Math.random()*60;
+          const bottomPct = 10 + Math.random()*30;
+          el.style.left   = leftPct + '%';
+          el.style.bottom = bottomPct + '%';
+          el.style.fontSize = (16 + Math.random()*12) + 'px';
+          el.style.setProperty('--dur', (1.9 + Math.random()*0.9) + 's');
+          el.style.setProperty('--delay', (Math.random()*0.1) + 's');
+          el.style.setProperty('--x0', (Math.random()*20 - 10) + 'px');
+          el.style.setProperty('--x1', (Math.random()*60 - 30) + 'px');
+          el.style.setProperty('--r0', (Math.random()*-10) + 'deg');
+          el.style.setProperty('--r1', (10 + Math.random()*20) + 'deg');
+          root.appendChild(el);
+          setTimeout(()=> el.remove(), 3000);
+        }
+        spawn();
+        floatTimer = setInterval(spawn, everyMs);
+      }
+
+      // 4) abrir/fechar
+      function open(){
+        root.classList.add('active');
+        button.textContent = 'Fechar buquê ✨';
+        spawnFloaters(2400, 90);
+        setTimeout(()=>{ if (window.confetti) confetti({ particleCount: 70, spread: 60, origin:{x:.5, y:.7} }); }, 1900);
+      }
+      function close(){
+        root.classList.remove('active');
+        void root.offsetWidth; // reflow
+        button.textContent = 'Abrir buquê 💐';
+      }
+
+      // clique no próprio buquê
+      root.addEventListener('click', () => {
+        if (root.classList.contains('active')) close(); else open();
+      });
+
+      // **AQUI estava o erro**: precisa ser `if (root...)`
+      button.addEventListener('click', () => {
+        if (root.classList.contains('active')) { close(); } else { open(); }
+      });
+    })();
+  </script>
+  <script>
+    /* ======== 4 MESES – LÓGICA DO QUEBRA-CABEÇA (com opções) ======== */
+    (function(){
+      const grid = document.getElementById('puzzle-grid');
+      const board = document.getElementById('puzzle-board');
+      const secret = document.getElementById('puzzle-secret');
+      const progressEl = document.getElementById('puzzle-progress');
+      const resetBtn = document.getElementById('puzzle-reset');
+      if (!grid || !board || !secret || !progressEl) return;
+
+      // Agora cada pergunta pode ser:
+      // - de TEXTO:  { q, a: ["resposta1","resposta2"...] }
+      // - de OPÇÕES: { q, choices: ["A","B","C","D"], correct: 2 }   (índice da correta)
+      //   (também aceita múltiplas corretas: correct: [1,3])
+      const QUESTIONS = [
+        { q: "Em que dia dissemos nosso primeiro 'oi'?", a: ["06/06/2025","6/6/2025","06-06-2025","6-6-2025","06.06.2025"] },
+
+        { q: "Qual foi nosso primeiro passeio de 'pé na areia'?",
+          choices: ["Shopping", "Cinema", "Praia", "Parque"], correct: 2 },
+
+        { q: "Quem puxa os covers mais sem vergonha? 😂",
+          choices: ["Eu", "Você", "Nós dois"], correct: 2 },
+
+        { q: "Cor do coração que mais usamos aqui?",
+          choices: ["Vermelho ❤️", "Azul 💙", "Roxo 💜"], correct: 1 },
+
+        { q: "Complete: te amo mil _______.", a: ["milhões","milhoes"] },
+
+        { q: "Qual presente te fez realizar um sonho logo no começo?",
+          choices: ["Chocolate", "Buquê de flores", "Pelúcia"], correct: 1 },
+
+        { q: "Qual é o nosso mêsversário agora?",
+          choices: ["3 meses", "4 meses", "5 meses"], correct: 1 },
+
+        { q: "Meu refúgio de paz é o teu ______.", a: ["colo","abraço","abraco"] },
+
+        { q: "Quem é a minha galáxia rara?",
+          choices: ["O sol", "Você", "A lua"], correct: 1 },
+      ];
+
+      // Persistência simples
+      const LS_KEY = "lovePuzzle_v1";
+      const state = (()=>{ try{ return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }catch{ return {}; } })();
+      if (!Array.isArray(state.solved)) state.solved = Array(9).fill(false);
+      if (typeof state.done !== "boolean") state.done = false;
+      function save(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+
+      // Helpers
+      const normalize = (s)=> (s||"").toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+      const $backdrop = document.getElementById('qa-backdrop');
+      const $title = document.getElementById('qa-title');
+      const $q = document.getElementById('qa-question');
+      const $input = document.getElementById('qa-input');
+      const $opts = document.getElementById('qa-options');
+      const $err = document.getElementById('qa-error');
+      const $close = document.getElementById('qa-close');
+      const $cancel = document.getElementById('qa-cancel');
+      const $submit = document.getElementById('qa-submit');
+
+      let currentIdx = null;
+
+      function isChoiceItem(item){ return Array.isArray(item.choices) && item.choices.length > 0; }
+      function correctSet(item){
+        if (Array.isArray(item.correct)) return new Set(item.correct);
+        if (typeof item.correct === 'number') return new Set([item.correct]);
+        return new Set();
+      }
+
+      function openModal(idx){
+        const item = QUESTIONS[idx]; if (!item) return;
+        currentIdx = idx;
+        $title.textContent = `Pergunta ${idx+1} de 9`;
+        $q.textContent = item.q;
+        $err.textContent = '';
+
+        // Se for de opções: mostra grid de botões, oculta input e botão "Responder"
+        if (isChoiceItem(item)){
+          $opts.innerHTML = '';
+          $opts.style.display = '';
+          $input.style.display = 'none';
+          $submit.style.display = 'none';
+
+          const correct = correctSet(item);
+          item.choices.forEach((label, i)=>{
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'qa-option';
+            btn.textContent = label;
+            btn.dataset.index = i;
+            btn.addEventListener('click', ()=>{
+              const isOk = correct.has(i);
+              if (!isOk){
+                btn.classList.add('wrong');
+                $err.textContent = "Quase! Tenta outra 😉";
+                return;
+              }
+              btn.classList.add('correct');
+              solveCurrent();
+            });
+            $opts.appendChild(btn);
+          });
+        } else {
+          // Texto: mostra input + botão responder
+          $opts.style.display = 'none';
+          $input.style.display = '';
+          $submit.style.display = '';
+          $input.value = '';
+          setTimeout(()=> $input.focus({preventScroll:true}), 0);
+        }
+
+        $backdrop.classList.add('show');
+      }
+
+      function closeModal(){ $backdrop.classList.remove('show'); currentIdx = null; }
+      $close.addEventListener('click', closeModal);
+      $cancel.addEventListener('click', closeModal);
+      $backdrop.addEventListener('click', (e)=>{ if(e.target === $backdrop) closeModal(); });
+      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+
+      function solveCurrent(){
+        if (currentIdx == null) return;
+        state.solved[currentIdx] = true;
+        save();
+        markTiles();
+        updateProgress();
+        closeModal();
+        checkComplete();
+      }
+
+      function checkAnswerText(){
+        if (currentIdx == null) return;
+        const item = QUESTIONS[currentIdx];
+        const val = normalize($input.value);
+        if (!val){ $err.textContent = "Digite uma resposta 💙"; return; }
+        const ok = (item.a || []).some(ans => normalize(ans) === val);
+        if (!ok){ $err.textContent = "Quase! Tenta de novo 😉"; return; }
+        solveCurrent();
+      }
+      $submit.addEventListener('click', checkAnswerText);
+      $input.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') checkAnswerText(); });
+
+      // Render/estado das peças
+      function markTiles(){
+        grid.querySelectorAll('.puzzle-tile').forEach(tile=>{
+          const idx = +tile.getAttribute('data-idx');
+          const solved = !!state.solved[idx];
+          tile.classList.toggle('solved', solved);
+          tile.setAttribute('aria-pressed', solved ? 'true' : 'false');
+        });
+      }
+      function updateProgress(){
+        const solvedCount = state.solved.filter(Boolean).length;
+        progressEl.textContent = `Progresso: ${solvedCount} / 9`;
+      }
+      function checkComplete(){
+        const allSolved = state.solved.every(Boolean);
+
+        if (allSolved && !state.done){
+          state.done = true; save();
+
+          board.classList.add('puzzle-revealed');
+          requestAnimationFrame(()=> board.classList.add('puzzle-cleared'));
+
+          const onEnd = (e)=>{
+            if(e.target !== grid) return;
+            grid.style.display = 'none';
+            grid.removeEventListener('transitionend', onEnd);
+          };
+          grid.addEventListener('transitionend', onEnd, { once:true });
+
+          try{
+            if (window.confetti){
+              confetti({ particleCount: 140, spread: 80, origin:{x:.5, y:.6} });
+              setTimeout(()=> confetti({ particleCount: 100, spread: 60 }), 300);
+            }
+          }catch{}
+        }
+
+        if (state.done){
+          board.classList.add('puzzle-revealed','puzzle-cleared');
+          grid.style.display = 'none';
+        }
+      }
+
+      function resetPuzzle(){
+        try { $backdrop.classList.remove('show'); } catch {}
+
+        localStorage.removeItem(LS_KEY);
+        state.solved = Array(9).fill(false);
+        state.done = false;
+        save();
+
+        // restaura UI
+        board.classList.remove('puzzle-revealed', 'puzzle-cleared');
+        grid.style.display = '';           // volta pro fluxo
+        grid.querySelectorAll('.puzzle-tile').forEach(t=> t.classList.remove('solved'));
+        updateProgress();
+
+        // pequena animação de retorno (opcional)
+        grid.style.opacity = '0';
+        grid.style.transform = 'scale(0.98)';
+        requestAnimationFrame(()=>{
+          grid.style.transition = 'opacity .25s ease, transform .25s ease';
+          grid.style.opacity = '1';
+          grid.style.transform = 'scale(1)';
+          setTimeout(()=> grid.style.transition = '', 260);
+        });
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (confirm('Quer mesmo resetar suas respostas?')) resetPuzzle();
+        });
+      }
+
+      // Click nas peças
+      grid.addEventListener('click', (e)=>{
+        const tile = e.target.closest('.puzzle-tile');
+        if (!tile) return;
+        const idx = +tile.getAttribute('data-idx');
+        if (state.solved[idx]) return;
+        openModal(idx);
+      });
+
+      // Inicialização
+      markTiles();
+      updateProgress();
+      checkComplete();
+    })();
+  </script>
+  <script>
+    (function(){
+      const wrap = document.getElementById('rbWrap');
+      const btn  = document.getElementById('rbBtn');
+      const spark= document.getElementById('rbSpark');
+      const text = document.getElementById('rbText');
+      if(!wrap||!btn) return;
+
+      let joined = false;
+
+      function confettiLite(){
+        if (!window.confetti) return;
+        confetti({ particleCount: 90, spread: 70, origin:{x:.5, y:.55} });
+      }
+
+      function join(){
+        joined = true;
+        wrap.classList.add('joined');
+        btn.textContent = 'Separar ↺';
+        spark.textContent = '✨';
+        confettiLite();
+        // não apague o texto aqui
+      }
+      function split(){
+        joined = false;
+        wrap.classList.remove('joined');
+        btn.textContent = 'Juntar ✨';
+      }
+
+      btn.addEventListener('click', ()=> joined ? split() : join());
+      wrap.addEventListener('click', ()=> { if(!joined) join(); });
+    })();
+  </script>
+  <script>
+    (function(){
+      const env   = document.getElementById('fe-envelope');
+      const btn   = document.getElementById('fe-open');
+      const typed = document.getElementById('fe-typed');
+      const closeBtn = document.getElementById('fe-close');
+      if(!env || !btn || !typed || !closeBtn) return;
+
+      // seu texto
+      const MESSAGE = 
+        `Amor,
+
+        se este bilhete chegou até nós, é porque seguimos escolhendo o mesmo caminho:
+        o de sonhar juntos. Este mês foi sobre olhar para frente — traçar metas,
+        combinar passos e guardar coragem para os dias difíceis.
+
+        Que o futuro nos encontre de mãos dadas: planejando, rindo e construindo
+        um lar nas pequenas vitórias. Que a gente lembre de regar nossos planos
+        com paciência, honestidade e gentileza.
+
+        Que nunca nos falte a vontade de crescer, aprender e, acima de tudo,
+        amar. Que a gente saiba celebrar cada conquista, por menor que seja,
+        e que nos apoiemos nas derrotas, sabendo que são apenas capítulos
+        de uma história maior.
+
+        Se tem uma coisa que essa semana que passou me ensinou, é que
+        mesmo nos dias mais dificeis, quando tudo parece incerto,
+        o amor que a gente cultiva é o que me dá força e vontade para continuar e vencer os desafios.
+
+        Te fiz a promessa de estar ao teu lado, e é isso que quero fazer:
+        estar contigo, na alegria e na tristeza, na saúde e na doença e acima de tudo realizar seus sonhos e os meus contigo.
+
+        Pois te ver feliz é aquilo que me faz feliz.
+
+        Enem preciso dizer que te amo, por que isso você já sabe.
+        Mas só para deixar claro te amo mil milhões.
+        E claro o final dessa história está cada vez mais próximo de ser escrito.
+        E mal posso esperar pelo próximo capítulo.
+
+        O amanhã nos aguarda — e ele tem o nosso nome.
+
+        Com amor,
+        JP.`;
+
+      let hasTyped = false;
+      let isOpen = false;
+
+      function typewrite(text, el, speed=16){
+        el.textContent = '';
+        el.style.borderRightColor = 'rgba(0,0,0,.5)';
+        let i = 0;
+        const timer = setInterval(()=>{
+          el.textContent = text.slice(0, i++);
+          if (i > text.length){
+            clearInterval(timer);
+            el.style.borderRightColor = 'transparent';
+          }
+        }, speed);
+      }
+
+      function openLetter(){
+        if (isOpen) return;
+        isOpen = true;
+        env.classList.add('open');
+        btn.textContent = 'Guardar carta ✉️';
+        closeBtn.style.display = '';
+        if (!hasTyped){
+          setTimeout(()=> typewrite(MESSAGE, typed, 16), 650);
+          hasTyped = true;
+        }
+        try{ if (window.confetti) confetti({ particleCount: 80, spread: 70, origin:{x:.5,y:.55} }); }catch{}
+      }
+
+      function closeLetter(){
+        if (!isOpen) return;
+        isOpen = false;
+        env.classList.remove('open');
+        // tira o cursor, mas mantém o texto já escrito
+        typed.style.borderRightColor = 'transparent';
+        btn.textContent = 'Abrir carta ✨';
+        closeBtn.style.display = 'none';
+      }
+
+      // botão externo alterna abrir/guardar
+      btn.addEventListener('click', ()=> isOpen ? closeLetter() : openLetter());
+      // clique no envelope sempre abre
+      env.addEventListener('click', openLetter);
+      // botão interno fecha
+      closeBtn.addEventListener('click', (e)=>{ e.stopPropagation(); closeLetter(); });
+    })();
+  </script>
+  <script>
+  /* ======== 5 MESES – QUEBRA-CABEÇA DE FOTO (click-to-swap) ======== */
+  (function(){
+    const board   = document.getElementById('jigsaw-board');
+    const sizeSel = document.getElementById('jg-size');
+    const shuffleBtn = document.getElementById('jg-shuffle');
+    const fileInp = document.getElementById('jg-file');
+    const preview = document.getElementById('jg-preview');
+    const statsEl = document.getElementById('jigsaw-stats');
+
+    if(!board || !sizeSel || !shuffleBtn || !fileInp || !preview || !statsEl) return;
+
+    // --- helper para garantir que a imagem está carregada antes de montar
+    function preloadImage(src){
+      return new Promise((resolve, reject)=>{
+        const img = new Image();
+        img.onload = ()=> resolve(src);
+        img.onerror = (e)=> reject(e);
+        img.src = src;
+      });
+    }
+
+    // estado
+    let IMG_SRC = preview.getAttribute('src') || 'images/20250629_202254.jpg'; // evite "./"
+    let N = parseInt(sizeSel.value, 10) || 4;
+    let tiles = [];          // [{el, idx}] idx = índice CORRETO
+    let order = [];          // array de índices na ordem atual
+    let firstPick = null;    // {i, el}
+    let moves = 0;
+    let timerId = null, startTs = null;
+
+    // helpers
+    const pad2 = (n)=> (n<10?'0':'') + n;
+    function updateStats(){
+      const secs = startTs ? Math.floor((Date.now() - startTs)/1000) : 0;
+      const mm = pad2(Math.floor(secs/60)), ss = pad2(secs%60);
+      statsEl.textContent = `Movimentos: ${moves} • Tempo: ${mm}:${ss}`;
+    }
+    function startTimer(){
+      stopTimer(); startTs = Date.now();
+      timerId = setInterval(updateStats, 1000);
+      updateStats();
+    }
+    function stopTimer(){ if(timerId){ clearInterval(timerId); timerId=null; } }
+
+    function buildBoard(){
+      // grid
+      board.style.gridTemplateColumns = `repeat(${N}, 1fr)`;
+      board.style.gridTemplateRows    = `repeat(${N}, 1fr)`;
+      board.innerHTML = '';
+      tiles = [];
+      order = [];
+
+      // cria N*N azulejos
+      for(let i=0;i<N*N;i++){
+        const r = Math.floor(i / N);
+        const c = i % N;
+
+        const tile = document.createElement('button'); // botão acessível
+        tile.type = 'button';
+        tile.className = 'jig-tile';
+        tile.setAttribute('aria-label', `Peça ${i+1}`);
+        tile.style.backgroundImage = `url("${IMG_SRC}")`;
+        tile.style.backgroundSize  = `${N*100}% ${N*100}%`;
+        tile.style.backgroundPosition = `${(c/(N-1))*100}% ${(r/(N-1))*100}%`;
+
+        tile.dataset.correct = String(i); // índice correto
+        tiles.push({ el: tile, idx: i });
+        order.push(i);
+
+        tile.addEventListener('click', ()=> onPick(tile));
+        board.appendChild(tile);
+      }
+
+      moves = 0; startTimer();
+    }
+
+    function onPick(tile){
+      const i = Array.from(board.children).indexOf(tile);
+      if (i < 0) return;
+
+      if (!firstPick){
+        firstPick = { i, el: tile };
+        tile.classList.add('selected');
+        return;
+      }
+      if (firstPick.i === i){
+        // mesmo tile -> desmarca
+        tile.classList.remove('selected');
+        firstPick = null;
+        return;
+      }
+
+      // swap DOM (posição na grid = ordem no DOM)
+      const a = Math.min(firstPick.i, i);
+      const b = Math.max(firstPick.i, i);
+      const nodeA = board.children[a];
+      const nodeB = board.children[b];
+
+      // troca usando placeholder
+      const placeholder = document.createElement('div');
+      board.replaceChild(placeholder, nodeA);
+      board.replaceChild(nodeA, nodeB);
+      board.replaceChild(nodeB, placeholder);
+
+      // atualiza ordem
+      const tmp = order[a]; order[a] = order[b]; order[b] = tmp;
+
+      // feedback
+      firstPick.el.classList.remove('selected');
+      firstPick = null;
+      moves++; updateStats();
+
+      checkWin();
+    }
+
+    function shuffle(){
+      // Fisher-Yates em 'order', depois reordena DOM conforme 'order'
+      const arr = order.slice();
+      for(let i=arr.length-1;i>0;i--){
+        const j = (Math.random() * (i+1)) | 0;
+        const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+      }
+      // evita começar já resolvido
+      if (arr.every((v, i)=> v === i)){
+        const j = (Math.random() * arr.length)|0;
+        const k = (Math.random() * arr.length)|0;
+        [arr[j], arr[k]] = [arr[k], arr[j]];
+      }
+      order = arr;
+
+      // aplica à UI: recria a ordem das children
+      const frag = document.createDocumentFragment();
+      order.forEach(idx => frag.appendChild(tiles[idx].el));
+      board.innerHTML = '';
+      board.appendChild(frag);
+
+      moves = 0; startTimer();
+    }
+
+    function checkWin(){
+      // ganhou se a ordem 0..N*N-1
+      const ok = order.every((v, i)=> v === i);
+      if (!ok) return;
+
+      stopTimer();
+      try{
+        if (window.confetti){
+          confetti({ particleCount: 150, spread: 80, origin:{x:.5,y:.6} });
+          setTimeout(()=> confetti({ particleCount: 100, spread: 60 }), 280);
+        }
+      }catch{}
+    }
+
+    // troca de dificuldade
+    sizeSel.addEventListener('change', async ()=>{
+      N = parseInt(sizeSel.value, 10) || 4;
+      try{
+        await preloadImage(IMG_SRC);
+        buildBoard();
+        setTimeout(()=> shuffle(), 60);
+      }catch(err){
+        console.warn('Falha ao recarregar imagem atual:', IMG_SRC, err);
+      }
+    });
+
+    // embaralhar manual
+    shuffleBtn.addEventListener('click', ()=> shuffle());
+
+    // trocar foto (arquivo local)
+    fileInp.addEventListener('change', async (e)=>{
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      try{
+        await preloadImage(url);
+        IMG_SRC = url;
+        preview.src = url;
+        buildBoard();
+        setTimeout(()=> shuffle(), 60);
+      }catch(err){
+        console.warn('Falha ao carregar arquivo selecionado:', err);
+      }
+    });
+
+    // clique na prévia: também embaralha (gesto rápido)
+    preview.addEventListener('click', ()=> shuffle());
+
+    // permitir SETAR a imagem por JS
+    window.setFiveMonthsPuzzleImage = async function(src){
+      try{
+        await preloadImage(src);
+        IMG_SRC = src;
+        preview.src = src;
+        buildBoard();
+        setTimeout(()=> shuffle(), 60);
+      }catch(err){
+        console.warn('Falha ao carregar imagem informada:', src, err);
+      }
+    };
+
+    // reconstruir ao abrir o <details> (caso esteja fechado no load)
+    document.getElementById('acc-five-months')?.addEventListener('toggle', async ()=>{
+      const acc = document.getElementById('acc-five-months');
+      if (acc && acc.open){
+        try{
+          await preloadImage(IMG_SRC);
+          buildBoard();
+          setTimeout(()=> shuffle(), 60);
+        }catch(err){
+          console.warn('Falha ao (re)carregar imagem ao abrir a seção:', IMG_SRC, err);
+        }
+      }
+    });
+
+    // inicializa com a imagem padrão (pré-carregada)
+    (async ()=>{
+      try{
+        // dica: teste 'images/20250629_202254.jpg' sem "./"
+        IMG_SRC = preview.getAttribute('src') || 'images/20250629_202254.jpg';
+        await preloadImage(IMG_SRC);
+        buildBoard();
+        setTimeout(()=> shuffle(), 60);
+      }catch(err){
+        console.warn('Não consegui carregar a imagem padrão:', IMG_SRC, err);
+      }
+    })();
+  })();
+  </script>
+  <script>
+    (function(){
+      // Fade-in/out suave para o áudio desta seção
+      const btn   = document.getElementById('sky-audio-btn');
+      const audio = document.getElementById('sky-audio');
+      if(!btn || !audio) return;
+
+      let fading = null;
+      function fadeTo(targetVol=1, ms=800){
+        if(fading) cancelAnimationFrame(fading);
+        const start = audio.volume;
+        const t0 = performance.now();
+        (function step(t){
+          const k = Math.min(1, (t - t0) / ms);
+          audio.volume = start + (targetVol - start) * k;
+          if (k < 1) fading = requestAnimationFrame(step);
+        })(t0);
+      }
+
+      async function play(){
+        try{
+          audio.volume = 0;
+          await audio.play();
+          fadeTo(1, 900);
+          btn.textContent = '⏸️ Pausar “Sinais”';
+          btn.setAttribute('aria-pressed', 'true');
+        }catch(e){ console.warn('Autoplay bloqueado, clique no botão para tocar.'); }
+      }
+      function pause(){
+        fadeTo(0, 600);
+        setTimeout(()=> audio.pause(), 650);
+        btn.textContent = '▶️ Tocar “Sinais”';
+        btn.setAttribute('aria-pressed', 'false');
+      }
+
+      btn.addEventListener('click', ()=>{
+        if (audio.paused) play(); else pause();
+      });
+
+      // Tenta tocar quando a seção entrar na tela (só se o usuário já interagiu com a página)
+      const section = document.getElementById('sky-born');
+      const acc = document.getElementById('acc-five-months');
+      const tryAutoplay = ()=> { if (audio.paused) play(); };
+
+      // ao abrir a aba de 5 meses
+      acc?.addEventListener('toggle', ()=> { if (acc.open) setTimeout(tryAutoplay, 250); });
+
+      // se já estiver aberta, tenta ao rolar
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=> { if(e.isIntersecting) tryAutoplay(); });
+      }, { threshold: 0.4 });
+      if (section) io.observe(section);
+
+      // qualquer clique dentro da seção também libera o play
+      section?.addEventListener('click', ()=>{
+        if (audio.paused) play();
+      }, { once:true });
+    })();
+    </script>
+    <script>
+      (function(){
+        const box   = document.getElementById('five-lightbox');
+        const lgImg = document.getElementById('five-lg-img');
+        const lgCap = document.getElementById('five-lg-cap');
+        const lgDt  = document.getElementById('five-lg-date');
+        const close = box?.querySelector('.five-close');
+
+        document.querySelectorAll('#five-frames .five-card').forEach(card=>{
+          card.addEventListener('click', ()=>{
+            const src = card.getAttribute('data-src') || card.querySelector('img')?.src;
+            const cap = card.getAttribute('data-caption') || card.querySelector('small')?.textContent || '';
+            const dt  = card.getAttribute('data-date') || '';
+            if (!src) return;
+
+            lgImg.src = src;
+            lgImg.alt = cap || 'Foto';
+            lgCap.textContent = cap;
+            lgDt.textContent  = dt;
+            box.classList.add('show');
+            box.setAttribute('aria-hidden','false');
+          });
+        });
+
+        function hide(){
+          box.classList.remove('show');
+          box.setAttribute('aria-hidden','true');
+          lgImg.src = '';
+        }
+        close?.addEventListener('click', hide);
+        box?.addEventListener('click', (e)=>{ if(e.target === box) hide(); });
+        document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && box.classList.contains('show')) hide(); });
+      })();
+    </script>
+    <script>
+      /* ======== 6 MESES – VOTOS (sv-*) ======== */
+      (function(){
+        const acc   = document.getElementById('acc-six-months');
+        const typeEl= document.getElementById('sv-typewriter');
+        const env   = document.getElementById('sv-envelope');
+        const openBtn = document.getElementById('sv-open');
+        const replayBtn = document.getElementById('sv-replay');
+        const typed = document.getElementById('sv-typed');
+        const closeBtn = document.getElementById('sv-close');
+
+        if(!acc || !typeEl || !env || !openBtn || !replayBtn || !typed || !closeBtn) return;
+
+        // Type do título da seção
+        (function typeTitle(){
+          const text = "Seis meses de nós — e ainda é só o começo 💙";
+          let i = 0;
+          function t(){
+            if(i <= text.length){
+              typeEl.textContent = text.slice(0, i++);
+              setTimeout(t, 45);
+            }
+          }
+          // só inicia quando abrir a aba
+          acc.addEventListener('toggle', () => {
+            if(acc.open && !typeEl.dataset.done){
+              typeEl.dataset.done = "1";
+              t();
+            }
+          });
+        })();
+
+        const VOWS = [
+          "Eu prometo te escolher nos dias fáceis e, principalmente, nos difíceis.",
+          "Eu prometo te ouvir de verdade, sem pressa, sem orgulho.",
+          "Eu prometo ser abrigo — e não tempestade.",
+          "Eu prometo cuidar do que é nosso, mesmo quando a vida cansar.",
+          "Eu prometo te fazer rir, te lembrar do quanto você é amada e te admirar sempre.",
+          "Eu prometo crescer contigo — sem perder a leveza de ser nós dois."
+        ];
+
+        const MESSAGE =
+    `Amor,
+
+    hoje a gente completa 6 meses… e é doido como, mesmo com o tempo passando,
+    eu sinto que meu coração só confirma o que já sabia: eu quero você.
+
+    Então aqui vão os nossos votos — simples, verdadeiros e do tamanho do que eu sinto:
+
+    1) ${VOWS[0]}
+    2) ${VOWS[1]}
+    3) ${VOWS[2]}
+    4) ${VOWS[3]}
+    5) ${VOWS[4]}
+    6) ${VOWS[5]}
+
+    Seis meses não são “só” seis meses…
+    são escolhas repetidas, cuidado, presença e amor construído.
+
+    Eu te amo mil milhões. 💙`;
+
+        let isOpen = false;
+        let timer = null;
+
+        function confettiSoft(){
+          try{
+            if(window.confetti){
+              confetti({ particleCount: 80, spread: 70, origin:{x:.5,y:.55} });
+              setTimeout(()=> confetti({ particleCount: 50, spread: 55, origin:{x:.5,y:.6} }), 260);
+            }
+          }catch{}
+        }
+
+        function typewrite(text, el, speed=14){
+          clearInterval(timer);
+          el.textContent = "";
+          el.style.borderRightColor = 'rgba(0,0,0,.5)';
+          let i = 0;
+          timer = setInterval(()=>{
+            el.textContent = text.slice(0, i++);
+            if(i > text.length){
+              clearInterval(timer);
+              timer = null;
+              el.style.borderRightColor = 'transparent';
+            }
+          }, speed);
+        }
+
+        function openLetter(rewrite=false){
+          if(isOpen && !rewrite) return;
+          isOpen = true;
+          env.classList.add('open');
+          openBtn.textContent = 'Guardar carta ✉️';
+          closeBtn.style.display = '';
+          if(rewrite || !typed.textContent.trim()){
+            setTimeout(()=> typewrite(MESSAGE, typed, 14), 520);
+          }
+          confettiSoft();
+        }
+
+        function closeLetter(){
+          isOpen = false;
+          env.classList.remove('open');
+          typed.style.borderRightColor = 'transparent';
+          openBtn.textContent = 'Abrir carta ✨';
+          closeBtn.style.display = 'none';
+          clearInterval(timer); timer = null;
+        }
+
+        // botões
+        openBtn.addEventListener('click', ()=> isOpen ? closeLetter() : openLetter(false));
+        replayBtn.addEventListener('click', ()=> openLetter(true));
+        closeBtn.addEventListener('click', (e)=>{ e.stopPropagation(); closeLetter(); });
+
+        // clique no envelope abre
+        env.addEventListener('click', ()=> openLetter(false));
+
+        // ao abrir a aba, monta bonitinho (opcional)
+        acc.addEventListener('toggle', ()=>{
+          if(acc.open){
+            // se quiser abrir automaticamente ao abrir a aba, descomente:
+            // setTimeout(()=> openLetter(false), 250);
+          } else {
+            closeLetter();
+          }
+        });
+      })();
+    </script>
+    <script>
+      /* ======== 6 MESES – QUEM SOMOS AGORA (qs-*) ======== */
+      (function(){
+        const meCard  = document.getElementById('qs-me');
+        const youCard = document.getElementById('qs-you');
+        const tMe     = document.getElementById('qs-toggle-me');
+        const tYou    = document.getElementById('qs-toggle-you');
+        const revealAll = document.getElementById('qs-reveal-all');
+        const hideAll   = document.getElementById('qs-hide-all');
+
+        if(!meCard || !youCard || !tMe || !tYou || !revealAll || !hideAll) return;
+
+        function confettiSoft(){
+          try{
+            if(window.confetti){
+              confetti({ particleCount: 60, spread: 55, origin:{x:.5,y:.6} });
+              setTimeout(()=> confetti({ particleCount: 35, spread: 45, origin:{x:.5,y:.65} }), 220);
+            }
+          }catch{}
+        }
+
+        function setRevealed(card, btn, on){
+          card.classList.toggle('revealed', on);
+          btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+          btn.textContent = on ? 'Esconder antes' : 'Revelar antes';
+        }
+
+        tMe.addEventListener('click', ()=>{
+          const on = !meCard.classList.contains('revealed');
+          setRevealed(meCard, tMe, on);
+          if(on) confettiSoft();
+        });
+
+        tYou.addEventListener('click', ()=>{
+          const on = !youCard.classList.contains('revealed');
+          setRevealed(youCard, tYou, on);
+          if(on) confettiSoft();
+        });
+
+        revealAll.addEventListener('click', ()=>{
+          setRevealed(meCard, tMe, true);
+          setRevealed(youCard, tYou, true);
+          confettiSoft();
+        });
+
+        hideAll.addEventListener('click', ()=>{
+          setRevealed(meCard, tMe, false);
+          setRevealed(youCard, tYou, false);
+        });
+      })();
+    </script>
+    <script>
+      /* ======== 6 MESES – O QUE EU NUNCA TE DISSE (ud-*) ======== */
+      (function(){
+        const grid = document.getElementById('ud-grid');
+        const finalBox = document.getElementById('ud-final');
+        if(!grid || !finalBox) return;
+
+        const CARDS = Array.from(grid.querySelectorAll('.ud-card'));
+
+        // textos (edite à vontade)
+        const TEXTS = [
+      `Eu tive medo de me apegar.
+      Porque quando é de verdade, a queda também assusta.
+
+      Mas aí você apareceu com um tipo de paz que eu não sabia pedir —
+      e eu percebi que vale a pena arriscar quando o destino tem o teu nome.`,
+
+      `Teve um dia que eu pensei em recuar.
+      Por que parecia que estava apenas sendo enrolado e que você não tinha a mesma intesidade
+      em relação ao sentimentos que nutriamos um pelo outro.
+
+      Mas ai você mudou: se tornou a pessoa e a luz da minha vida que é hoje e bem não poderia ter ninguem melhor ao meu lado que o meu maior amor.`,
+
+      `Não foi num momento grande.
+      Foi num detalhe bobo.
+
+      Foi quando eu me vi contando qualquer coisa do meu dia
+      e percebi que o meu coração tava em casa
+      só por estar perto de você.`,
+
+      `Você me salvou sem saber.
+      Num dia em que o mundo tava pesado,
+      você fez algo simples — e mudou tudo.
+
+      Você não resolveu a vida… você me deu força.
+      E isso é amor de verdade.`,
+
+      `Foi a primeira vez que o amanhã não me assustou.
+      Porque quando eu penso no futuro,
+      eu não penso em coisas… eu penso em nós.
+
+      E isso me dá coragem.`,
+
+      `Mesmo quando a gente discute,
+      eu nunca penso em ir embora.
+
+      Porque no fundo eu sei:
+      a gente não é perfeito — mas a gente é real.
+      E real é raro.`
+        ];
+
+        // persistência (pra não perder ao recarregar)
+        const LS_KEY = "loveUnsaid_v1";
+        const state = (()=>{ try{ return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }catch{ return {}; } })();
+        if(!Array.isArray(state.opened)) state.opened = Array(6).fill(false);
+
+        function save(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+
+        let typingTimers = Array(6).fill(null);
+
+        function confettiSoft(){
+          try{
+            if(window.confetti){
+              confetti({ particleCount: 55, spread: 55, origin:{x:.5,y:.62} });
+              setTimeout(()=> confetti({ particleCount: 35, spread: 45, origin:{x:.5,y:.66} }), 220);
+            }
+          }catch{}
+        }
+
+        function typewrite(idx, el, text, speed=16){
+          if(typingTimers[idx]){ clearInterval(typingTimers[idx]); typingTimers[idx]=null; }
+          el.textContent = "";
+          el.style.borderRightColor = 'rgba(255,255,255,.75)';
+          let i = 0;
+          typingTimers[idx] = setInterval(()=>{
+            el.textContent = text.slice(0, i++);
+            if(i > text.length){
+              clearInterval(typingTimers[idx]);
+              typingTimers[idx] = null;
+              el.style.borderRightColor = 'transparent';
+            }
+          }, speed);
+        }
+
+        function closeAllExcept(exceptIdx){
+          CARDS.forEach((card)=>{
+            const idx = +card.dataset.idx;
+            if(idx !== exceptIdx) card.classList.remove('open');
+          });
+        }
+
+        function checkAllOpened(){
+          const all = state.opened.every(Boolean);
+          if(all){
+            finalBox.classList.add('show');
+            // confetti só uma vez (marca no state)
+            if(!state.finalShown){
+              state.finalShown = true;
+              save();
+              confettiSoft();
+            }
+          }
+        }
+
+        function openCard(card){
+          const idx = +card.dataset.idx;
+          closeAllExcept(idx);
+
+          const isOpen = card.classList.contains('open');
+          if(isOpen){
+            card.classList.remove('open');
+            return;
+          }
+
+          card.classList.add('open');
+
+          // marca como aberto (persistente)
+          state.opened[idx] = true;
+          save();
+
+          // troca lock
+          const lock = card.querySelector('.ud-lock');
+          if(lock) lock.textContent = "🔓";
+
+          // digita (se ainda não digitou)
+          const typedEl = document.getElementById(`ud-typed-${idx}`);
+          if(typedEl && !typedEl.textContent.trim()){
+            typewrite(idx, typedEl, TEXTS[idx], 14);
+          }
+
+          // micro confetti
+          confettiSoft();
+          checkAllOpened();
+        }
+
+        // click
+        CARDS.forEach(card=>{
+          card.addEventListener('click', ()=> openCard(card));
+        });
+
+        // restaura locks (se já abriu antes)
+        CARDS.forEach(card=>{
+          const idx = +card.dataset.idx;
+          if(state.opened[idx]){
+            const lock = card.querySelector('.ud-lock');
+            if(lock) lock.textContent = "🔓";
+          }
+        });
+
+        // restaura final se já completou
+        if(state.opened.every(Boolean)){
+          finalBox.classList.add('show');
+        }
+      })();
+    </script>
+    
+    <script>
+    (() => {
+      // pega o container mais próximo onde estiverem as interações (todos os meses)
+      const root = document.querySelector(".month-section");
+      if (!root) return;
+
+      // Flip cards (delegação: funciona mesmo se você adicionar novos depois)
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest(".flip-card");
+        if (!btn) return;
+
+        const isOpen = btn.getAttribute("data-open") === "true";
+        btn.setAttribute("data-open", String(!isOpen));
+        btn.setAttribute("aria-pressed", String(!isOpen));
+      });
+
+      // Botões data-action continuam funcionando, mas agora para o mês onde clicou
+      document.addEventListener("click", (e) => {
+        const target = e.target.closest("[data-action]");
+        if (!target) return;
+
+        const section = target.closest(".month-section");
+        if (!section) return;
+
+        const action = target.getAttribute("data-action");
+
+        if (action === "navegar") {
+          const next = document.querySelector("#mes-9, [data-next-section]");
+          if (next) next.scrollIntoView({ behavior: "smooth", block: "start" });
+          else section.animate(
+            [{ transform: "scale(1)" }, { transform: "scale(1.01)" }, { transform: "scale(1)" }],
+            { duration: 380, easing: "ease-out" }
+          );
+          return;
+        }
+
+        const output = section.querySelector('[data-output="resumo"]');
+
+        if (action === "resumo") {
+          const checks = Array.from(section.querySelectorAll('.check-item input[type="checkbox"]'));
+          const marcados = checks.filter(c => c.checked).map(c => c.value);
+
+          const base = "💙 Neste mês, a gente viveu o real — e descobriu que conviver também é amar.";
+          const extra = marcados.length
+            ? " O que ficou mais forte pra mim foi: " + marcados.join(", ") + "."
+            : " E o mais importante: nós seguimos escolhendo um ao outro.";
+
+          if (output) {
+            output.textContent = base + extra;
+            output.classList.add("show");
+            output.style.display = "block";
+          }
+          return;
+        }
+
+        if (action === "limpar") {
+          section.querySelectorAll('.check-item input[type="checkbox"]').forEach(c => c.checked = false);
+          if (output) {
+            output.textContent = "";
+            output.classList.remove("show");
+            output.style.display = "none";
+          }
+          return;
+        }
+      });
+    })();
+    </script>
+
+    <script>
+      (() => {
+        const RELATIONSHIP_START = "2025-07-06"; 
+
+        const start = new Date(RELATIONSHIP_START + "T00:00:00");
+        if (isNaN(start.getTime())) return;
+
+        const now = new Date();
+        const anniversary = new Date(start);
+        anniversary.setFullYear(anniversary.getFullYear() + 1);
+
+        // Calcula quantos "meses completos" já passaram (1..12)
+        const monthsElapsed = (() => {
+          let m = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+          // se ainda não chegou no "dia do mês", não conta o mês atual
+          if (now.getDate() < start.getDate()) m -= 1;
+          // meses liberados = m + 1 (mês 1 no começo)
+          const unlocked = Math.min(12, Math.max(1, m + 1));
+          return unlocked;
+        })();
+
+        const allUnlocked = now >= anniversary;
+
+        const grid = document.getElementById("trail-grid");
+        const progressEl = document.getElementById("trail-progress");
+        const countdownEl = document.getElementById("trail-countdown");
+
+        const cards = Array.from(grid.querySelectorAll(".trail-card"));
+        cards.forEach((card) => {
+          const month = Number(card.getAttribute("data-month"));
+          const unlocked = allUnlocked || month <= monthsElapsed;
+
+          card.classList.toggle("locked", !unlocked);
+          card.setAttribute("aria-disabled", String(!unlocked));
+        });
+
+        // Texto de progresso
+        if (progressEl) {
+          progressEl.textContent = allUnlocked
+            ? "🎉 Tudo liberado! 1 ano completado!"
+            : `✅ Liberado até o mês ${monthsElapsed} de 12`;
+        }
+
+        // Contagem regressiva até 1 ano
+        if (countdownEl) {
+          if (allUnlocked) {
+            countdownEl.textContent = "💙 Parabéns pelo 1 ano!";
+          } else {
+            const diffMs = anniversary - now;
+            const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+            countdownEl.textContent = `⏳ Faltam ${days} dias para liberar tudo`;
+          }
+        }
+
+        // Modal (abre só se estiver liberado)
+        const modal = document.getElementById("trail-modal");
+        const modalImg = document.getElementById("trail-modal-img");
+        const caption = document.getElementById("trail-modal-caption");
+        const closeBtn = document.getElementById("trail-close");
+
+        grid.addEventListener("click", (e) => {
+          const card = e.target.closest(".trail-card");
+          if (!card) return;
+
+          if (card.classList.contains("locked")) return;
+
+          const img = card.querySelector("img");
+          const label = card.querySelector(".trail-label")?.textContent?.trim() || "";
+
+          modalImg.src = img.src;
+          modalImg.alt = img.alt || label;
+          caption.textContent = label;
+
+          modal.classList.add("show");
+          modal.setAttribute("aria-hidden", "false");
+        });
+
+        const close = () => {
+          modal.classList.remove("show");
+          modal.setAttribute("aria-hidden", "true");
+          modalImg.src = "";
+        };
+
+        closeBtn?.addEventListener("click", close);
+        modal?.addEventListener("click", (e) => {
+          if (e.target === modal) close();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") close();
+        });
+      })();
+      </script>
+
+</body>
+</html>
