@@ -1385,6 +1385,101 @@
       cursor: pointer;
     }
 
+
+    /* ======== 9 A 12 MESES – O ÚLTIMO CAPÍTULO DO PRIMEIRO ANO ======== */
+    .year-chapter { min-width:0; overflow-wrap:anywhere; }
+    .year-chapter .month-section { margin:16px auto; }
+    .year-chapter .hint { line-height:1.45; }
+    .year-chapter .year-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:16px 0; }
+    .year-chapter .year-tile { min-width:0; min-height:104px; padding:12px 8px; border:1px solid rgba(255,255,255,.28); border-radius:14px; background:rgba(0,0,0,.18); color:#fff; font:inherit; cursor:pointer; transition:transform .2s,background .3s,border-color .3s; }
+    .year-chapter .year-tile:hover { transform:translateY(-3px); background:rgba(255,255,255,.13); }
+    .year-chapter .year-tile:focus-visible, .year-chapter .btn:focus-visible { outline:2px solid #fff; outline-offset:3px; }
+    .year-chapter .year-tile[aria-pressed="true"] { background:rgba(151,213,255,.18); border-color:#bfe0ff; }
+    .year-chapter .year-icon { display:block; font-size:29px; margin-bottom:5px; }
+    .year-chapter .year-tile small { display:block; margin-top:5px; font-size:.78em; opacity:.9; }
+    .year-chapter .year-note { min-height:112px; padding:18px; margin:14px 0 8px; border-radius:12px; background:rgba(0,0,0,.20); border:1px solid rgba(255,255,255,.25); line-height:1.6; }
+    .year-chapter .year-note strong { display:block; color:#d9efff; margin-bottom:6px; }
+    .year-chapter .year-status { text-align:center; opacity:.92; margin:10px 0; font-size:.94em; }
+    .year-chapter progress { display:block; width:100%; height:10px; accent-color:#aee1ff; margin:10px 0; }
+    .year-chapter .year-reward { margin:16px 0 0; padding:16px; border:1px solid rgba(255,255,255,.38); border-radius:14px; background:rgba(0,0,0,.18); line-height:1.6; text-align:center; }
+    .year-chapter [hidden] { display:none !important; }
+    .year-chapter .house-art { display:block; width:min(100%,360px); height:auto; margin:10px auto; }
+    .year-chapter .house-art .window { fill:#314e83; transition:fill .4s; }
+    .year-chapter .house-art .window.lit { fill:#ffdc8b; }
+    .year-chapter .wish-label { display:block; margin:14px 0 6px; font-weight:700; }
+    .year-chapter textarea { display:block; width:100%; min-height:85px; resize:vertical; padding:12px; color:#fff; background:rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.38); border-radius:10px; font:inherit; }
+    .year-chapter textarea::placeholder { color:rgba(255,255,255,.7); }
+    .year-chapter .capsule { text-align:center; padding:15px 0; }
+    .year-chapter .capsule-icon { font-size:64px; display:inline-block; transition:transform .5s; }
+    .year-chapter .capsule.sealed .capsule-icon { transform:scale(1.12) rotate(-8deg); }
+    .year-chapter .year-letter { text-align:left; background:#fefefe; color:#253750; padding:24px; border-radius:12px; margin:16px 0; box-shadow:0 12px 30px rgba(0,0,0,.22); line-height:1.65; }
+    .year-chapter .year-letter h3 { color:#0072ff; margin-bottom:12px; }
+    .year-chapter .year-letter p { margin:0 0 14px; }
+    .year-chapter .year-letter .signature { font-family:'Patrick Hand',cursive; font-size:1.5em; color:#0072ff; }
+    .year-chapter .year-letter:not([hidden]) { animation:yearReveal .65s ease both; }
+    @keyframes yearReveal { from {opacity:0;transform:translateY(14px)} to {opacity:1;transform:translateY(0)} }
+    .year-chapter .year-end { font-family:'Patrick Hand',cursive; text-align:center; font-size:clamp(1.45rem,5vw,2.3rem); margin:22px 0 8px; }
+    @media(max-width:480px) { .year-chapter .month-section {padding:15px 10px;} .year-chapter .interactive-block {padding:12px 8px;} .year-chapter .year-grid {grid-template-columns:repeat(2,minmax(0,1fr));} .year-chapter .year-letter {padding:17px;} }
+    @media(prefers-reduced-motion:reduce) { .year-chapter *, .year-chapter *::before, .year-chapter *::after {animation:none!important;transition:none!important;} }
+    .trail-card .trail-label { color:#fff; }
+    /* ======== NOIVADO – 06/06/2026 (eng-*) ======== */
+    #acc-engagement { --eng-gold:#ffe0a0; --eng-ice:#d9f0ff; }
+    #acc-engagement .eng-hero { position:relative; overflow:hidden; padding:32px 16px; text-align:center; border-radius:18px; border:1px solid #ffffff55; background:radial-gradient(ellipse at 50% 0%,#2866a8,#0c2855 75%); }
+    #acc-engagement .eng-hero::before { content:''; position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(circle,#fff9 1px,transparent 1.7px),radial-gradient(circle,#ffe0a088 1px,transparent 1.6px); background-size:57px 61px,83px 79px; background-position:12px 19px,34px 8px; opacity:.45; }
+    #acc-engagement .eng-hero > * { position:relative; }
+    #acc-engagement .eng-date { color:var(--eng-gold); letter-spacing:.2em; font-size:.85em; font-weight:700; }
+    #acc-engagement .eng-ring { display:block; width:min(220px,80%); height:auto; margin:12px auto; filter:drop-shadow(0 0 18px #aee1ff66); animation:eng-float 5s ease-in-out infinite; }
+    @keyframes eng-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+    #acc-engagement .eng-hero h2 { font-family:'Patrick Hand',cursive; font-size:clamp(1.9rem,6vw,3rem); line-height:1.15; margin:12px 0; }
+    #acc-engagement .eng-hero p { line-height:1.6; margin:10px auto; max-width:560px; }
+    #acc-engagement .eng-days { display:inline-block; border:1px solid #ffffff55; border-radius:999px; padding:8px 14px; margin-top:10px; background:#ffffff14; font-size:.92rem; }
+    #acc-engagement .eng-quote { text-align:center; color:var(--eng-gold); font-family:'Patrick Hand',cursive; font-size:1.55rem; margin:18px 0; }
+    #acc-engagement .eng-block { margin-top:20px; }
+    #acc-engagement .eng-block h3 { color:var(--eng-ice); }
+    #acc-engagement .eng-progress { accent-color:var(--eng-gold); }
+    #acc-engagement .eng-pairs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:14px 0; }
+    #acc-engagement .eng-pair { min-height:78px; aspect-ratio:1.1; border:1px solid #ffffff55; background:linear-gradient(135deg,#123d72,#215d9a); color:white; border-radius:12px; font-size:clamp(1.35rem,5vw,2.25rem); cursor:pointer; transition:transform .2s,background .2s; }
+    #acc-engagement .eng-pair.is-open { background:#f5faff; color:#123d72; transform:rotate(-2deg); }
+    #acc-engagement .eng-pair.is-matched { background:#1c6092; border-color:var(--eng-gold); opacity:1; cursor:default; }
+    #acc-engagement .eng-feedback { min-height:3em; margin:12px 0; line-height:1.5; }
+    #acc-engagement .eng-choices { display:grid; gap:8px; margin-top:12px; }
+    #acc-engagement .eng-choice { text-align:left; margin:0; font:inherit; }
+    #acc-engagement .eng-choice.correct { border-color:#ffe0a0; background:#ffffff28; }
+    #acc-engagement .eng-choice.wrong { border-color:#ffb5b5; }
+    #acc-engagement .eng-sky { position:relative; aspect-ratio: 1.38; margin:14px 0; background:radial-gradient(ellipse at center,#163c73,#081b3b 80%); border:1px solid #ffffff55; border-radius:16px; overflow:hidden; }
+    #acc-engagement .eng-sky svg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+    #acc-engagement .eng-sky line { stroke:#ffe0a0; stroke-width:1; opacity:0; transition:opacity .5s; }
+    #acc-engagement .eng-sky line.lit { opacity:.9; }
+    #acc-engagement .eng-star { position:absolute; transform:translate(-50%,-50%); width:44px; height:44px; border-radius:50%; border:1px solid #ffffff66; background:#143766; color:#cde8ff; font-weight:700; font-size:1.15rem; cursor:pointer; box-shadow:0 0 12px #aee1ff33; }
+    #acc-engagement .eng-star[aria-pressed="true"] { color:#ffe0a0; background:#294b78; border-color:#ffe0a0; box-shadow:0 0 17px #ffe0a088; }
+    #acc-engagement .eng-star.next { outline:2px dashed #ffffffaa; outline-offset:3px; }
+    #acc-engagement .eng-envelope { text-align:center; padding:18px 10px; }
+    #acc-engagement .eng-seal { display:grid; place-items:center; width:100%; max-width:320px; height:164px; margin:8px auto; border:0; border-radius:12px; background:linear-gradient(155deg,#fffdf7,#d9eaff); color:#0c2855; position:relative; overflow:hidden; cursor:pointer; box-shadow:0 10px 24px #0004; }
+    #acc-engagement .eng-seal::before { content:''; position:absolute; inset:0; background:linear-gradient(180deg,#fff,#d5e6fc); clip-path:polygon(0 0,100% 0,50% 65%); transform-origin:top; transition:transform .65s; }
+    #acc-engagement .eng-seal[aria-expanded="true"]::before { transform:rotateX(180deg); }
+    #acc-engagement .eng-seal span { position:relative; display:grid; place-items:center; border-radius:50%; width:62px; height:62px; background:#194f90; border:2px solid #ffe0a0; color:#ffe0a0; font-size:29px; box-shadow:0 4px 10px #0004; }
+    #acc-engagement .eng-letter { background:#fffdf7; color:#213b5b; padding:clamp(17px,4vw,34px); border:1px solid #ffe0a0; line-height:1.75; }
+    #acc-engagement .eng-letter h3 { color:#174f91; font-family:'Patrick Hand',cursive; font-size:1.8rem; }
+    #acc-engagement .eng-letter .eng-letter-date { font-size:.85rem; color:#536b85; letter-spacing:.1em; }
+    #acc-engagement .eng-letter .signature { color:#174f91; }
+    #acc-engagement .eng-photo-stage { margin:14px 0 8px; padding:8px 8px 13px; border-radius:12px; background:#fffdf7; color:#203b5b; box-shadow:0 10px 28px #0004; }
+    #acc-engagement .eng-photo-open { display:block; width:100%; padding:0; background:#0a2854; border:0; border-radius:7px; cursor:zoom-in; overflow:hidden; touch-action:pan-y; }
+    #acc-engagement .eng-photo-open[aria-disabled="true"] { cursor:default; }
+    #acc-engagement .eng-photo-open img { display:block; width:100%; aspect-ratio:4/3; object-fit:contain; }
+    #acc-engagement .eng-photo-caption { padding:10px 6px 0; font-family:'Patrick Hand',cursive; text-align:center; font-size:1.25rem; }
+    #acc-engagement .eng-photo-nav { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    #acc-engagement .eng-photo-nav button { margin:0; }
+    #acc-engagement .eng-dots { display:flex; justify-content:center; flex-wrap:wrap; gap:4px; margin:10px 0; }
+    #acc-engagement .eng-dot { width:30px; height:32px; border:0; background:transparent; color:#fff; cursor:pointer; font-size:1.4rem; }
+    #acc-engagement .eng-dot[aria-current="true"] { color:var(--eng-gold); }
+    #acc-engagement .eng-dialog { position:fixed; inset:0; margin:auto; max-width:95vw; width:850px; max-height:95vh; padding:14px; background:#0b2855; color:#fff; border:1px solid #ffffff66; border-radius:14px; z-index:10001; }
+    #acc-engagement .eng-dialog::backdrop { background:#000c; }
+    #acc-engagement .eng-dialog img { display:block; width:100%; max-height:72vh; object-fit:contain; margin:10px 0; }
+    #acc-engagement .eng-dialog .btn { margin:0; }
+    #acc-engagement .eng-finale { text-align:center; background:radial-gradient(ellipse at 50% 0%,#2c68a5,#0a2854); border-color:#ffe0a080; padding:22px 14px; }
+    #acc-engagement .eng-finale .eng-quote { font-size:clamp(1.5rem,5vw,2rem); }
+    #acc-engagement button:focus-visible { outline:2px solid #ffe0a0; outline-offset:3px; }
+    @media(max-width:480px) { #acc-engagement .eng-pairs {gap:6px;} #acc-engagement .eng-pair {min-height:56px;} #acc-engagement .eng-star {width:35px;height:35px;} #acc-engagement .eng-photo-nav .btn {padding:9px;} }
   </style>
 </head>
 
@@ -2348,7 +2443,6 @@
       </section>
     </div>
   </details>
-  </section>
 
   <details class="accordion" id="acc-eight-months">
     <summary>
@@ -2500,7 +2594,243 @@
     </div>
   </details>
 
-  </section>
+  <!-- ====== SEÇÃO 9 MESES (COLAPSÁVEL) ====== -->
+  <details class="accordion year-chapter" id="acc-nine-months">
+    <summary><span>🌷💙 9 meses</span><span class="chev">▸</span></summary>
+    <div class="accordion-body">
+      <section id="mes-9" class="month-section" aria-labelledby="mes-9-title">
+        <header class="month-header"><h2 id="mes-9-title">🌷💙 9 meses — o jardim que a gente plantou</h2><p class="month-subtitle">O amor também cresce nos pequenos detalhes, um dia de cada vez.</p></header>
+        <article class="month-text" aria-label="Texto principal do mês 9">
+          <p>Então amor, chegamos aos nove meses. E pensar que tudo isso começou com um oi e com aquele monte de desculpas até a gente finalmente se encontrar kkkkkk.</p><p>Quando lembro das flores que te dei lá no começo, penso no quanto aquele gesto acabou significando pra mim também. Desde então, a gente vem plantando pequenas coisas: confiança, carinho, companheirismo e sonhos.</p><p>Não quero que o nosso amor dependa apenas de datas especiais. Quero continuar cuidando dele nos dias comuns, na correria e nas pequenas oportunidades de te fazer sorrir.</p><p>Por isso, fiz mais um jardim pra você. Dessa vez, cada flor guarda um pedacinho de nós.</p>
+        </article>
+        <section class="interactive-block" data-year-game aria-labelledby="year-game-9">
+          <div class="block-title"><h3 id="year-game-9">🌷 Nove flores, nove pedacinhos de nós</h3><span class="hint">Toque nas flores e faça nosso jardim crescer.</span></div>
+          
+          <div class="year-grid">
+            <button class="year-tile" type="button" aria-pressed="false" data-title="O primeiro oi" data-message="Pensar que um simples oi, no dia 6 de junho, acabou dando origem a tudo isso. Se eu pudesse voltar, mandaria aquela mensagem de novo."><span class="year-icon" aria-hidden="true">🌱</span>O primeiro oi<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Teu sorriso" data-message="Acho muito injusto você ter um sorriso desses e ainda achar que eu vou conseguir ficar sério contigo."><span class="year-icon" aria-hidden="true">🌷</span>Teu sorriso<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Teu abraço" data-message="Quando o mundo fica barulhento demais, teu abraço continua sendo o lugar em que eu mais gosto de estar."><span class="year-icon" aria-hidden="true">🌻</span>Teu abraço<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="As flores" data-message="Nunca esqueci o significado daquele primeiro buquê pra você. Quero continuar encontrando jeitos de te fazer sentir amada."><span class="year-icon" aria-hidden="true">🌸</span>As flores<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Nossos covers" data-message="A gente pode até não ganhar um Grammy kkkkkk, mas eu não trocaria nossa dupla por nenhuma outra."><span class="year-icon" aria-hidden="true">🎤</span>Nossos covers<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Nossas aventuras" data-message="Da praia à nossa primeira viagem, o mais bonito nunca foi só o lugar. Foi ter você comigo."><span class="year-icon" aria-hidden="true">🌊</span>Nossas aventuras<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="O ursinho" data-message="Quero continuar sendo teu aconchego, teu amigo e alguém com quem você pode simplesmente ser você."><span class="year-icon" aria-hidden="true">🧸</span>O ursinho<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="A aliança" data-message="Ela me lembra que amar também é respeitar, conversar e cuidar do que a gente escolheu construir."><span class="year-icon" aria-hidden="true">💍</span>A aliança<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Nosso amanhã" data-message="De todos os planos que eu posso fazer, os que mais me animam são aqueles em que a gente cresce e realiza sonhos lado a lado."><span class="year-icon" aria-hidden="true">💙</span>Nosso amanhã<small>Toque para descobrir</small></button>
+          </div>
+          <div class="year-note" aria-live="polite"><strong>Uma surpresa por vez 💙</strong><span>Escolha qualquer card para começar.</span></div>
+          <p class="year-status" aria-live="polite">0 de 9 descobertos</p>
+          <progress value="0" max="9" aria-label="Progresso das descobertas"></progress>
+          <div class="year-reward" hidden><strong>Nosso jardim floresceu! 💐</strong><p>Se pudesse te dar uma flor por cada vez que penso em você, a gente ia precisar de um jardim bem maior que esse. Te amo mil milhões, meu amor. 💙</p></div>
+          <button class="btn btn-ghost" data-year-reset type="button">Recomeçar ↻</button>
+        </section>
+      </section>
+    </div>
+  </details>
+
+  <!-- ====== SEÇÃO 10 MESES (COLAPSÁVEL) ====== -->
+  <details class="accordion year-chapter" id="acc-ten-months">
+    <summary><span>🏡💙 10 meses</span><span class="chev">▸</span></summary>
+    <div class="accordion-body">
+      <section id="mes-10" class="month-section" aria-labelledby="mes-10-title">
+        <header class="month-header"><h2 id="mes-10-title">🏡💙 10 meses — quando você virou ideia de lar</h2><p class="month-subtitle">Oito meses nos deram uma prévia. Agora, vamos imaginar o que ainda podemos construir.</p></header>
+        <article class="month-text" aria-label="Texto principal do mês 10">
+          <p>Depois da nossa primeira viagem, fiquei pensando bastante naquele sentimento de dividir o cotidiano contigo. Não era sobre estar num lugar diferente, era sobre estar com você.</p><p>E se um dia a gente tiver nosso cantinho? Não precisa ser enorme, nem perfeito. Quero que tenha espaço pras nossas coisas, pros nossos sonhos e pra cada um de nós continuar sendo quem é.</p><p>Eu quero conhecer cada versão tua, inclusive aquela que acorda de mau humor e aquela que vai querer me matar por alguma brincadeira besta kkkkkk. E quero que a gente possa aprender a cuidar um do outro sem esquecer de cuidar de si mesmo.</p><p>Fiz uma pequena planta desse futuro. Acende cada cantinho comigo?</p>
+        </article>
+        <section class="interactive-block" data-year-game aria-labelledby="year-game-10">
+          <div class="block-title"><h3 id="year-game-10">🏡 Acenda as luzes do nosso lar</h3><span class="hint">Cada cômodo guarda um pedacinho de um futuro que eu imagino.</span></div>
+          <svg class="house-art" viewBox="0 0 320 218" role="img" aria-label="Uma casinha que se ilumina conforme os cômodos são descobertos">
+<rect x="0" y="0" width="320" height="218" rx="16" fill="#092b63"/><circle cx="260" cy="35" r="17" fill="#fff1b9"/><g fill="#bfe0ff"><circle cx="42" cy="25" r="2"/><circle cx="110" cy="20" r="2"/><circle cx="220" cy="22" r="2"/><circle cx="290" cy="70" r="2"/></g>
+<path d="M38 103 L160 22 L282 103" fill="#7ebeff" stroke="#cde6ff" stroke-width="5" stroke-linejoin="round"/><rect x="65" y="98" width="190" height="105" rx="3" fill="#d9edff"/><g stroke="#4779b2" stroke-width="4"><rect class="window" x="82" y="111" width="36" height="29" rx="4"/><rect class="window" x="142" y="111" width="36" height="29" rx="4"/><rect class="window" x="202" y="111" width="36" height="29" rx="4"/><rect class="window" x="82" y="157" width="36" height="29" rx="4"/><rect class="window" x="202" y="157" width="36" height="29" rx="4"/><rect class="window" x="143" y="151" width="34" height="52" rx="4"/></g><circle cx="169" cy="178" r="2.5" fill="#fff"/><path d="M20 205H300" stroke="#78c8a0" stroke-width="6" stroke-linecap="round"/></svg>
+          <div class="year-grid">
+            <button class="year-tile" type="button" aria-pressed="false" data-title="A cozinha" data-message="Eu imagino nossos cafés, a discussão sobre o que comer e os pequenos cuidados no meio da rotina."><span class="year-icon" aria-hidden="true">☕</span>A cozinha<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="A sala" data-message="Um sofá, um filme que talvez a gente nem termine e aquele momento de não precisar estar em nenhum outro lugar."><span class="year-icon" aria-hidden="true">🛋️</span>A sala<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Nosso cantinho" data-message="Onde nossos covers continuam acontecendo, mesmo que os vizinhos não tenham pedido pelo show kkkkkk."><span class="year-icon" aria-hidden="true">🎶</span>Nosso cantinho<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="A varanda" data-message="Um lugar para conversar sobre o dia, respirar e fazer planos sem precisar ter todas as respostas."><span class="year-icon" aria-hidden="true">🌿</span>A varanda<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="O quarto" data-message="Quero ter mais dias começando com teu bom dia e terminando com um abraço, como naquela prévia que tivemos na viagem."><span class="year-icon" aria-hidden="true">🌙</span>O quarto<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="A porta de casa" data-message="Que ela sempre represente um lugar de respeito, liberdade, acolhimento e vontade de voltar."><span class="year-icon" aria-hidden="true">🚪</span>A porta de casa<small>Toque para descobrir</small></button>
+          </div>
+          <div class="year-note" aria-live="polite"><strong>Uma surpresa por vez 💙</strong><span>Escolha qualquer card para começar.</span></div>
+          <p class="year-status" aria-live="polite">0 de 6 descobertos</p>
+          <progress value="0" max="6" aria-label="Progresso das descobertas"></progress>
+          <div class="year-reward" hidden><strong>Todas as luzes estão acesas. ✨</strong><p>Uma casa é feita de paredes. O lar que eu quero construir contigo é feito de risadas, respeito, carinho e vontade de estar juntos. 💙</p></div>
+          <button class="btn btn-ghost" data-year-reset type="button">Recomeçar ↻</button>
+        </section>
+      </section>
+    </div>
+  </details>
+
+  <!-- ====== SEÇÃO 11 MESES (COLAPSÁVEL) ====== -->
+  <details class="accordion year-chapter" id="acc-eleven-months">
+    <summary><span>🕰️💙 11 meses</span><span class="chev">▸</span></summary>
+    <div class="accordion-body">
+      <section id="mes-11" class="month-section" aria-labelledby="mes-11-title">
+        <header class="month-header"><h2 id="mes-11-title">🕰️💙 11 meses — uma carta que o tempo ainda vai ler</h2><p class="month-subtitle">Falta um mês para fechar o primeiro ano, mas o futuro ainda tem páginas em branco.</p></header>
+        <article class="month-text" aria-label="Texto principal do mês 11">
+          <p>Onze meses. É estranho pensar que estamos tão perto de completar um ano e, ao mesmo tempo, sentir que temos tanta coisa pra descobrir um do outro.</p><p>Nas outras vezes, escrevi cartas sobre o que eu sentia e sobre o que imaginava para nós. Dessa vez, queria deixar um espaço pra você também escrever um pedacinho da nossa história.</p><p>Não precisamos saber exatamente onde estaremos daqui a alguns anos. Quero que a gente tenha liberdade pra mudar os planos, amadurecer e celebrar as coisas que conseguir construir.</p><p>Então vamos guardar um pouquinho de quem somos hoje. Um dia vai ser bonito poder olhar pra trás e lembrar dos sonhos que tínhamos aqui.</p>
+        </article>
+        <section class="interactive-block" aria-labelledby="year-capsule-title" id="year-capsule">
+          <div class="block-title"><h3 id="year-capsule-title">🕰️ Nossa cápsula do tempo</h3><span class="hint">Escreva o que quiser guardar para o futuro.</span></div>
+          <div class="capsule" id="year-capsule-art"><span class="capsule-icon" aria-hidden="true">💌</span><p>De nós, hoje, para nós daqui a alguns anos.</p></div>
+          <div id="year-capsule-form">
+            <label class="wish-label" for="year-wish-1">Uma aventura que quero viver contigo</label><textarea id="year-wish-1" maxlength="1500" placeholder="Pode ser uma viagem, um lugar, uma loucura nossa..."></textarea>
+            <label class="wish-label" for="year-wish-2">Algo que quero que nunca se perca entre nós</label><textarea id="year-wish-2" maxlength="1500" placeholder="Um costume, uma brincadeira, um jeito de amar..."></textarea>
+            <label class="wish-label" for="year-wish-3">Uma mensagem para o nosso eu do futuro</label><textarea id="year-wish-3" maxlength="1500" placeholder="Oi, nós do futuro..."></textarea>
+            <button class="btn btn-secondary" type="button" id="year-seal">Guardar nossa cápsula 🔒</button>
+          </div>
+          <div class="year-reward" id="year-capsule-sealed" hidden><strong>Um pedacinho do nosso hoje foi guardado. 💙</strong><p id="year-capsule-date"></p><button class="btn" type="button" id="year-unseal">Reabrir e editar ✨</button><button class="btn btn-ghost" type="button" id="year-copy-wishes">Copiar mensagem</button></div>
+          <p class="year-status" id="year-capsule-status" aria-live="polite">As mensagens ficam apenas neste navegador; não são enviadas para nenhum servidor.</p>
+        </section>
+        <section class="interactive-block"><div class="block-title"><h3>💌 O que eu quero guardar</h3><span class="hint">Uma carta minha para o nosso futuro</span></div><details class="acc-item"><summary class="acc-summary">Abrir minha mensagem 💙</summary><div class="acc-content"><p>Se algum dia a gente estiver lendo isso daqui a cinco, dez ou cinquenta anos, espero que ainda consiga rir das mesmas besteiras. Espero que a gente tenha realizado alguns sonhos e inventado muitos outros.</p><p>Quero que a gente se lembre de que não precisávamos ter tudo resolvido para construir algo bonito. A gente só precisava ser sincero, paciente e ter vontade de aprender um com o outro.</p><p>E quando o tempo passar, quero continuar dizendo a mesma coisa que digo hoje: te amo mil milhões, meu amor.</p></div></details></section>
+      </section>
+    </div>
+  </details>
+
+  <!-- ====== SEÇÃO 12 MESES (COLAPSÁVEL) ====== -->
+  <details class="accordion year-chapter" id="acc-twelve-months">
+    <summary><span>🎉💙 12 meses — 1 ano</span><span class="chev">▸</span></summary>
+    <div class="accordion-body">
+      <section id="mes-12" class="month-section" aria-labelledby="mes-12-title">
+        <header class="month-header"><h2 id="mes-12-title">🎉💙 12 meses — de um oi a uma história inteira</h2><p class="month-subtitle">06 de junho de 2025 — 06 de junho de 2026. Nosso primeiro ano.</p></header>
+        <article class="month-text" aria-label="Texto principal do mês 12">
+          <p>Você lembra daquela pergunta dos três meses? Eu te perguntava se prometia mais 3, 6, 12 meses e uma vida inteira comigo. E olha só onde chegamos.</p><p>Esse site começou como uma forma de guardar nossas memórias e acabou virando um pedacinho da nossa história. Tem cartas, flores, joguinhos, fotos, risadas e até algumas verdades que eu precisava aprender a colocar em palavras.</p><p>Antes da última surpresa, vamos revisitar cada pedacinho desse primeiro ano? Não como uma prova do quanto a gente se conhece, mas como um lembrete de tudo que nos trouxe até aqui.</p>
+        </article>
+        <section class="interactive-block" data-year-game aria-labelledby="year-game-12">
+          <div class="block-title"><h3 id="year-game-12">📖 Doze meses, doze capítulos</h3><span class="hint">Relembre todos os capítulos para liberar a carta final.</span></div>
+          
+          <div class="year-grid">
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 1" data-message="Um primeiro oi em 6 de junho de 2025. O começo de uma história que eu não imaginava que fosse tomar esse tamanho."><span class="year-icon" aria-hidden="true">💬</span>Mês 1<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 2" data-message="Os encontros, os covers, a praia e o começo de fazer parte da tua rotina."><span class="year-icon" aria-hidden="true">🌊</span>Mês 2<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 3" data-message="Uma carta, um buquê que nunca murcha e uma galáxia rara que eu tive a sorte de encontrar."><span class="year-icon" aria-hidden="true">💐</span>Mês 3<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 4" data-message="A aliança e o ursinho: compromisso e aconchego, duas peças que se encontram."><span class="year-icon" aria-hidden="true">🧸</span>Mês 4<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 5" data-message="Nosso quebra-cabeça, as fotos e aquele céu que desenhei pensando em você."><span class="year-icon" aria-hidden="true">🌙</span>Mês 5<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 6" data-message="Os votos, o que mudou em nós e todas aquelas coisas que eu quis te dizer."><span class="year-icon" aria-hidden="true">💍</span>Mês 6<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 7" data-message="Os altos e baixos, as readaptações e a importância de ouvir e respeitar um ao outro."><span class="year-icon" aria-hidden="true">🧭</span>Mês 7<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 8" data-message="A primeira viagem e uma pequena prévia de como seria compartilhar a vida cotidiana."><span class="year-icon" aria-hidden="true">🏡</span>Mês 8<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 9" data-message="Um jardim feito dos pequenos detalhes que eu quero continuar cultivando."><span class="year-icon" aria-hidden="true">🌷</span>Mês 9<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 10" data-message="A ideia de construir um lar onde a gente possa sonhar, rir e ser quem é."><span class="year-icon" aria-hidden="true">✨</span>Mês 10<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 11" data-message="Uma cápsula com espaço para guardar nossos desejos e deixar recados ao futuro."><span class="year-icon" aria-hidden="true">💌</span>Mês 11<small>Toque para descobrir</small></button>
+            <button class="year-tile" type="button" aria-pressed="false" data-title="Mês 12" data-message="Um ano de história. Não um ponto final, mas o primeiro capítulo de tantos que ainda podemos escrever."><span class="year-icon" aria-hidden="true">💙</span>Mês 12<small>Toque para descobrir</small></button>
+          </div>
+          <div class="year-note" aria-live="polite"><strong>Uma surpresa por vez 💙</strong><span>Escolha qualquer card para começar.</span></div>
+          <p class="year-status" aria-live="polite">0 de 12 descobertos</p>
+          <progress value="0" max="12" aria-label="Progresso das descobertas"></progress>
+          <div class="year-reward" hidden><strong>Você chegou ao final da nossa primeira volta ao sol! 🎉</strong><p>Obrigada, vida, por ter cruzado nossos caminhos. Agora só falta uma última surpresa.</p></div>
+          <button class="btn btn-ghost" data-year-reset type="button">Recomeçar ↻</button>
+        </section><section class="interactive-block" id="year-final-section" aria-labelledby="year-final-title" hidden><div class="block-title"><h3 id="year-final-title">💌 Para o amor da minha vida</h3><span class="hint">A última surpresa do primeiro ano</span></div><div class="capsule"><span class="capsule-icon" aria-hidden="true">💌</span><p>Uma carta que demorou um ano inteiro para ganhar todos esses significados.</p><button class="btn btn-secondary" id="year-open-letter" type="button" aria-expanded="false" aria-controls="year-final-letter">Abrir nossa carta de 1 ano ✨</button></div><article class="year-letter" id="year-final-letter" hidden><h3>Meu amor,</h3>
+<p>Então chegamos ao nosso primeiro ano. E pensar que, no dia 6 de junho de 2025, eu não fazia ideia de que aquele primeiro oi ia acabar significando tanto. Se alguém me contasse que eu ia estar aqui, um ano depois, fazendo um site inteiro pra te lembrar do quanto eu te amo, provavelmente eu ia rir.</p>
+<p>Eu lembro daquele começo, das tuas desculpas, dos nossos encontros, do primeiro buquê e de ver a tua felicidade por receber flores. Lembro da praia, dos nossos covers sem vergonha, do ursinho e da aliança. E lembro da sensação de finalmente ter uma pequena prévia de um cotidiano ao teu lado.</p>
+<p>Mas também aprendi que amar não é só juntar lembranças bonitas. É ter paciência, ouvir de verdade, respeitar as diferenças e entender que nem sempre a gente vai acertar de primeira. Eu não quero te prometer uma vida sem problemas. Quero me comprometer a fazer a minha parte para que a gente saiba conversar e cuidar um do outro quando eles aparecerem.</p>
+<p>Obrigado por dividir um pedacinho da tua vida comigo. Por ser minha namorada, minha amiga, minha dupla de covers e essa pessoa que consegue me fazer sorrir e testar minha paciência, às vezes no mesmo minuto kkkkkk.</p>
+<p>Nos próximos anos, quero continuar te conhecendo. Quero descobrir novos lugares contigo, fazer planos bobos e gigantes, celebrar tuas conquistas e ter orgulho de tudo que a gente construir, juntos e individualmente. Quero que as flores continuem chegando sem precisar de motivo.</p>
+<p>Se um dia nossas fotos ficarem antigas, se a gente tiver esquecido metade das nossas piadas e se o tempo mudar tanta coisa em nós, espero que ainda possamos olhar um pro outro e lembrar de como foi bom ter dado chance àquele primeiro oi.</p>
+<p>Um ano é muito quando olho pra tudo o que vivemos. E é tão pouco quando penso em tudo o que ainda sonho viver contigo.</p>
+<p>Feliz nosso primeiro ano, meu amor. Que essa seja só a primeira de muitas vezes em que a gente possa comemorar a nossa história.</p><p class="signature">Te amo mil milhões. Hoje, amanhã e sempre. 💙</p></article><p class="year-end" hidden id="year-end-line">Fim do primeiro ano. Começo de tantos outros. ∞ 💙</p><p style="margin-top:12px;text-align:center;">E naquele mesmo 6 de junho, a nossa história ganhou um novo capítulo: <a href="#acc-engagement" style="color:#fff;font-weight:700;" id="eng-jump">o nosso noivado 💍</a>.</p></section>
+      </section>
+    </div>
+  </details>
+
+  <!-- ====== NOIVADO – 06 DE JUNHO DE 2026 ====== -->
+  <details class="accordion year-chapter" id="acc-engagement">
+    <summary><span>💍✨ Nosso noivado — 06/06/2026</span><span class="chev">▸</span></summary>
+    <div class="accordion-body">
+      <section id="engagement" class="month-section" aria-labelledby="eng-title">
+        <header class="eng-hero">
+          <div class="eng-date">06 · 06 · 2026</div>
+          <svg class="eng-ring" viewBox="0 0 240 180" role="img" aria-label="Duas alianças entrelaçadas, símbolo do nosso noivado">
+            <defs><linearGradient id="eng-silver" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".45" stop-color="#9eb6d7"/><stop offset=".7" stop-color="#f5faff"/><stop offset="1" stop-color="#758fae"/></linearGradient><linearGradient id="eng-gem" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c6eeff"/><stop offset="1" stop-color="#237ad5"/></linearGradient></defs>
+            <circle cx="89" cy="105" r="48" fill="none" stroke="url(#eng-silver)" stroke-width="13"/>
+            <circle cx="151" cy="105" r="48" fill="none" stroke="#d6b46c" stroke-width="13"/>
+            <path d="M89 57 A48 48 0 0 1 137 105" fill="none" stroke="url(#eng-silver)" stroke-width="13" stroke-linecap="round"/>
+            <path d="M67 42 L76 28 H102 L111 42 L89 64Z" fill="url(#eng-gem)" stroke="#ecfaff" stroke-width="2"/>
+            <path d="M67 42 H111 M76 28 L89 64 L102 28" stroke="#e4f7ff" stroke-width="1.3" fill="none"/>
+            <g fill="#ffe0a0"><path d="M181 13l3 10 10 3-10 3-3 10-3-10-10-3 10-3z"/><path d="M35 52l2 7 7 2-7 2-2 7-2-7-7-2 7-2z"/><circle cx="212" cy="82" r="2"/><circle cx="26" cy="118" r="2"/></g>
+          </svg>
+          <h2 id="eng-title">O dia em que o nosso amanhã ganhou uma promessa</h2>
+          <p>Há exatamente um ano, um primeiro oi. Em 6 de junho de 2026, o nosso noivado. A mesma data, um novo significado e uma vida inteira ainda por escrever.</p>
+          <div class="eng-days" id="eng-days">Desde o nosso noivado 💍</div>
+        </header>
+        <p class="eng-quote">De todos os caminhos que eu poderia ter seguido, que sorte o meu ter encontrado o teu.</p>
+        <article class="month-text">
+          <p>Amor, lembra quando a gente falava sobre o que a aliança e o ursinho representavam? Compromisso de um lado, aconchego do outro. Naquele momento eram duas peças de um quebra-cabeça aqui no site. Hoje essas duas ideias significam ainda mais pra mim.</p>
+          <p>No mesmo dia em que completamos um ano, demos um novo nome ao nosso futuro. O noivado não apaga nada do que fomos: ele carrega o nosso primeiro oi, as flores, a praia, os covers sem vergonha, a viagem e tudo que aprendemos quando a vida pediu que a gente se adaptasse.</p>
+          <p>Eu quis fazer desta parte do site um lugar só nosso. Tem joguinhos, lembranças, promessas e uma carta que nenhuma quantidade de código conseguiria escrever tão bem quanto o meu coração gostaria.</p>
+        </article>
+
+        <section class="interactive-block eng-block" aria-labelledby="eng-mission-title">
+          <div class="block-title"><h3 id="eng-mission-title">🔑 Três chaves para o nosso para sempre</h3><span class="hint">Jogue na ordem que quiser.</span></div>
+          <p>Cada desafio concluído acende uma chave. Junte as três para revelar a última surpresa do noivado. A galeria e a carta já estão livres para você abrir.</p>
+          <p id="eng-mission-status" class="year-status" aria-live="polite">0 de 3 chaves</p><progress class="eng-progress" id="eng-mission-progress" max="3" value="0" aria-label="Chaves conquistadas"></progress>
+        </section>
+
+        <section class="interactive-block eng-block" aria-labelledby="eng-memory-title">
+          <div class="block-title"><h3 id="eng-memory-title">🧸 1. Memória de dois corações</h3><span class="hint">Encontre os seis pares da nossa história.</span></div>
+          <div id="eng-memory" class="eng-pairs" aria-label="Cartas do jogo da memória"></div>
+          <p id="eng-memory-status" class="year-status" aria-live="polite">0/6 pares • 0 tentativas</p>
+          <div id="eng-memory-note" class="year-note" aria-live="polite">Cada par guarda uma lembrança. Vire duas cartas para começar. 💙</div>
+          <button class="btn btn-ghost" id="eng-memory-reset" type="button">Embaralhar novamente ↻</button>
+        </section>
+
+        <section class="interactive-block eng-block" aria-labelledby="eng-quiz-title">
+          <div class="block-title"><h3 id="eng-quiz-title">💌 2. De um oi até o noivado</h3><span class="hint">Seis perguntinhas, sem pressa e sem nota.</span></div>
+          <p id="eng-quiz-count" class="year-status"></p><progress class="eng-progress" id="eng-quiz-progress" max="6" value="0" aria-label="Perguntas respondidas"></progress>
+          <div id="eng-quiz-game"><h4 id="eng-quiz-question"></h4><div class="eng-choices" id="eng-quiz-choices"></div><p class="eng-feedback" id="eng-quiz-feedback" aria-live="polite"></p><button class="btn btn-secondary" id="eng-quiz-next" type="button" hidden>Próxima pergunta ✨</button></div>
+          <div class="year-reward" id="eng-quiz-done" hidden>Seis respostas, tantas lembranças. Nossa história é bem maior que qualquer quiz. 💙</div>
+          <button class="btn btn-ghost" id="eng-quiz-reset" type="button">Jogar novamente ↻</button>
+        </section>
+
+        <section class="interactive-block eng-block" aria-labelledby="eng-sky-title">
+          <div class="block-title"><h3 id="eng-sky-title">🌌 3. A constelação do nosso futuro</h3><span class="hint">Acenda as seis estrelas em ordem.</span></div>
+          <p>Não é um mapa real do céu; é o desenho de seis coisas que eu quero preservar na nossa vida. A estrela seguinte está destacada. Ao final, elas desenham um coração.</p>
+          <div class="eng-sky" id="eng-sky">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><g fill="#c8eaff" opacity=".45"><circle cx="10" cy="12" r=".5"/><circle cx="88" cy="15" r=".5"/><circle cx="18" cy="79" r=".5"/><circle cx="83" cy="87" r=".6"/><circle cx="50" cy="10" r=".4"/><circle cx="91" cy="62" r=".4"/></g><g id="eng-lines"></g></svg>
+          </div>
+          <div id="eng-sky-note" class="year-note" aria-live="polite">Toque na estrela 1 para começar a desenhar o nosso coração.</div>
+          <p id="eng-sky-status" class="year-status" aria-live="polite">0 de 6 estrelas acesas</p>
+          <button class="btn btn-ghost" id="eng-sky-reset" type="button">Apagar as estrelas ↻</button>
+        </section>
+
+        <section class="interactive-block eng-block" aria-labelledby="eng-gallery-title">
+          <div class="block-title"><h3 id="eng-gallery-title">📸 O dia que eu guardaria numa fotografia</h3><span class="hint">Passe para o lado ou use as setas. Toque na foto para ampliar.</span></div>
+          <p>Tem dias que a gente queria conseguir guardar inteiros dentro de uma caixinha. Esta é a nossa galeria daquele 6 de junho.</p>
+          <figure class="eng-photo-stage"><button class="eng-photo-open" id="eng-photo-open" type="button" aria-label="Ampliar foto atual"><img id="eng-photo" alt="Foto do nosso noivado"/></button><figcaption class="eng-photo-caption" id="eng-photo-caption"></figcaption></figure>
+          <div class="eng-photo-nav"><button class="btn" id="eng-prev" type="button" aria-label="Foto anterior">‹ Anterior</button><span id="eng-photo-count" aria-live="polite"></span><button class="btn" id="eng-next" type="button" aria-label="Próxima foto">Próxima ›</button></div>
+          <div class="eng-dots" id="eng-dots" aria-label="Escolher foto"></div>
+          <dialog class="eng-dialog" id="eng-photo-dialog" aria-labelledby="eng-dialog-caption"><button type="button" class="btn" id="eng-dialog-close">✕ Fechar</button><img id="eng-dialog-img" alt=""/><p id="eng-dialog-caption"></p></dialog>
+        </section>
+
+        <section class="interactive-block eng-block" aria-labelledby="eng-letter-title">
+          <div class="block-title"><h3 id="eng-letter-title">✉️ Uma carta para a minha noiva</h3><span class="hint">De mim, para todos os teus amanhãs.</span></div>
+          <div class="eng-envelope"><button id="eng-letter-open" class="eng-seal" type="button" aria-label="Abrir carta de noivado" aria-expanded="false" aria-controls="eng-letter"><span>💙</span></button><p id="eng-letter-hint">Toque no selo para abrir a carta que guardei pra você.</p></div>
+          <article id="eng-letter" class="year-letter eng-letter" hidden>
+            <p class="eng-letter-date">06 DE JUNHO DE 2026 · NOSSO NOIVADO</p>
+            <h3>À mulher com quem eu sonho dividir o tempo,</h3>
+            <p>Se eu pudesse voltar ao dia 6 de junho de 2025, eu não mudaria uma única palavra daquele primeiro oi. Nem adiantaria o relógio, nem tentaria explicar ao meu eu daquele dia o tamanho do que estava prestes a acontecer. Eu só olharia para ele com a ternura de quem conhece o final de uma carta que ainda nem começou a ser escrita.</p>
+            <p>Porque naquele dia, sem que eu soubesse, a vida estava colocando o teu nome na margem de todas as páginas que eu ainda tinha para viver.</p>
+            <p>Um ano depois, a mesma data ganhou outro significado. O calendário repetiu seus números, mas nós já não éramos os mesmos. Entre um seis de junho e o outro, coube um universo inteiro: o primeiro encontro, as tuas desculpas, a praia, as nossas músicas cantadas sem a menor vergonha, as flores e a felicidade de poder te fazer feliz. Couberam também as conversas difíceis, os ajustes e o aprendizado de que amar alguém é uma coisa muito maior do que saber dizer eu te amo.</p>
+            <p>Eu ainda penso naquele primeiro buquê. Na época, eu queria te dar flores. Hoje, entendo que o que mais desejo é ser alguém que nunca se esqueça de cultivar o jardim, mesmo quando as estações mudarem. Que não espere uma data especial para demonstrar carinho. Que saiba que uma flor precisa de cuidado, não de posse; de espaço para crescer, não de medo de que floresça longe das minhas mãos.</p>
+            <p>Você me disse um dia que uma aliança representava compromisso e um ursinho representava aconchego. Eu não poderia ter encontrado uma imagem mais bonita para nós. Quero que o nosso compromisso tenha a firmeza de uma aliança, mas que o nosso amor nunca perca a delicadeza de um abraço. Quero que você encontre em mim companhia para os dias de sol e um ombro nos dias em que o céu resolver chover.</p>
+            <p>Se alguém me perguntasse como imagino a felicidade, talvez esperasse que eu descrevesse algo grandioso. Mas eu falaria de uma manhã qualquer, de uma casa onde teu riso atravessa os cômodos, de uma conversa sobre o que vamos comer, de duas pessoas cansadas que ainda encontram tempo para perguntar como foi o dia uma da outra. Falaria de uma vida que não precisa ser extraordinária o tempo inteiro para ser extraordinária pra mim.</p>
+            <p>O nosso noivado é, para mim, uma ponte entre tudo que já fomos e tudo que ainda podemos ser. Não é uma promessa de que o mundo vai se tornar mais fácil. É a vontade de atravessá-lo contigo, sem esquecer que somos duas pessoas inteiras, com nossos próprios sonhos, escolhendo construir algo em comum. Quero aprender a te ouvir mesmo quando discordarmos, te admirar em cada nova versão tua e reconhecer quando eu errar. Quero que a nossa casa seja feita de respeito antes mesmo de ser feita de paredes.</p>
+            <p>E se o tempo, esse sujeito apressado, um dia levar embora a juventude das nossas fotos, que ele nos devolva em forma de histórias tudo aquilo que levou em forma de segundos. Que os nossos cabelos mudem de cor e que a gente ainda consiga rir das mesmas besteiras. Que eu continue inventando maneiras de te arrancar um sorriso e que tu continue, com esse teu jeitinho, testando a minha paciência de vez em quando — porque nem num texto poético eu ia deixar essa passar kkkkkk.</p>
+            <p>Quando escrevi que você era minha galáxia rara, eu tentava encontrar no infinito uma unidade de medida para o que sentia. Hoje eu acho que não existe. O amor que quero viver contigo não cabe na distância das estrelas, nem no número de dias que esse site consegue contar. Ele cabe, paradoxalmente, nas coisas menores: numa mão que procura a outra, numa mensagem de cuidado, numa flor sem motivo, num abraço demorado, numa escolha que se renova.</p>
+            <p>Não sei quantas vezes o mundo vai dar voltas ao redor do Sol enquanto estivermos escrevendo essa história. Mas sei que desejo estar presente de verdade em cada capítulo que nos for dado. Quero celebrar tuas conquistas, respeitar teus silêncios, dividir responsabilidades e continuar descobrindo quem você é, mesmo depois de muitos anos pensando que já conheço cada detalhe.</p>
+            <p>Minha noiva. Que coisa bonita poder escrever essas duas palavras. Elas carregam uma alegria que parece maior que a própria frase. Carregam o privilégio de ter vivido o nosso ontem, a felicidade de compartilhar o nosso hoje e a esperança de um amanhã que estamos escolhendo construir.</p>
+            <p>Se um dia você esquecer o que eu quis dizer com todas essas páginas, lembra só disso: de todas as possibilidades de futuro que consigo imaginar, uma das mais bonitas é aquela em que a gente continua se encontrando, se respeitando e se apaixonando, não porque o destino nos obriga, mas porque o amor nos convida.</p>
+            <p>Que o dia 6 de junho nunca seja apenas uma data. Que seja sempre a lembrança de que, entre bilhões de vidas, um primeiro oi abriu espaço para o nosso nós. E que o nosso noivado seja o começo de uma promessa que a gente não precise apenas escrever, mas possa viver, um dia de cada vez.</p>
+            <p>Eu te escolheria naquela primeira conversa. Te escolheria no meio das minhas dúvidas, na simplicidade da rotina, nas alegrias e nos recomeços. E, se me fosse permitido escrever outra história em outro universo, eu torceria para que, em algum lugar dela, a vida me apresentasse você outra vez.</p>
+            <p>Feliz noivado, meu amor. Que ainda existam milhares de manhãs, milhões de abraços e infinitas razões para a gente agradecer por aquele primeiro oi.</p>
+            <p class="signature">Do teu noivo, que te ama mil milhões.<br>Hoje, amanhã e em todos os capítulos que ainda forem nossos. 💙</p>
+          </article>
+        </section>
+
+        <section class="interactive-block eng-block eng-finale" aria-labelledby="eng-finale-title">
+          <h3 id="eng-finale-title">∞ O que vem depois do sim?</h3>
+          <p id="eng-finale-locked" class="eng-feedback">🔒 Descubra as três chaves dos jogos para abrir esta última surpresa.</p>
+          <div id="eng-finale-unlocked" hidden><p class="eng-quote">Não precisamos ter o futuro inteiro escrito para começar a vivê-lo.</p><button id="eng-final-btn" class="tm-btn" type="button" aria-expanded="false" aria-controls="eng-final-message">Abrir a última promessa 💍</button><div id="eng-final-message" hidden><p class="eng-quote">Que nunca nos faltem flores, risadas, diálogo, respeito e vontade de voltar um para o outro.</p><p>O primeiro ano foi a nossa origem. O noivado, a nossa promessa. O resto, meu amor, a gente escreve junto.</p><p class="year-end">6 de junho de 2025 — nosso começo.<br>6 de junho de 2026 — nosso noivado.<br>O futuro — nosso próximo capítulo. 💙</p></div></div>
+        </section>
+      </section>
+    </div>
+  </details>
 
   <section id="photo-trail" class="trail" aria-labelledby="trail-title">
     <header class="trail-header">
@@ -2564,27 +2894,27 @@
         <span class="trail-label">Mês 8</span>
       </button>
 
-      <button class="trail-card" data-month="9" type="button">
+      <button class="trail-card" data-month="9" data-caption="Um jardim de pequenos detalhes 🌷" type="button">
         <span class="trail-badge">9</span>
-        <img class="trail-img" src="assets/photos/09.jpg" alt="Foto do mês 9">
+        <img class="trail-img" src="images/ADS1242.jpg" alt="Foto do mês 9">
         <span class="trail-label">Mês 9</span>
       </button>
 
-      <button class="trail-card" data-month="10" type="button">
+      <button class="trail-card" data-month="10" data-caption="A ideia do nosso lar 🏡" type="button">
         <span class="trail-badge">10</span>
-        <img class="trail-img" src="assets/photos/10.jpg" alt="Foto do mês 10">
+        <img class="trail-img" src="images/20260403_1706201.jpg" alt="Foto do mês 10">
         <span class="trail-label">Mês 10</span>
       </button>
 
-      <button class="trail-card" data-month="11" type="button">
+      <button class="trail-card" data-month="11" data-caption="Uma mensagem ao futuro 💌" type="button">
         <span class="trail-badge">11</span>
-        <img class="trail-img" src="assets/photos/11.jpg" alt="Foto do mês 11">
+        <img class="trail-img" src="images/20260529_201452.jpg" alt="Foto do mês 11">
         <span class="trail-label">Mês 11</span>
       </button>
 
-      <button class="trail-card" data-month="12" type="button">
+      <button class="trail-card" data-month="12" data-caption="Nosso primeiro ano — e tantos outros pela frente 💙" type="button">
         <span class="trail-badge">12</span>
-        <img class="trail-img" src="assets/photos/12.jpg" alt="Foto do mês 12">
+        <img class="trail-img" src="images/_DSC6302.jpg" alt="Foto do mês 12">
         <span class="trail-label">1 ano 🎉</span>
       </button>
     </div>
@@ -2598,6 +2928,7 @@
       </div>
     </div>
   </section>
+  </div><!-- /.wrapper -->
 
   <!-- confetti lib -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -4013,8 +4344,13 @@
         const action = target.getAttribute("data-action");
 
         if (action === "navegar") {
-          const next = document.querySelector("#mes-9, [data-next-section]");
-          if (next) next.scrollIntoView({ behavior: "smooth", block: "start" });
+          const month = Number(section.id.replace("mes-", ""));
+          const next = document.getElementById("mes-" + (month + 1));
+          if (next) {
+            const accordion = next.closest("details.accordion");
+            if (accordion) accordion.open = true;
+            next.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
           else section.animate(
             [{ transform: "scale(1)" }, { transform: "scale(1.01)" }, { transform: "scale(1)" }],
             { duration: 380, easing: "ease-out" }
@@ -4056,7 +4392,7 @@
 
     <script>
       (() => {
-        const RELATIONSHIP_START = "2025-07-06"; 
+        const RELATIONSHIP_START = "2025-06-06"; 
 
         const start = new Date(RELATIONSHIP_START + "T00:00:00");
         if (isNaN(start.getTime())) return;
@@ -4070,8 +4406,8 @@
           let m = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
           // se ainda não chegou no "dia do mês", não conta o mês atual
           if (now.getDate() < start.getDate()) m -= 1;
-          // meses liberados = m + 1 (mês 1 no começo)
-          const unlocked = Math.min(12, Math.max(1, m + 1));
+          // Libera cada novo mês completo; mantém a primeira lembrança disponível desde o início.
+          const unlocked = Math.min(12, Math.max(1, m));
           return unlocked;
         })();
 
@@ -4125,7 +4461,7 @@
 
           modalImg.src = img.src;
           modalImg.alt = img.alt || label;
-          caption.textContent = label;
+          caption.textContent = card.dataset.caption ? `${label} — ${card.dataset.caption}` : label;
 
           modal.classList.add("show");
           modal.setAttribute("aria-hidden", "false");
@@ -4146,6 +4482,282 @@
         });
       })();
       </script>
+
+
+  <script>
+  /* ======== 9 A 12 MESES – INTERAÇÕES INDEPENDENTES ======== */
+  (() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const celebrate = () => { if (!reduced && typeof window.confetti === 'function') window.confetti({particleCount:110,spread:82,origin:{y:.68},colors:['#ffffff','#aee1ff','#0072ff','#ffd166']}); };
+    const get = (key) => { try { return JSON.parse(localStorage.getItem(key)); } catch { return null; } };
+    const put = (key,value) => { try { localStorage.setItem(key,JSON.stringify(value)); return true; } catch { return false; } };
+    document.querySelectorAll('[data-year-game]').forEach(game => {
+      const chapter = game.closest('.month-section');
+      const key = 'love-year-v1-' + chapter.id;
+      const tiles = [...game.querySelectorAll('.year-tile')];
+      const note = game.querySelector('.year-note');
+      const reward = game.querySelector('.year-reward');
+      const status = game.querySelector('.year-status');
+      const progress = game.querySelector('progress');
+      const finalSection = chapter.querySelector('#year-final-section');
+      const stored = get(key);
+      const seen = new Set(Array.isArray(stored) ? stored.filter(i => Number.isInteger(i) && i >= 0 && i < tiles.length) : []);
+      const render = () => {
+        tiles.forEach((tile,i) => {
+          tile.setAttribute('aria-pressed', String(seen.has(i)));
+          tile.querySelector('small').textContent = seen.has(i) ? 'Descoberto 💙' : 'Toque para descobrir';
+        });
+        game.querySelectorAll('.window').forEach((el,i) => el.classList.toggle('lit',seen.has(i)));
+        status.textContent = `${seen.size} de ${tiles.length} descobertos`;
+        progress.value = seen.size;
+        reward.hidden = seen.size !== tiles.length;
+        if (finalSection) finalSection.hidden = reward.hidden;
+      };
+      tiles.forEach((tile,i) => tile.addEventListener('click', () => {
+        const alreadyComplete = seen.size === tiles.length;
+        seen.add(i);
+        note.querySelector('strong').textContent = tile.dataset.title;
+        note.querySelector('span').textContent = tile.dataset.message;
+        put(key,[...seen]); render();
+        if (!alreadyComplete && seen.size === tiles.length) celebrate();
+      }));
+      game.querySelector('[data-year-reset]').addEventListener('click', () => {
+        seen.clear(); put(key,[]); render();
+        note.querySelector('strong').textContent = 'Uma surpresa por vez 💙';
+        note.querySelector('span').textContent = 'Escolha qualquer card para começar.';
+        if(finalSection) {
+          chapter.querySelector('#year-final-letter').hidden = true;
+          chapter.querySelector('#year-end-line').hidden = true;
+          const btn = chapter.querySelector('#year-open-letter');
+          btn.setAttribute('aria-expanded','false'); btn.textContent = 'Abrir nossa carta de 1 ano ✨';
+        }
+      });
+      render();
+    });
+    const fields = [1,2,3].map(i=>document.getElementById('year-wish-'+i));
+    const form = document.getElementById('year-capsule-form');
+    const savedBox = document.getElementById('year-capsule-sealed');
+    const status = document.getElementById('year-capsule-status');
+    const art = document.getElementById('year-capsule-art');
+    const capsuleKey = 'love-year-v1-capsule';
+    let capsule = get(capsuleKey);
+    const privacy = 'As mensagens ficam apenas neste navegador; não são enviadas para nenhum servidor.';
+    const renderCapsule = sealed => {
+      form.hidden = sealed; savedBox.hidden = !sealed; art.classList.toggle('sealed',sealed);
+      art.querySelector('.capsule-icon').textContent = sealed ? '🔒' : '💌';
+      if(sealed && capsule) document.getElementById('year-capsule-date').textContent = 'Guardada em ' + new Date(capsule.date).toLocaleDateString('pt-BR') + '.';
+    };
+    if (capsule && Array.isArray(capsule.values)) {
+      fields.forEach((f,i) => f.value = typeof capsule.values[i] === 'string' ? capsule.values[i] : '');
+      renderCapsule(true);
+    }
+    document.getElementById('year-seal').addEventListener('click', () => {
+      const values = fields.map(f=>f.value.trim());
+      if(!values.some(Boolean)) { status.textContent = 'Escreva pelo menos uma lembrança ou sonho para guardar 💙'; fields[0].focus(); return; }
+      capsule = {values,date:new Date().toISOString()};
+      const persisted = put(capsuleKey,capsule);
+      status.textContent = persisted ? 'Cápsula guardada! ' + privacy : 'Não foi possível salvar neste navegador. Copie a mensagem para não perdê-la ao fechar a página.';
+      renderCapsule(true); celebrate();
+    });
+    document.getElementById('year-unseal').addEventListener('click',()=> {renderCapsule(false);status.textContent=privacy;fields[0].focus();});
+    document.getElementById('year-copy-wishes').addEventListener('click',async()=>{
+      const titles=['Uma aventura','Algo que quero preservar','Mensagem ao futuro'];
+      const text = capsule.values.map((v,i)=>titles[i]+': '+(v||'—')).join('\n\n');
+      try { await navigator.clipboard.writeText(text); status.textContent='Mensagem copiada 💙'; }
+      catch { renderCapsule(false); status.textContent='A cópia automática não está disponível. Você pode selecionar e copiar os textos manualmente.'; }
+    });
+    const letterBtn = document.getElementById('year-open-letter');
+    const letter = document.getElementById('year-final-letter');
+    const endLine = document.getElementById('year-end-line');
+    letterBtn.addEventListener('click',()=>{
+      const opening = letter.hidden;
+      letter.hidden = !opening; endLine.hidden = !opening;
+      letterBtn.setAttribute('aria-expanded',String(opening));
+      letterBtn.textContent = opening ? 'Guardar nossa carta 💙' : 'Abrir nossa carta de 1 ano ✨';
+      if(opening) { celebrate(); letter.scrollIntoView({behavior:reduced?'auto':'smooth',block:'nearest'}); }
+    });
+    // Fotos novas: mantém o caminho original e usa um cartão simbólico se o arquivo ainda não existir.
+    document.querySelectorAll('.trail-card[data-month]').forEach(card=>{
+      const n = Number(card.dataset.month); if(n<9) return;
+      const img = card.querySelector('img');
+      const fallback = () => {
+        if(img.dataset.fallback) return;
+        img.dataset.fallback = 'true';
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320"><defs><linearGradient id="b" x2="1" y2="1"><stop stop-color="#124c9a"/><stop offset="1" stop-color="#082858"/></linearGradient></defs><rect width="480" height="320" fill="url(#b)"/><rect x="18" y="18" width="444" height="284" rx="12" fill="none" stroke="#9dccff" stroke-opacity=".6"/><path d="M240 172C165 125 190 75 240 111C290 75 315 125 240 172Z" fill="#8ac8ff"/><text x="240" y="220" text-anchor="middle" font-family="sans-serif" font-size="26" fill="white">${n===12?'1 ano':n+' meses'}</text><text x="240" y="254" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#d3e8ff">Espaço para nossa foto</text></svg>`;
+        img.src = 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+        img.alt = `Espaço reservado para a foto do mês ${n}`;
+      };
+      img.addEventListener('error',fallback);
+      if(img.complete && !img.naturalWidth) fallback();
+    });
+  })();
+  </script>
+
+  <script>
+  /* ======== NOIVADO – interações isoladas (eng-*) ======== */
+  (() => {
+    const root = document.getElementById('acc-engagement');
+    if (!root) return;
+    const $ = id => root.querySelector('#eng-' + id);
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const celebrate = () => { if (!reduced && typeof window.confetti === 'function') window.confetti({particleCount:125,spread:95,origin:{y:.68},colors:['#ffe0a0','#ffffff','#80c9ff','#0072ff']}); };
+    const key = 'love-engagement-20260606-v1';
+    let saved;
+    try { saved = JSON.parse(localStorage.getItem(key)); } catch {}
+    const completed = new Set(Array.isArray(saved) ? saved.filter(x => ['memory','quiz','sky'].includes(x)) : []);
+    function renderMission() {
+      $('mission-status').textContent = `${completed.size} de 3 chaves ${'🔑'.repeat(completed.size)}`;
+      $('mission-progress').value = completed.size;
+      $('finale-locked').hidden = completed.size === 3;
+      $('finale-unlocked').hidden = completed.size !== 3;
+      if (completed.size !== 3) {
+        $('final-message').hidden = true;
+        $('final-btn').setAttribute('aria-expanded','false');
+        $('final-btn').textContent = 'Abrir a última promessa 💍';
+      }
+    }
+    function setCompleted(game, value) {
+      const wasDone = completed.has(game);
+      if (value) completed.add(game); else completed.delete(game);
+      try { localStorage.setItem(key,JSON.stringify([...completed])); } catch {}
+      renderMission();
+      if (value && !wasDone) celebrate();
+    }
+    // Dias civis em Recife, sem depender do fuso do dispositivo.
+    const civilDate = new Intl.DateTimeFormat('en-CA',{timeZone:'America/Recife',year:'numeric',month:'2-digit',day:'2-digit'});
+    function updateDays() {
+      const parts = Object.fromEntries(civilDate.formatToParts(new Date()).map(p=>[p.type,p.value]));
+      const days = Math.floor((Date.UTC(+parts.year,+parts.month-1,+parts.day)-Date.UTC(2026,5,6))/86400000);
+      $('days').textContent = days < 0 ? `Faltam ${-days} dias para 06/06/2026` : days === 0 ? 'Hoje é o nosso noivado! 💍' : `${days.toLocaleString('pt-BR')} ${days === 1?'dia':'dias'} desde o nosso noivado 💍`;
+    }
+    updateDays(); setInterval(updateDays,60000);
+    // Jogo 1: memória. Os pares e seus textos retomam símbolos do site.
+    const symbols = [
+      ['💬','O primeiro oi','Uma conversa em 06/06/2025 que mudou o sentido de tantas outras.'],
+      ['💐','O buquê','Que as flores continuem chegando, até nos dias sem data especial.'],
+      ['🎤','Os covers','Que nunca falte coragem para cantar mal e rir muito juntos.'],
+      ['🧸','O ursinho','O aconchego de ter um lugar de paz no abraço do outro.'],
+      ['🏡','A primeira viagem','Uma prévia de como pode ser bonito dividir o cotidiano contigo.'],
+      ['💍','A aliança','O compromisso que ganhou mais um significado em 06/06/2026.']
+    ];
+    let deck=[], matched=new Set(), first=null, busy=false, attempts=0, flipTimer;
+    function shuffle(arr) { for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
+    function memoryRender() {
+      [...$('memory').children].forEach((b,i)=>{
+        const open=matched.has(i)||i===first||b.dataset.pending==='true';
+        b.textContent=open?symbols[deck[i]][0]:'💙';
+        b.classList.toggle('is-open',open);
+        b.classList.toggle('is-matched',matched.has(i));
+        b.setAttribute('aria-label',`Carta ${i+1}: ${open?symbols[deck[i]][1]:'virada para baixo'}${matched.has(i)?', par encontrado':''}`);
+        b.disabled=matched.has(i);
+      });
+      $('memory-status').textContent=`${matched.size/2}/6 pares • ${attempts} ${attempts===1?'tentativa':'tentativas'}`;
+    }
+    function memoryStart(restore=false) {
+      clearTimeout(flipTimer); deck=shuffle([...symbols.keys(),...symbols.keys()]); matched=new Set(); first=null;busy=false;attempts=0;
+      $('memory').replaceChildren();
+      deck.forEach((_,i)=>{const b=document.createElement('button');b.type='button';b.className='eng-pair';b.addEventListener('click',()=>flip(i));$('memory').append(b);});
+      if(restore && completed.has('memory')) {deck.forEach((_,i)=>matched.add(i)); $('memory-note').textContent='Todos os pares encontrados! Sua chave está guardada. 💙';}
+      else $('memory-note').textContent='Cada par guarda uma lembrança. Vire duas cartas para começar. 💙';
+      memoryRender();
+    }
+    function flip(i) {
+      if(busy||matched.has(i)||first===i)return;
+      if(first===null){first=i;memoryRender();return;}
+      attempts++;
+      const previous=first;
+      if(deck[previous]===deck[i]){
+        matched.add(previous);matched.add(i);first=null;
+        const symbol=symbols[deck[i]];
+        $('memory-note').textContent=`${symbol[0]} ${symbol[1]} — ${symbol[2]}`;
+        memoryRender();
+        if(matched.size===deck.length){$('memory-note').textContent+=' Todos os pares encontrados! Primeira chave conquistada. 🔑';setCompleted('memory',true);}
+      } else {
+        busy=true; $('memory').children[i].dataset.pending='true';memoryRender();
+        $('memory-note').textContent='Essas duas não são um par. Tenta de novo, meu amor. 💙';
+        flipTimer=setTimeout(()=>{delete $('memory').children[i].dataset.pending;first=null;busy=false;memoryRender();},850);
+      }
+    }
+    $('memory-reset').addEventListener('click',()=>{setCompleted('memory',false);memoryStart();});
+    memoryStart(true);
+    // Jogo 2: quiz sem penalidade, com as respostas documentadas no site.
+    const questions=[
+      {q:'Quando foi o nosso primeiro oi?',opts:['06/06/2025','06/07/2025','11/06/2025'],a:0,note:'Um seis de junho que mudou tanta coisa.'},
+      {q:'Qual presente realizou um sonho teu logo no começo?',opts:['Um ursinho','Um buquê de flores','Um álbum'],a:1,note:'E por isso eu quis que existisse um buquê eterno aqui no site.'},
+      {q:'O que a gente cantava junto, sem vergonha?',opts:['Ópera','Só parabéns','Nossos covers'],a:2,note:'Uma dupla que pode até desafinar, mas não perde a graça. 😂'},
+      {q:'Quais objetos escolhemos para representar nós dois?',opts:['A aliança e o ursinho','A lua e o sol','Um livro e uma flor'],a:0,note:'Compromisso e aconchego. Duas peças, um significado.'},
+      {q:'Qual experiência nos deu uma prévia da vida de casados?',opts:['O primeiro buquê','A nossa primeira viagem','O quebra-cabeça'],a:1,note:'Dividir a rotina contigo fez a ideia de lar ficar ainda mais bonita.'},
+      {q:'Em que data nosso primeiro aniversário virou também a data do noivado?',opts:['06/05/2026','06/07/2026','06/06/2026'],a:2,note:'O mesmo dia, um novo significado e tantos amanhãs.'}
+    ];
+    let qi=completed.has('quiz')?questions.length:0, answered=false;
+    function quizRender() {
+      const done=qi===questions.length;
+      $('quiz-game').hidden=done;$('quiz-done').hidden=!done;
+      $('quiz-count').textContent=done?'6 de 6 respondidas 💙':`Pergunta ${qi+1} de ${questions.length}`;
+      $('quiz-progress').value=qi+(answered&&!done?1:0);
+      if(done)return;
+      const q=questions[qi];$('quiz-question').textContent=q.q;$('quiz-feedback').textContent='';$('quiz-next').hidden=true;$('quiz-choices').replaceChildren();
+      q.opts.forEach((option,i)=>{const b=document.createElement('button');b.type='button';b.className='btn eng-choice';b.textContent=option;b.addEventListener('click',()=>{
+        if(answered)return;
+        if(i!==q.a){b.classList.add('wrong');$('quiz-feedback').textContent='Quase! Pode tentar de novo, sem pressa. 💙';return;}
+        answered=true;b.classList.remove('wrong');b.classList.add('correct');
+        [...$('quiz-choices').children].forEach(choice=>choice.disabled=true);
+        $('quiz-feedback').textContent='Acertou! '+q.note;$('quiz-progress').value=qi+1;
+        $('quiz-next').textContent=qi===questions.length-1?'Conquistar a chave 🔑':'Próxima pergunta ✨';$('quiz-next').hidden=false;
+      });$('quiz-choices').append(b);});
+    }
+    $('quiz-next').addEventListener('click',()=>{if(!answered)return;qi++;answered=false;quizRender();if(qi===questions.length)setCompleted('quiz',true);else $('quiz-choices').firstElementChild.focus({preventScroll:true});});
+    $('quiz-reset').addEventListener('click',()=>{setCompleted('quiz',false);qi=0;answered=false;quizRender();});quizRender();
+    // Jogo 3: constelação em forma de coração, seis promessas.
+    const stars=[
+      [50,30,'Respeito','Que o amor nunca nos faça esquecer que somos duas pessoas inteiras.'],
+      [28,16,'Carinho','Que a gente nunca espere um motivo para cuidar um do outro.'],
+      [13,43,'Diálogo','Que nenhuma diferença seja maior que a vontade de nos ouvir.'],
+      [50,83,'Parceria','Que cada conquista encontre um coração disposto a celebrar junto.'],
+      [87,43,'Liberdade','Que nossos sonhos cresçam lado a lado, sem deixar de ser nossos.'],
+      [72,16,'Escolha','Que o nosso amor seja renovado nos pequenos gestos de cada dia.']
+    ];
+    let lit=completed.has('sky')?stars.length:0;
+    const lines=stars.map(([x,y],i)=>{const line=document.createElementNS('http://www.w3.org/2000/svg','line');const next=stars[(i+1)%stars.length];[['x1',x],['y1',y],['x2',next[0]],['y2',next[1]]].forEach(([k,v])=>line.setAttribute(k,v));$('lines').append(line);return line;});
+    const starButtons=stars.map(([x,y,title,note],i)=>{const b=document.createElement('button');b.type='button';b.className='eng-star';b.style.left=x+'%';b.style.top=y+'%';b.addEventListener('click',()=>{
+      if(i<lit){$('sky-note').textContent=`✨ ${title} — ${note}`;return;}
+      if(i!==lit){$('sky-note').textContent=`O próximo brilho é a estrela ${lit+1}. 💙`;return;}
+      lit++;$('sky-note').textContent=`✨ ${title} — ${note}`;skyRender();
+      if(lit===stars.length){$('sky-note').textContent+=' O nosso coração está completo! 🔑';setCompleted('sky',true);}
+    });$('sky').append(b);return b;});
+    function skyRender(){starButtons.forEach((b,i)=>{b.textContent=i<lit?'★':i+1;b.setAttribute('aria-label',`Estrela ${i+1}${i<lit?' — '+stars[i][2]:''}`);b.setAttribute('aria-pressed',String(i<lit));b.classList.toggle('next',i===lit);});lines.forEach((line,i)=>line.classList.toggle('lit',i===stars.length-1?lit===stars.length:i+1<lit));$('sky-status').textContent=`${lit} de ${stars.length} estrelas acesas`;}
+    $('sky-reset').addEventListener('click',()=>{setCompleted('sky',false);lit=0;$('sky-note').textContent='Toque na estrela 1 para começar a desenhar o nosso coração.';skyRender();});
+    if(lit===stars.length)$('sky-note').textContent='O nosso coração está completo! Sua chave está guardada. 💙';skyRender();
+    // Galeria: substitua os arquivos e, se desejar, as legendas abaixo.
+    // Os textos são dedicatórias, não descrições de fotos que ainda não vimos.
+    const captions=['O nosso 6 de junho.','Um novo capítulo para nós dois.','O amor que a gente escolhe viver.','Que o tempo guarde este dia com carinho.','Mais um pedacinho do nosso infinito.','Uma promessa que vai além das palavras.','De todos os caminhos, o nosso.','O futuro tem espaço para muitos sonhos.','Meu lugar favorito continua sendo ao teu lado.','Uma data, tantos significados.','O começo de tantos outros capítulos.','Te amo mil milhões, minha noiva. 💙'];
+    const photos=captions.map((caption,i)=>({src:`./assets/noivado/${String(i+1).padStart(2,'0')}.jpg`,caption}));
+    let photoIndex=0,photoVersion=0,photoReady=false;
+    const photo=$('photo'),photoOpen=$('photo-open'),dialog=$('photo-dialog');
+    const dots=photos.map((_,i)=>{const b=document.createElement('button');b.type='button';b.className='eng-dot';b.textContent='●';b.setAttribute('aria-label',`Ir para foto ${i+1}`);b.addEventListener('click',()=>showPhoto(i));$('dots').append(b);return b;});
+    function placeholder(i){const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"><defs><radialGradient id="b"><stop stop-color="#2866a8"/><stop offset="1" stop-color="#09244b"/></radialGradient></defs><rect width="640" height="480" fill="url(#b)"/><rect x="18" y="18" width="604" height="444" rx="14" fill="none" stroke="#ffe0a0" stroke-opacity=".6"/><g fill="none" stroke="#ffe0a0" stroke-width="8"><circle cx="290" cy="175" r="45"/><circle cx="350" cy="175" r="45"/></g><text x="320" y="275" text-anchor="middle" font-family="sans-serif" font-size="25" fill="#fff">Nosso noivado · 06/06/2026</text><text x="320" y="315" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#d9f0ff">Espaço para a foto ${i+1}</text></svg>`;return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);}
+    function showPhoto(i){
+      photoIndex=(i+photos.length)%photos.length;const version=++photoVersion;const item=photos[photoIndex];
+      photoReady=false;photoOpen.setAttribute('aria-disabled','true');photo.src=placeholder(photoIndex);photo.alt=`Espaço reservado para foto ${photoIndex+1} do noivado`;
+      $('photo-caption').textContent=item.caption;$('photo-count').textContent=`${photoIndex+1} / ${photos.length}`;dots.forEach((d,j)=>d.setAttribute('aria-current',String(j===photoIndex)));
+      const preload=new Image();preload.onload=()=>{if(version!==photoVersion)return;photo.src=item.src;photo.alt=`Foto ${photoIndex+1} do noivado`;photoReady=true;photoOpen.removeAttribute('aria-disabled');};preload.onerror=()=>{};preload.src=item.src;
+    }
+    $('prev').addEventListener('click',()=>showPhoto(photoIndex-1));$('next').addEventListener('click',()=>showPhoto(photoIndex+1));
+    let touchX=null, suppressClick=false;
+    photoOpen.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX;suppressClick=false;},{passive:true});
+    photoOpen.addEventListener('touchend',e=>{if(touchX===null)return;const dx=e.changedTouches[0].clientX-touchX;touchX=null;if(Math.abs(dx)>45){suppressClick=true;showPhoto(photoIndex+(dx<0?1:-1));setTimeout(()=>{suppressClick=false;},350);}},{passive:true});
+    photoOpen.addEventListener('click',()=>{if(suppressClick||!photoReady)return;$('dialog-img').src=photos[photoIndex].src;$('dialog-img').alt=photo.alt;$('dialog-caption').textContent=photos[photoIndex].caption;dialog.showModal();});
+    $('dialog-close').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+    photoOpen.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();showPhoto(photoIndex+(e.key==='ArrowRight'?1:-1));}});
+    // Carrega a primeira foto somente quando a seção for visitada.
+    let galleryStarted=false;function initGallery(){if(!galleryStarted){galleryStarted=true;showPhoto(0);}}
+    root.addEventListener('toggle',()=>{if(root.open)initGallery();});if(root.open)initGallery();
+    $('letter-open').addEventListener('click',()=>{const open=$('letter').hidden;$('letter').hidden=!open;$('letter-open').setAttribute('aria-expanded',String(open));$('letter-open').setAttribute('aria-label',open?'Guardar carta de noivado':'Abrir carta de noivado');$('letter-hint').textContent=open?'Uma carta para guardar no coração. Toque no selo para fechar.':'Toque no selo para abrir a carta que guardei pra você.';if(open){celebrate();$('letter').scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});}});
+    $('final-btn').addEventListener('click',()=>{const open=$('final-message').hidden;$('final-message').hidden=!open;$('final-btn').setAttribute('aria-expanded',String(open));$('final-btn').textContent=open?'Guardar a promessa 💙':'Abrir a última promessa 💍';if(open)celebrate();});
+    document.getElementById('eng-jump')?.addEventListener('click',()=>{root.open=true;});
+    renderMission();
+  })();
+  </script>
 
 </body>
 </html>
